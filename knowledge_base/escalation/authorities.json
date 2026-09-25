@@ -1,0 +1,14 @@
+{
+  "_note": "DEMO KNOWLEDGE-BASE DATA for the fictional 'Sample Municipal Corporation'. Not real government rules. Hackathon prototype only.",
+  "items": [
+    {
+      "id": "AUTH-WARD-12-OFFICER",
+      "title": "Ward Officer, Ward 12 (demo)",
+      "jurisdiction_id": "WARD-12"
+    },
+    {
+      "id": "AUTH-ZONAL-COMMISSIONER",
+      "title": "Zonal Commissioner (demo)"
+    }
+  ]
+}

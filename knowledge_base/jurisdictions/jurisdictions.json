@@ -1,0 +1,18 @@
+{
+  "_note": "DEMO KNOWLEDGE-BASE DATA for the fictional 'Sample Municipal Corporation'. Not real government rules. Hackathon prototype only.",
+  "items": [
+    {
+      "id": "WARD-12",
+      "name": "Ward 12 (demo)",
+      "type": "ward",
+      "localities": [
+        "Gandhi Nagar",
+        "Station Road"
+      ],
+      "landmarks": [
+        "Ramalayam temple",
+        "Government school"
+      ]
+    }
+  ]
+}
