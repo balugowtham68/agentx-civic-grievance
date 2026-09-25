@@ -1,475 +1,331 @@
+AGENT X 🤖
 
+The AI That Doesn't Stop When the Citizen Leaves
 
+AGENT X is an Autonomous Civic Grievance Redressal Agent that helps citizens report civic problems through voice or text and autonomously manages the grievance lifecycle after submission.
 
-AGENT X — Autonomous Civic Grievance Redressal Agent
-Build for Billions — Agent AI for Billions
+It combines multilingual citizen intake, AI-based classification and reasoning, complaint drafting, mock grievance filing, persistent complaint state, SLA monitoring, autonomous delay detection, configured escalation, and an explainable audit trail.
 
-AGENT X is an Autonomous Civic Grievance Redressal Agent designed to help citizens report civic problems through natural voice or text input and autonomously manage the grievance lifecycle after submission.
+The core idea is simple:
 
-The system is designed around one central idea:
+Don't just help citizens file complaints. Continue working after they leave.
 
-The AI does not just answer the citizen. It continues working after the citizen leaves.
+🚀 Key Features
 
-AGENT X combines multilingual citizen intake, AI-based classification and reasoning, complaint drafting, mock grievance filing, persistent complaint state, SLA monitoring, autonomous watchdog behavior, configured escalation, and an explainable audit trail.
+Voice and text-based grievance intake
 
-📌 Table of Contents
-Problem Statement
+Multilingual / vernacular citizen interaction
 
-Why Existing Grievance Workflows Are Insufficient
+Natural-language issue, location, duration, and entity extraction
 
-Our Solution
+Missing-information detection
 
-Core Agentic Lifecycle
+AI-based grievance classification
 
-Five-Agent Architecture
+Responsible department identification
 
-End-to-End Workflow
+Jurisdiction reasoning
 
-Autonomous Watchdog
+RAG-powered civic knowledge retrieval
 
-SLA Monitoring
+Structured complaint drafting
 
-Automatic Escalation
+Mock government grievance filing
 
-Explainability and Audit Trail
+Tracking ID generation
 
-RAG and Civic Knowledge Base
+Persistent complaint state
 
-Multilingual and Voice-First Interaction
+SLA tracking and time-accelerated simulation
 
-Mock Government Integration
+Autonomous Watchdog for continuous monitoring
 
-System Architecture
+SLA approaching and breach detection
 
-Data and State Model
+Configured automatic escalation
 
-Technology Stack
+Explainable decision and escalation reasons
 
-Project Structure
+Persistent audit trail
 
-Team Responsibilities
+Citizen complaint tracking
 
-24-Hour Hackathon MVP
+Human-authority resolution workflow
 
-Demo Scenario
+🧠 Tech Stack
 
-Safety and Design Principles
+Frontend
 
-Testing Strategy
+React
 
-Development Roadmap
+Vite
 
-Git Workflow
+Tailwind CSS
 
-Future Scalability
+Voice / Text interaction
 
-Limitations and Demo Assumptions
+Complaint tracking and audit visualization
 
-Project Status
+Backend
 
-Team
+Python
 
-🚨 Problem Statement
-Citizens face difficulty getting everyday civic problems resolved, including:
+FastAPI
 
-Potholes
+Pydantic
 
-Water leaks
+SQLite / persistent application state
 
-Garbage and sanitation issues
+APScheduler
 
-Broken streetlights
+AI / Agentic Layer
 
-Public infrastructure problems
+Gemini API
 
-Welfare-service related problems
+Citizen Intake Agent
 
-The challenge is not only submitting a complaint.
+Classification & Reasoning Agent
 
-Citizens may:
+Complaint Drafting Agent
 
-Not know which department or authority is responsible.
+Filing Agent
 
-Struggle to identify the correct category.
+Autonomous Watchdog Agent
 
-Struggle with jurisdiction and responsible offices.
+RAG / Knowledge
 
-Have difficulty completing structured forms.
+ChromaDB
 
-Face language or literacy barriers.
+Vector embeddings
 
-Face accessibility challenges.
-
-Need to repeatedly check complaint status.
-
-Need to repeatedly follow up when authorities do not act within expected timelines.
-
-Lack visibility into why a complaint was routed or escalated.
-
-The submitted project concept identifies a gap between complaint submission/tracking and autonomous follow-through after submission.
-
-AGENT X is designed to provide that follow-through layer.
-
-🔎 Why Existing Grievance Workflows Are Insufficient
-A conventional workflow often looks like:
-
-Citizen
-   ↓
-Submit Complaint
-   ↓
-Receive Tracking ID
-   ↓
-Citizen Checks Status
-   ↓
-Citizen Follows Up
-   ↓
-Citizen Escalates Manually
-The burden of monitoring and follow-up remains largely with the citizen.
-
-AGENT X changes the workflow to:
-
-Citizen
-   ↓
-Natural Voice / Text Complaint
-   ↓
-AI Understands
-   ↓
-AI Classifies
-   ↓
-AI Drafts
-   ↓
-System Files
-   ↓
-System Monitors
-   ↓
-System Evaluates SLA
-   ↓
-System Detects Delay
-   ↓
-System Triggers Configured Escalation
-   ↓
-Human Authority
-   ↓
-Resolution / Update
-   ↓
-Explainable Audit Trail
-💡 Our Solution
-AGENT X is an agentic AI system that manages the civic grievance lifecycle from citizen input through monitoring and configured escalation.
-
-The system accepts a grievance through voice or text, extracts relevant information, determines the likely category and responsible department, generates a structured complaint, files it through a mock government grievance API, stores the resulting state, and continues monitoring the complaint.
-
-When the configured SLA is approaching or breached, the Autonomous Watchdog evaluates the configured conditions and can trigger an escalation workflow.
-
-The system does not claim to physically resolve the civic problem. Resolution remains with the appropriate human authority.
-
-🔄 Core Agentic Lifecycle
-The complete AGENT X lifecycle is:
-
-UNDERSTAND
-     ↓
-CLASSIFY
-     ↓
-DRAFT
-     ↓
-FILE
-     ↓
-MONITOR
-     ↓
-DECIDE
-     ↓
-ESCALATE
-     ↓
-EXPLAIN
-This lifecycle is the foundation of the system.
+Civic rules
+
+Department mappings
+
+Jurisdiction mappings
+
+Service timelines
+
+Escalation policies
+
+Voice / Language
+
+Whisper and/or Web Speech
+
+Translation layer where required
+
+Integration
+
+Mock Government Grievance API
 
 🤖 Five-Agent Architecture
+
 1. Citizen Intake Agent
-Purpose
-Understand the citizen's grievance from natural voice or text.
 
-Responsibilities
-Accept voice/text input.
+Accepts natural voice or text complaints and extracts:
 
-Handle supported local/vernacular language input.
+Issue
 
-Transcribe voice where required.
+Location
 
-Translate where required.
+Duration
 
-Extract issue/problem.
+Language
 
-Extract location.
+Relevant entities
 
-Extract duration.
+Missing information
 
-Extract relevant entities.
-
-Detect missing information.
-
-Request clarification when necessary.
-
-Example
-Citizen says:
-
-"Engal theruvil moondru naatkalaaga street light velai seyyavillai."
-
-The system should derive information such as:
-
-Issue: Streetlight not functioning
-Duration: 3 days
-Language: Tamil
-Location: Citizen-provided location
 2. Classification & Reasoning Agent
-Purpose
-Determine what the grievance is, who should handle it, and what configured civic information applies.
 
-Responsibilities
-Classify grievance category.
+Determines:
 
-Identify responsible department.
+Grievance category
 
-Determine jurisdiction.
+Responsible department
 
-Identify missing information.
+Jurisdiction
 
-Retrieve relevant civic rules.
+Applicable civic information
 
-Retrieve department mappings.
+Service timeline
 
-Retrieve jurisdiction mappings.
+Missing information
 
-Retrieve service timelines.
-
-Provide reasoning/evidence for classification.
-
-Example
-Streetlight Problem
-        ↓
-Civic Infrastructure
-        ↓
-Streetlight Maintenance
-        ↓
-Municipal Electrical Division
-The result should be explainable rather than being a black-box routing decision.
+Uses the configured civic knowledge base through RAG.
 
 3. Complaint Drafting Agent
-Purpose
-Convert the citizen's natural-language description into a structured administrative complaint.
 
-Responsibilities
-Preserve the citizen's intended meaning.
+Converts natural citizen language into a structured administrative complaint while preserving the citizen's intended meaning.
 
-Produce a clear complaint description.
-
-Populate structured fields.
-
-Include relevant category and department.
-
-Prepare the complaint for filing.
-
-Avoid inventing facts that the citizen did not provide.
-
-Example
-Issue:
-Non-functional public streetlight
-
-Category:
-Public Infrastructure
-
-Department:
-Municipal Electrical Division
-
-Description:
-A public streetlight has not been functioning
-for approximately three days and requires
-maintenance.
 4. Filing Agent
-Purpose
-Submit the prepared complaint to the hackathon's mock grievance environment.
 
-Responsibilities
-Validate the complaint.
+Submits the structured complaint to the Mock Government Grievance API, receives a tracking ID, persists the complaint state, and starts SLA tracking.
 
-Submit through the Mock Government Grievance API.
+5. Autonomous Watchdog
 
-Receive a tracking ID.
+The core differentiator of AGENT X.
 
-Persist complaint state.
+It continuously evaluates:
 
-Start the configured SLA clock.
+Complaint status
 
-Create a filing audit event.
+Authority action
 
-Example:
+SLA progression
 
-Complaint Draft
-      ↓
-Validation
-      ↓
-Mock Government API
-      ↓
+Approaching deadlines
+
+SLA breaches
+
+Configured escalation conditions
+
+It can trigger configured escalation workflows and record the reason in the audit trail.
+
+🔄 Workflow
+
+Citizen Voice / Text
+        ↓
+Citizen Intake Agent
+        ↓
+Understand Issue + Extract Information
+        ↓
+Classification & Reasoning
+        ↓
+RAG Knowledge Retrieval
+        ↓
+Department + Jurisdiction + SLA
+        ↓
+Complaint Drafting Agent
+        ↓
+Mock Government Filing
+        ↓
 Tracking ID
-      ↓
-Complaint State Created
-      ↓
-SLA Started
-🛡️ 5. Autonomous Watchdog
-The Autonomous Watchdog is the core differentiator of AGENT X.
+        ↓
+Persistent Complaint State
+        ↓
+SLA Clock
+        ↓
+Autonomous Watchdog
+        ↓
+Status Monitoring
+        ↓
+SLA Approaching / SLA Breach
+        ↓
+Configured Escalation
+        ↓
+Human Authority
+        ↓
+Resolution / Update
+        ↓
+Explainable Audit Trail
 
-It is responsible for continuing the workflow after the citizen has submitted the grievance.
+svg
 
-The Watchdog observes complaint state over time and evaluates configured conditions.
+⏱️ Autonomous SLA Monitoring
 
-Responsibilities
-Monitor complaint status.
+Unlike a conventional grievance system where the citizen repeatedly checks the status, AGENT X continues monitoring after filing.
 
-Track SLA timelines.
+For the hackathon demonstration, SLA progression is time-accelerated/simulated.
 
-Detect inactivity.
-
-Detect approaching deadlines.
-
-Detect SLA breaches.
-
-Evaluate configured policies.
-
-Trigger configured escalation.
-
-Record actions in the audit trail.
-
-Provide reasons for warnings and escalation.
-
-Traditional System
-Citizen
-   ↓
-Submit
-   ↓
-Citizen checks
-   ↓
-Citizen follows up
-AGENT X
-Citizen
-   ↓
-Submit
-   ↓
-AGENT X continues working
-   ↓
-Monitor
-   ↓
-Evaluate
-   ↓
-Detect delay
-   ↓
-Warn
-   ↓
-Escalate
-   ↓
-Explain
-⏱️ SLA Monitoring
-The system maintains a configured SLA for a complaint.
-
-The hackathon prototype uses time-accelerated/simulated SLA progression so the entire lifecycle can be demonstrated within the event.
-
-Example:
-
-DAY 0
+Day 0
 Complaint Filed
 Tracking ID Generated
 SLA Started
-        ↓
-DAY 2
+     ↓
+Day 2
 No Qualifying Action
 SLA Approaching
 Warning Generated
-        ↓
-DAY 3
+     ↓
+Day 3
 SLA Breached
-        ↓
-Configured Escalation Triggered
-The exact SLA values are configuration data for the prototype rather than claims about real government service timelines.
+     ↓
+Configured Escalation
+     ↓
+Human Authority
 
 🚨 Automatic Escalation
-Escalation is configured and policy-driven.
 
-The AI does not receive unrestricted authority to take arbitrary external actions.
+Escalation is driven by configured policies and conditions, not unrestricted AI authority.
 
-A simplified policy can be represented as:
+Example:
 
-IF
-    complaint is not resolved
-AND
-    configured SLA deadline has expired
-AND
-    escalation conditions are satisfied
+Complaint unresolved
+        +
+Configured SLA expired
+        +
+Escalation policy satisfied
+        ↓
+Automatic Escalation
+        ↓
+Audit Event
+        ↓
+Human Authority
 
-THEN
-    trigger configured escalation
-    create audit event
-    record explanation
-Officer acknowledgement
-AGENT X treats:
+An important state distinction is:
 
 ACKNOWLEDGED ≠ RESOLVED
-An acknowledgement can update the complaint state and create an audit event.
 
-It does not automatically stop escalation if the configured SLA remains unsatisfied.
+An officer acknowledgement can update the complaint state and create an audit event, but it does not automatically stop escalation if the configured SLA remains unsatisfied.
 
-A configured terminal state such as RESOLVED or CLOSED, or another explicitly configured policy condition, can stop further escalation.
+A configured resolved/closed state can stop further escalation.
 
-🔍 Explainability and Audit Trail
-AGENT X is designed to explain major decisions throughout the lifecycle.
+🔍 Explainability
 
-Example: Department Selection
+AGENT X provides reasons for important decisions.
+
 Why was this department selected?
 
 The complaint was classified as a streetlight
 maintenance issue.
 
-The configured civic department mapping associates
-streetlight maintenance with the Municipal Electrical
-Division.
-Example: SLA Warning
-Why was a warning generated?
+The configured civic mapping associates the issue
+with the Municipal Electrical Division.
 
-The complaint has not reached a qualifying resolution
-state and its configured SLA deadline is approaching.
-Example: Escalation
 Why was escalation triggered?
 
-The complaint remained unresolved after the configured
-SLA deadline and the configured escalation policy
-conditions were satisfied.
-Audit Events
-Important events can include:
+The configured SLA deadline expired while the
+complaint remained unresolved.
+
+The configured escalation policy conditions
+were satisfied.
+
+The system is designed so that important autonomous actions are understandable rather than hidden.
+
+📜 Audit Trail
+
+Major lifecycle events are recorded.
 
 Complaint Created
-        ↓
+      ↓
 Information Extracted
-        ↓
+      ↓
 Complaint Classified
-        ↓
+      ↓
 Department Determined
-        ↓
+      ↓
 Complaint Drafted
-        ↓
+      ↓
 Complaint Filed
-        ↓
+      ↓
 Tracking ID Generated
-        ↓
+      ↓
 SLA Started
-        ↓
-Status Checked
-        ↓
+      ↓
+Status Monitored
+      ↓
 SLA Warning
-        ↓
+      ↓
 SLA Breached
-        ↓
+      ↓
 Escalation Triggered
-        ↓
+      ↓
 Authority Update
-        ↓
+      ↓
 Resolution / Closure
-Each major event should retain information such as:
+
+Audit records can contain:
 
 Event type
 
@@ -477,20 +333,21 @@ Timestamp
 
 Complaint ID
 
-Agent/component responsible
+Agent / system actor
 
 Reason
 
-Result
+Previous state
 
-Relevant decision metadata
+New state
 
-📚 RAG and Civic Knowledge Base
-The Classification & Reasoning Agent uses a configured civic knowledge base.
+Relevant metadata
 
-The knowledge base is intended to contain information such as:
+📚 RAG Knowledge Base
 
-Civic service rules
+The Classification & Reasoning Agent uses a configured civic knowledge base containing information such as:
+
+Civic rules
 
 Department mappings
 
@@ -504,177 +361,163 @@ Escalation policies
 
 Operational guidelines
 
-The RAG layer allows the system to retrieve relevant configured information before making routing or workflow decisions.
-
-Example
 Citizen Complaint
-       ↓
+        ↓
 Issue Classification
-       ↓
-Retrieve Relevant Civic Knowledge
-       ↓
-Department / Jurisdiction / SLA Evidence
-       ↓
+        ↓
+Knowledge Retrieval
+        ↓
+Relevant Civic Evidence
+        ↓
 Reasoned Decision
-       ↓
-Explainable Output
-For the hackathon MVP, this knowledge base may contain controlled demo data.
+        ↓
+Explainable Result
 
-🌐 Multilingual and Voice-First Interaction
-AGENT X is designed around accessible citizen interaction.
+For the hackathon MVP, controlled/demo civic data may be used.
 
-The proposed interaction supports:
+🌐 Multilingual & Voice-First Interaction
+
+Citizens should not need to understand government terminology or structured forms to report a problem.
+
+AGENT X is designed to support:
 
 Voice input
 
 Text input
 
-Local/vernacular language input
+Vernacular language input
 
-Transcription
+Speech transcription
 
 Translation where required
 
 Natural-language grievance submission
 
-The system should convert natural citizen language into structured information without requiring the citizen to understand government forms or departmental terminology.
+Example:
 
-For the 24-hour MVP, language coverage may be limited to selected languages while keeping the architecture extensible.
+"Engal theruvil moondru naatkalaaga street light velai seyyavillai."
 
-🏛️ Mock Government Integration
-The hackathon implementation uses a Mock Government Grievance API.
+The system can extract:
 
-The mock API represents the external grievance authority.
+Issue      → Streetlight not functioning
+Duration   → 3 days
+Language   → Tamil
+Location   → Citizen-provided
 
-It can provide operations conceptually similar to:
+🏛️ Mock Government API
 
-Submit Complaint
-      ↓
-Generate Tracking ID
-      ↓
-Get Complaint Status
-      ↓
-Update Complaint Status
-      ↓
-Return Authority Information
-The mock environment allows AGENT X to demonstrate:
+AGENT X uses a Mock Government Grievance API for the hackathon.
 
-Filing
+The mock system represents the external grievance authority and supports the demonstration of:
 
-Tracking IDs
+Complaint submission
 
-Status changes
+Tracking ID generation
+
+Complaint status
+
+Authority updates
 
 SLA progression
 
-No-action scenarios
-
-Warnings
-
-SLA breaches
-
-Escalation
-
 Resolution
+
+Escalation scenarios
 
 No real government system is required for the prototype.
 
 🏗️ System Architecture
-                         ┌──────────────────────┐
-                         │       CITIZEN        │
-                         │    Voice / Text      │
-                         └──────────┬───────────┘
-                                    │
-                                    ▼
-                         ┌──────────────────────┐
-                         │   CITIZEN INTAKE     │
-                         │        AGENT         │
-                         │                      │
-                         │ Speech / Text        │
-                         │ Language             │
-                         │ Extraction           │
-                         │ Missing Information  │
-                         └──────────┬───────────┘
-                                    │
-                                    ▼
-                         ┌──────────────────────┐
-                         │ CLASSIFICATION &     │
-                         │ REASONING AGENT      │
-                         │                      │
-                         │ Category             │
-                         │ Department           │
-                         │ Jurisdiction         │
-                         │ RAG                  │
-                         └──────────┬───────────┘
-                                    │
-                         ┌──────────▼───────────┐
-                         │    KNOWLEDGE BASE    │
-                         │       ChromaDB       │
-                         │                      │
-                         │ Rules / Mappings     │
-                         │ Jurisdictions        │
-                         │ Timelines            │
-                         └──────────┬───────────┘
-                                    │
-                                    ▼
-                         ┌──────────────────────┐
-                         │ COMPLAINT DRAFTING   │
-                         │        AGENT         │
-                         └──────────┬───────────┘
-                                    │
-                                    ▼
-                         ┌──────────────────────┐
-                         │     FILING AGENT     │
-                         └──────────┬───────────┘
-                                    │
-                                    ▼
-                         ┌──────────────────────┐
-                         │ MOCK GOVERNMENT API  │
-                         └──────────┬───────────┘
-                                    │
-                                    ▼
-                         ┌──────────────────────┐
-                         │  PERSISTENT STATE    │
-                         │                      │
-                         │ Complaint State      │
-                         │ SLA State            │
-                         │ Events               │
-                         └──────────┬───────────┘
-                                    │
-                                    ▼
-                  ┌─────────────────────────────────┐
-                  │      AUTONOMOUS WATCHDOG        │
-                  │                                 │
-                  │ Status Monitoring               │
-                  │ SLA Monitoring                  │
-                  │ Decision Logic                  │
-                  │ Delay Detection                 │
-                  └───────────────┬─────────────────┘
-                                  │
-                    ┌─────────────┴─────────────┐
-                    │                           │
-                    ▼                           ▼
-             SLA Approaching               SLA Breach
-                    │                           │
-                    ▼                           ▼
-                WARNING               CONFIGURED ESCALATION
-                                                │
-                                                ▼
-                                      ┌───────────────────┐
-                                      │ HUMAN AUTHORITY   │
-                                      │                   │
-                                      │ Action / Update   │
-                                      │ Resolution        │
-                                      └─────────┬─────────┘
-                                                │
-                                                ▼
-                                      ┌───────────────────┐
-                                      │ AUDIT + EXPLAIN   │
-                                      └───────────────────┘
-🗃️ Data and State Model
-The system maintains persistent state rather than treating each interaction as an isolated chat.
 
-A complaint can conceptually contain:
+                    Citizen
+                       │
+                 Voice / Text
+                       ↓
+             ┌───────────────────┐
+             │ Citizen Intake    │
+             │      Agent        │
+             └─────────┬─────────┘
+                       ↓
+             ┌───────────────────┐
+             │ Classification &  │
+             │ Reasoning Agent   │
+             └─────────┬─────────┘
+                       │
+                       ├──────────────→ ChromaDB
+                       │                RAG / Civic KB
+                       ↓
+             ┌───────────────────┐
+             │ Complaint         │
+             │ Drafting Agent    │
+             └─────────┬─────────┘
+                       ↓
+             ┌───────────────────┐
+             │ Filing Agent      │
+             └─────────┬─────────┘
+                       ↓
+             ┌───────────────────┐
+             │ Mock Government   │
+             │ Grievance API     │
+             └─────────┬─────────┘
+                       ↓
+             ┌───────────────────┐
+             │ Persistent State  │
+             │ Complaint + SLA   │
+             │ + Audit Events    │
+             └─────────┬─────────┘
+                       ↓
+             ┌───────────────────┐
+             │ Autonomous        │
+             │ Watchdog          │
+             └─────────┬─────────┘
+                       ↓
+             ┌───────────────────┐
+             │ SLA / Decision    │
+             │ Evaluation        │
+             └──────┬───────┬────┘
+                    │       │
+                 Warning   Breach
+                    │       ↓
+                    │  Configured
+                    │  Escalation
+                    │       ↓
+                    └──→ Human Authority
+                              ↓
+                     Resolution / Update
+                              ↓
+                    Explainable Audit Trail
+
+svg
+
+📊 Complaint State Model
+
+A complaint maintains persistent state throughout its lifecycle.
+
+CREATED
+   ↓
+UNDERSTOOD
+   ↓
+CLASSIFIED
+   ↓
+DRAFTED
+   ↓
+FILED
+   ↓
+MONITORING
+   ├──→ WARNING
+   │
+   ├──→ BREACHED
+   │       ↓
+   │   ESCALATED
+   │
+   └──→ RESOLVED
+           ↓
+         CLOSED
+
+The exact state machine may evolve during implementation while preserving the core grievance lifecycle.
+
+🗃️ Core Data
+
+A complaint can contain:
 
 Complaint
 ├── complaint_id
@@ -694,6 +537,7 @@ Complaint
 ├── escalation_state
 ├── created_at
 └── updated_at
+
 Audit events can contain:
 
 AuditEvent
@@ -706,56 +550,64 @@ AuditEvent
 ├── previous_state
 ├── new_state
 └── metadata
-The exact implementation schema may evolve during development while preserving the required lifecycle and persistent state.
 
-🧰 Technology Stack
-Frontend
-React
+🛠️ Getting Started
 
-Vite
+Clone
 
-Tailwind CSS
+git clone https://github.com/YOUR-USERNAME/agentx-civic-grievance.git
+cd agentx-civic-grievance
 
 Backend
-Python
 
-FastAPI
+cd backend
+python -m venv .venv
 
-AI / LLM
-Gemini API
+Activate the environment:
 
-Voice / Language
-Whisper and/or Web Speech
+Windows
 
-Translation layer where required
+.venv\Scripts\activate
 
-RAG
-ChromaDB
+Linux / macOS
 
-Vector embeddings
+source .venv/bin/activate
 
-Persistence
-SQLite and/or structured persistent state
+Install dependencies when the backend requirements are available:
 
-Scheduling
-APScheduler
+pip install -r requirements.txt
 
-External Integration
-Mock Government Grievance API
+Run the FastAPI application:
 
-Validation and Security
-Input validation
+uvicorn app.main:app --reload
 
-Input sanitization
+Frontend
 
-Environment-based secret management
+cd frontend
+npm install
+npm run dev
+
+Environment Variables
+
+Create a local .env file.
+
+Example:
+
+GEMINI_API_KEY=
+DATABASE_URL=
+
+Never commit .env or API keys.
+
+Use .env.example to document required variables.
 
 📁 Project Structure
-The repository structure will evolve as implementation proceeds.
-
-A target organization is:
 
 agentx-civic-grievance/
+│
+├── frontend/
+│   ├── src/
+│   ├── public/
+│   └── package.json
 │
 ├── backend/
 │   ├── app/
@@ -765,23 +617,11 @@ agentx-civic-grievance/
 │   │   │   ├── drafting/
 │   │   │   ├── filing/
 │   │   │   └── watchdog/
-│   │   │
 │   │   ├── api/
 │   │   ├── services/
 │   │   ├── models/
 │   │   ├── database/
-│   │   ├── core/
 │   │   └── main.py
-│   │
-│   └── tests/
-│
-├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   ├── services/
-│   │   ├── hooks/
-│   │   └── ...
 │   │
 │   └── tests/
 │
@@ -792,142 +632,42 @@ agentx-civic-grievance/
 │   ├── timelines/
 │   └── escalation/
 │
-├── docs/
-│
 ├── scripts/
-│
+├── docs/
 ├── .env.example
 ├── .gitignore
-└── README.md
-This structure is a planning target. Implementation phases may adjust individual directories without changing the overall architecture.
+├── README.md
+└── docker-compose.yml
 
-🔗 End-to-End API/Data Flow
-A typical request should follow a controlled flow:
+🎯 Hackathon Problem
 
-Frontend
-   ↓
-FastAPI
-   ↓
-Intake Service
-   ↓
-Classification / RAG
-   ↓
-Drafting Service
-   ↓
-Filing Service
-   ↓
-Mock Government API
-   ↓
-Persistent Complaint State
-   ↓
-Scheduler / Watchdog
-   ↓
-Decision / Escalation
-   ↓
-Audit Event
-   ↓
-Frontend
-The AI model provides intelligence.
+Build for Billions — Agent AI for Billions
 
-The application layer provides:
+Autonomous Civic Grievance Redressal
 
-State
+Citizens may know that they have a problem but not know:
 
-Tools
+Which department is responsible.
 
-APIs
+Which category to select.
 
-Scheduling
+Which jurisdiction applies.
 
-Decision logic
+How to structure the complaint.
 
-Monitoring
+What to do when the authority does not act.
 
-External actions
+How to escalate after a delay.
 
-Audit logging
+AGENT X addresses the complete operational lifecycle rather than functioning only as a conversational interface.
 
-This separation is important because an AI response alone does not constitute an autonomous agent workflow.
+🧪 MVP Scope
 
-🎯 Target Users
-Primary Users
-Everyday citizens
+The 24-hour hackathon MVP focuses on a functional end-to-end demonstration:
 
-Urban residents
+Voice/text intake
 
-Rural residents
-
-Peri-urban residents
-
-Vernacular-language speakers
-
-Citizens with limited digital literacy
-
-Senior citizens
-
-Users facing accessibility barriers
-
-Secondary Users
-Municipal officers
-
-Ward officers
-
-Maintenance departments
-
-Administrative authorities
-
-🌍 Expected Impact
-AGENT X is intended to reduce friction across the grievance lifecycle by:
-
-Making grievance submission more accessible.
-
-Supporting natural voice/text interaction.
-
-Helping citizens who may not know the correct department.
-
-Structuring unstructured complaints.
-
-Reducing repeated manual follow-up.
-
-Making status and SLA progression visible.
-
-Detecting delays automatically.
-
-Triggering configured escalation.
-
-Providing an auditable history of important actions.
-
-🏆 What Makes AGENT X Different?
-AGENT X is not another chatbot.
-
-The innovation is the combination of:
-
-Natural Citizen Input
-        +
-Multilingual Accessibility
-        +
-Department / Jurisdiction Reasoning
-        +
-Structured Complaint Drafting
-        +
-Mock Filing
-        +
-Persistent State
-        +
-Autonomous SLA Monitoring
-        +
-Configured Escalation
-        +
-Explainable Audit Trail
-The most important distinction is that the system is designed to continue operating after complaint submission.
-
-🧪 24-Hour Hackathon MVP
-The prototype is intentionally scoped as a functional end-to-end demonstration.
-
-MVP must demonstrate
-Voice/text grievance intake architecture
-
-Natural-language understanding
+Multilingual interaction for selected languages
 
 Information extraction
 
@@ -935,581 +675,206 @@ Department classification
 
 Jurisdiction reasoning
 
-RAG / civic knowledge retrieval
+RAG-based civic knowledge
 
 Complaint drafting
 
-Mock complaint filing
+Mock grievance filing
 
-Tracking ID generation
+Tracking ID
 
 Persistent complaint state
 
-SLA state
+Time-accelerated SLA monitoring
 
-Time-accelerated monitoring
+Autonomous Watchdog
 
-Automatic configured escalation
+Configured automatic escalation
 
 Explainability
 
 Audit trail
 
-Some capabilities may be implemented with controlled demo data so that the complete lifecycle can be reliably demonstrated within the hackathon.
-
 🎬 Demo Scenario
-The primary demonstration uses a streetlight complaint.
 
-Step 1 — Citizen Input
-Citizen submits:
+A citizen reports:
 
 "Engal theruvil moondru naatkalaaga street light velai seyyavillai."
 
-Step 2 — Intake
-Issue: Streetlight not working
-Duration: 3 days
-Language: Tamil
-Location: Citizen-provided
-Step 3 — Classification
-Category:
-Civic Infrastructure
+AGENT X demonstrates:
 
-Issue:
-Streetlight Maintenance
+1. Citizen submits voice/text
+              ↓
+2. Intake Agent understands complaint
+              ↓
+3. Issue + duration + location extracted
+              ↓
+4. Classification Agent identifies department
+              ↓
+5. RAG retrieves supporting civic information
+              ↓
+6. Drafting Agent creates structured complaint
+              ↓
+7. Filing Agent submits to Mock Government API
+              ↓
+8. Tracking ID generated
+              ↓
+9. SLA clock starts
+              ↓
+10. Watchdog monitors complaint
+              ↓
+11. SLA approaching → warning
+              ↓
+12. SLA breached → configured escalation
+              ↓
+13. Human authority receives escalation
+              ↓
+14. Audit trail explains the complete lifecycle
 
-Department:
-Municipal Electrical Division
-Step 4 — Draft
-The Drafting Agent generates a structured administrative complaint.
+🛡️ Safe-by-Design
 
-Step 5 — Filing
-The complaint is submitted to the Mock Government API.
+AGENT X operates using constrained autonomy.
 
-Tracking ID:
-AGX-XXXXXX
-Step 6 — SLA Starts
-The complaint enters persistent monitoring.
+Predefined civic rules and mappings
 
-Step 7 — Simulated Day 2
-No qualifying action detected.
+Configured SLA timelines
 
-SLA approaching.
+Configured escalation policies
 
-Warning generated.
-Step 8 — Simulated Day 3
-SLA breached.
+No unrestricted autonomous authority
 
-Complaint remains unresolved.
+Human authority remains responsible for resolution
 
-Configured escalation conditions satisfied.
-Step 9 — Escalation
-The configured escalation workflow is triggered.
+Important actions are logged
 
-Step 10 — Explainability
-The dashboard shows:
+Important decisions are explainable
 
-WHY?
+Input is validated and sanitized
 
-The configured SLA deadline expired while
-the complaint remained unresolved.
+Real government integration is not required for the prototype
 
-The configured escalation policy was therefore
-triggered.
-Step 11 — Audit Trail
-The complete sequence is displayed to demonstrate that AGENT X acted autonomously after filing.
+AGENT X does not claim that the AI itself physically resolves civic problems.
 
-🔐 Safety and Design Principles
-AGENT X follows a constrained autonomy model.
+👥 Team
 
-1. Configured Authority
-The system operates within predefined:
+Team AGENT X
 
-Rules
+Member
 
-Timelines
+Contribution
 
-Department mappings
+GOWTHAM BALU
 
-Jurisdiction mappings
+Team Lead, AI Architecture, Agent Orchestration, LLM Integration
 
-Escalation policies
+GUTTULA GOWTHAM GANDHI
 
-2. No Unrestricted Authority
-The AI should not be allowed to invent arbitrary government actions or escalation targets.
+AI/ML, RAG, Classification & Reasoning
 
-3. Human Resolution
-AGENT X does not claim to resolve physical civic problems.
+KURELLA PARDHU
 
-Human authorities remain responsible for actual resolution.
+Backend, FastAPI, Mock API, Persistent State
 
-4. Explainability
-Important decisions should have an understandable reason.
+NEDAM HARSHAVARDHAN
 
-5. Auditability
-Major lifecycle actions should be recorded.
+Frontend, UX, Voice/Text, Tracking & Audit UI
 
-6. Input Validation
-User input and external data should be validated and sanitized.
+K. LAKSHMI NARASIMHA CHARAN
 
-7. Mock External Integration
-The hackathon prototype uses a mock government API rather than real government systems.
+Watchdog, SLA Monitoring, Escalation, Testing & Integration
 
-🧪 Testing Strategy
-Testing should cover the complete lifecycle rather than only individual AI outputs.
+🗺️ Roadmap
 
-Unit Testing
-Examples:
-
-Input extraction
-
-Classification
-
-RAG retrieval
-
-Draft generation
-
-SLA calculation
-
-State transitions
-
-Escalation conditions
-
-API Testing
-Examples:
-
-Complaint creation
-
-Filing
-
-Tracking ID retrieval
-
-Status retrieval
-
-Status update
-
-Audit event creation
-
-Watchdog Testing
-Important scenarios:
-
-Complaint Filed
-        ↓
-No Action
-        ↓
-SLA Approaching
-        ↓
-Warning
-and:
-
-Complaint Filed
-        ↓
-No Resolution
-        ↓
-SLA Breach
-        ↓
-Escalation
-Also test:
-
-Complaint Filed
-        ↓
-Authority Action
-        ↓
-Resolved
-        ↓
-No Escalation
-Integration Testing
-Verify:
-
-Frontend
-   ↓
-Backend
-   ↓
-Agents
-   ↓
-Database
-   ↓
-Mock Government API
-   ↓
-Watchdog
-   ↓
-Escalation
-   ↓
-Audit
-🗺️ Development Roadmap
-Phase 1 — Foundation + Architecture
-Establish:
-
-Repository structure
-
-Backend foundation
-
-Frontend foundation
-
-Configuration
-
-Environment handling
-
-Shared contracts
-
-Base data models
+Phase 1 — Foundation & Architecture
 
 Phase 2 — Citizen Intake Agent
-Implement:
-
-Voice/text input
-
-Language handling
-
-Transcription
-
-Extraction
-
-Missing-information detection
 
 Phase 3 — RAG + Classification + Reasoning
-Implement:
-
-ChromaDB
-
-Knowledge base
-
-Retrieval
-
-Department classification
-
-Jurisdiction reasoning
-
-SLA information retrieval
 
 Phase 4 — Complaint Drafting
-Implement:
 
-Structured complaint generation
-
-Validation
-
-Draft preview
-
-Phase 5 — Mock Government Filing
-Implement:
-
-Mock government API
-
-Complaint submission
-
-Tracking ID
-
-Filing state
+Phase 5 — Mock Government Filing + Tracking
 
 Phase 6 — Persistent State + Audit Foundation
-Implement:
-
-Complaint persistence
-
-State transitions
-
-SLA state
-
-Audit events
 
 Phase 7 — Autonomous Watchdog + SLA Monitoring
-Implement:
-
-Scheduler
-
-Status monitoring
-
-Time acceleration
-
-SLA approaching detection
-
-SLA breach detection
 
 Phase 8 — Configured Automatic Escalation
-Implement:
-
-Escalation policies
-
-Escalation conditions
-
-Authority routing
-
-Escalation events
-
-Human resolution states
 
 Phase 9 — Frontend Dashboard + Explainability
-Implement:
-
-Citizen interface
-
-Complaint status
-
-Tracking view
-
-SLA visualization
-
-Escalation view
-
-Audit timeline
-
-Decision explanations
 
 Phase 10 — Full Integration + Testing + Demo Hardening
-Implement:
 
-End-to-end integration
+🌱 Future Scalability
 
-Testing
+AGENT X can be extended to support:
 
-Error handling
+More municipalities
 
-Demo data
+More departments
 
-Demo scenario
+More civic issue categories
 
-UI polish
+More languages
 
-Presentation readiness
+More jurisdiction mappings
 
-👥 Team Responsibilities
-Balu Gowtham — Team Lead
-Responsibilities:
+More escalation policies
 
-System architecture
+Additional grievance systems
 
-Agent orchestration
+The underlying workflow can also be adapted to other domains that require autonomous case follow-through:
 
-LLM integration
-
-Cross-module integration
-
-Architecture decisions
-
-Final integration
-
-Demo coordination
-
-Guttula Gowtham Gandhi — AI/ML
-Responsibilities:
-
-RAG
-
-Knowledge base
-
-Classification
-
-Reasoning
-
-Department mapping
-
-Jurisdiction reasoning
-
-AI evaluation
-
-Kurella Pardhu — Backend
-Responsibilities:
-
-FastAPI
-
-Database
-
-Persistent state
-
-Mock Government API
-
-Backend APIs
-
-Service integration
-
-Nedam Harshavardhan — Frontend
-Responsibilities:
-
-React interface
-
-Citizen experience
-
-Voice/text UI
-
-Complaint tracking
-
-SLA visualization
-
-Audit timeline
-
-Explainability UI
-
-K. Lakshmi Narasimha Charan — Watchdog / QA
-Responsibilities:
-
-Autonomous Watchdog
-
-SLA monitoring
-
-Escalation logic
-
-Scheduler
-
-Integration testing
-
-End-to-end testing
-
-Demo validation
-
-🌿 Git Workflow
-The repository uses a feature-branch workflow.
-
-main
- │
- ├── feature/orchestration
- ├── feature/backend
- ├── feature/rag-classification
- ├── feature/frontend
- └── feature/watchdog
-Rules
-main should remain the stable integration branch.
-
-Each member works primarily on their assigned feature branch.
-
-Changes should be committed in logical units.
-
-Pull Requests should be used to merge completed work.
-
-Do not force-push shared branches.
-
-Do not overwrite another member's work without coordination.
-
-Keep API contracts stable.
-
-Test before merging.
-
-Never commit API keys or secrets.
-
-Use .env locally and .env.example for required variable names.
-
-🔑 Environment Variables
-Secrets must never be committed to Git.
-
-Use:
-
-.env
-locally and provide:
-
-.env.example
-as a template.
-
-Example:
-
-GEMINI_API_KEY=
-DATABASE_URL=
-The actual environment variables may expand as implementation progresses.
-
-📈 Future Scalability
-The architecture is intended to be extensible across:
-
-Additional municipalities
-
-Additional wards
-
-Additional departments
-
-Additional civic issue categories
-
-Additional Indian languages
-
-Additional jurisdiction systems
-
-Additional escalation policies
-
-Additional external grievance systems
-
-The broader agentic workflow can also be adapted to other structured grievance domains where cases require:
-
-UNDERSTAND
+Understand
     ↓
-CLASSIFY
+Classify
     ↓
-ACT
+Act
     ↓
-MONITOR
+Monitor
     ↓
-DETECT DELAY
+Detect Delay
     ↓
-ESCALATE
+Escalate
     ↓
-EXPLAIN
-⚠️ Limitations and Demo Assumptions
-This repository represents a hackathon prototype, not a production government deployment.
+Explain
 
-For the 24-hour MVP:
+⚠️ Limitations
 
-Language support may be limited to selected languages.
+AGENT X is a hackathon prototype and not a production government deployment.
 
-Jurisdiction may use configured sample wards/landmarks rather than live GPS-based determination.
+For the MVP:
 
-The knowledge base may use controlled/demo civic rules.
+Language coverage may be limited to selected languages.
+
+Jurisdiction may use sample wards/landmarks rather than live GPS.
+
+Civic knowledge may use controlled/demo rules.
 
 Government interaction is represented through a mock API.
 
-SLA progression may be accelerated for demonstration.
+SLA timelines are accelerated for demonstration.
 
-Escalation targets are configured demo authorities.
+Escalation targets are configured for the prototype.
 
-Real-world government authentication, security, procurement, deployment, and integration are outside the hackathon scope.
-
-These limitations are implementation choices for a reliable demonstration and do not change the core concept of autonomous grievance follow-through.
-
-📊 Success Criteria
-The MVP should be considered successful when the team can demonstrate:
-
-Citizen Complaint
-      ↓
-AI Understands
-      ↓
-Issue Classified
-      ↓
-Department Identified
-      ↓
-Complaint Drafted
-      ↓
-Complaint Filed
-      ↓
-Tracking ID Generated
-      ↓
-State Persisted
-      ↓
-SLA Started
-      ↓
-Watchdog Monitors
-      ↓
-SLA Approaches
-      ↓
-Warning
-      ↓
-SLA Breach
-      ↓
-Automatic Configured Escalation
-      ↓
-Human Authority
-      ↓
-Explainable Audit Trail
-The key demonstration is that the workflow continues after the citizen submits the complaint.
+These are demo-scope implementation choices and do not change the core autonomous grievance follow-through concept.
 
 📌 Project Status
+
 🚧 Hackathon MVP — In Development
 
-Current development is being performed phase-by-phase using a shared GitHub repository.
+Built for Build for Billions — Agent AI for Billions.
 
-👨‍💻 Team AGENT X
-Member	Role
-GOWTHAM BALU	Team Lead / AI Architecture / Orchestration
-GUTTULA GOWTHAM GANDHI	AI/ML / RAG / Classification
-KURELLA PARDHU	Backend / FastAPI / Mock API
-NEDAM HARSHAVARDHAN	Frontend / UX / Tracking
-K. LAKSHMI NARASIMHA CHARAN	Watchdog / SLA / Escalation / Testing
-🏛️ Build for Billions
-AGENT X
-Autonomous Civic Grievance Redressal Agent
+📜 References
+
+Government grievance systems and public grievance workflow references used during problem analysis
+
+Civic rules, mappings, jurisdictions, and service timelines used by the configured prototype knowledge base
+
+Hackathon problem statement and submitted AGENT X proposal
+
+🤖 AGENT X
+
 Understand. Classify. Draft. File. Monitor. Decide. Escalate. Explain.
 
 The AI doesn't just answer the citizen. It continues working after the citizen leaves.
