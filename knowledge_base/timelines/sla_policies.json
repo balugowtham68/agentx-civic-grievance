@@ -1,0 +1,26 @@
+{
+  "_note": "DEMO KNOWLEDGE-BASE DATA for the fictional 'Sample Municipal Corporation'. Not real government rules. Hackathon prototype only.",
+  "items": [
+    {
+      "id": "SLA-STREETLIGHT",
+      "category": "streetlight",
+      "department_id": "DEPT-ELECTRICAL",
+      "duration_hours": 72,
+      "warning_after_hours": 48
+    },
+    {
+      "id": "SLA-GARBAGE",
+      "category": "garbage",
+      "department_id": "DEPT-SANITATION",
+      "duration_hours": 48,
+      "warning_after_hours": 24
+    },
+    {
+      "id": "SLA-DRAINAGE",
+      "category": "drainage",
+      "department_id": "DEPT-DRAINAGE",
+      "duration_hours": 72,
+      "warning_after_hours": 48
+    }
+  ]
+}

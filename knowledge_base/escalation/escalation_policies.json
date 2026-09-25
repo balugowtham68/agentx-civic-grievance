@@ -1,0 +1,37 @@
+{
+  "_note": "DEMO KNOWLEDGE-BASE DATA for the fictional 'Sample Municipal Corporation'. Not real government rules. Hackathon prototype only.",
+  "items": [
+    {
+      "id": "ESC-DEFAULT",
+      "name": "Escalate unresolved complaints after SLA breach (demo)",
+      "enabled": true,
+      "categories": [
+        "streetlight",
+        "garbage",
+        "drainage"
+      ],
+      "trigger": {
+        "source_statuses": [
+          "BREACHED"
+        ],
+        "sla_condition": "BREACHED"
+      },
+      "levels": [
+        {
+          "level": 1,
+          "target_authority_id": "AUTH-WARD-12-OFFICER",
+          "after_hours": 0
+        },
+        {
+          "level": 2,
+          "target_authority_id": "AUTH-ZONAL-COMMISSIONER",
+          "after_hours": 24
+        }
+      ],
+      "terminal_states": [
+        "RESOLVED",
+        "CLOSED"
+      ]
+    }
+  ]
+}

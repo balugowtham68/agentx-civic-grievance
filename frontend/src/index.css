@@ -1,0 +1,25 @@
+@import 'tailwindcss';
+
+/* Accessibility baseline for the target users (seniors, low digital literacy):
+   larger body text, visible focus, comfortable line height. */
+html {
+  font-size: 18px;
+}
+
+body {
+  @apply bg-slate-50 text-slate-900 antialiased;
+  line-height: 1.6;
+  font-family:
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    'Noto Sans',
+    'Noto Sans Telugu',
+    'Noto Sans Devanagari',
+    sans-serif;
+}
+
+:focus-visible {
+  outline: 3px solid #2563eb;
+  outline-offset: 2px;
+}

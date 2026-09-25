@@ -1,0 +1,29 @@
+{
+  "_note": "DEMO KNOWLEDGE-BASE DATA for the fictional 'Sample Municipal Corporation'. Not real government rules. Hackathon prototype only.",
+  "items": [
+    {
+      "id": "DEPT-ELECTRICAL",
+      "name": "Electrical Maintenance Department",
+      "description": "Street lighting and public electrical fixtures (demo).",
+      "categories": [
+        "streetlight"
+      ]
+    },
+    {
+      "id": "DEPT-SANITATION",
+      "name": "Sanitation Department",
+      "description": "Solid waste collection (demo).",
+      "categories": [
+        "garbage"
+      ]
+    },
+    {
+      "id": "DEPT-DRAINAGE",
+      "name": "Drainage & Public Works Department",
+      "description": "Storm drains and sewer blockages (demo).",
+      "categories": [
+        "drainage"
+      ]
+    }
+  ]
+}
