@@ -1,0 +1,97 @@
+{
+  "_note": "DEMO CIVIC RULE / PROTOTYPE CONFIGURATION for the fictional 'Sample Municipal Corporation'. Written for the SPANDAN AI hackathon prototype. NOT official government policy. Non-English phrases are drafts pending native-speaker review. Retrieval and decision parameters for the Classification & Reasoning Agent.",
+  "source": {
+    "id": "SRC-DEMO-CLASSIFIER-SETTINGS",
+    "name": "SPANDAN AI prototype classification settings",
+    "type": "prototype_configuration",
+    "version": "2026.09-demo.1",
+    "official": false,
+    "label": "DEMO CIVIC RULE"
+  },
+  "retrieval": {
+    "top_k": 8,
+    "min_similarity": 0.2,
+    "suggestion_similarity": 0.25,
+    "max_suggestions": 3,
+    "max_query_chars": 2000
+  },
+  "vague_location_phrases": {
+    "en": [
+      "my house",
+      "our house",
+      "my home",
+      "our home",
+      "our street",
+      "my street",
+      "this street",
+      "our area",
+      "our lane",
+      "our locality",
+      "our colony",
+      "here",
+      "near me",
+      "my place"
+    ],
+    "ta": [
+      "எங்க வீட்டு",
+      "எங்கள் வீட்டு",
+      "என் வீட்டு",
+      "எங்க தெரு",
+      "எங்கள் தெரு",
+      "இங்கே",
+      "இங்க"
+    ],
+    "te": [
+      "మా ఇంటి",
+      "మా ఇల్లు",
+      "మా వీధి",
+      "ఇక్కడ"
+    ],
+    "hi": [
+      "हमारे घर",
+      "मेरे घर",
+      "हमारी गली",
+      "मेरी गली",
+      "यहाँ",
+      "यहां"
+    ],
+    "kn": [
+      "ನಮ್ಮ ಮನೆ",
+      "ನನ್ನ ಮನೆ",
+      "ನಮ್ಮ ಬೀದಿ",
+      "ಇಲ್ಲಿ"
+    ],
+    "ml": [
+      "ഞങ്ങളുടെ വീട",
+      "എന്റെ വീട",
+      "ഞങ്ങളുടെ തെരുവ",
+      "ഇവിടെ"
+    ]
+  },
+  "questions": {
+    "locality": {
+      "en": "I understood: {issue}. Please provide the area, street, ward, or nearby landmark.",
+      "ta": "நான் புரிந்துகொண்டது: {issue}. பகுதி, தெரு, வார்டு அல்லது அருகிலுள்ள அடையாளத்தைச் சொல்லுங்கள்.",
+      "te": "నేను అర్థం చేసుకున్నది: {issue}. ప్రాంతం, వీధి, వార్డు లేదా దగ్గరలోని గుర్తును చెప్పండి.",
+      "hi": "मैंने समझा: {issue}. कृपया इलाका, गली, वार्ड या पास का कोई पहचान-स्थान बताइए।",
+      "kn": "ನಾನು ಅರ್ಥಮಾಡಿಕೊಂಡದ್ದು: {issue}. ದಯವಿಟ್ಟು ಪ್ರದೇಶ, ಬೀದಿ, ವಾರ್ಡ್ ಅಥವಾ ಹತ್ತಿರದ ಗುರುತನ್ನು ತಿಳಿಸಿ.",
+      "ml": "ഞാൻ മനസ്സിലാക്കിയത്: {issue}. ദയവായി പ്രദേശം, തെരുവ്, വാർഡ് അല്ലെങ്കിൽ അടുത്തുള്ള അടയാളം പറയുക."
+    },
+    "category": {
+      "en": "Which of these best describes the problem: {options}?",
+      "ta": "இவற்றில் எது பிரச்சினையை சரியாக விவரிக்கிறது: {options}?",
+      "te": "వీటిలో ఏది సమస్యను బాగా వివరిస్తుంది: {options}?",
+      "hi": "इनमें से कौन-सा समस्या को सबसे अच्छा बताता है: {options}?",
+      "kn": "ಇವುಗಳಲ್ಲಿ ಯಾವುದು ಸಮಸ್ಯೆಯನ್ನು ಸರಿಯಾಗಿ ವಿವರಿಸುತ್ತದೆ: {options}?",
+      "ml": "ഇവയിൽ ഏതാണ് പ്രശ്നം ഏറ്റവും നന്നായി വിവരിക്കുന്നത്: {options}?"
+    },
+    "unsupported": {
+      "en": "I could not match this to a civic category I know. What kind of problem is it? For example: {options}.",
+      "ta": "இதை எனக்குத் தெரிந்த குடிமைப் பிரிவுடன் பொருத்த முடியவில்லை. இது எந்த வகைப் பிரச்சினை? உதாரணம்: {options}.",
+      "te": "దీన్ని నాకు తెలిసిన పౌర విభాగంతో సరిపోల్చలేకపోయాను. ఇది ఏ రకమైన సమస్య? ఉదా: {options}.",
+      "hi": "मैं इसे किसी ज्ञात नागरिक श्रेणी से नहीं मिला सका। यह किस तरह की समस्या है? उदाहरण: {options}.",
+      "kn": "ಇದನ್ನು ನನಗೆ ತಿಳಿದ ನಾಗರಿಕ ವರ್ಗಕ್ಕೆ ಹೊಂದಿಸಲಾಗಲಿಲ್ಲ. ಇದು ಯಾವ ರೀತಿಯ ಸಮಸ್ಯೆ? ಉದಾ: {options}.",
+      "ml": "ഇത് എനിക്കറിയാവുന്ന ഒരു പൗര വിഭാഗവുമായി പൊരുത്തപ്പെടുത്താനായില്ല. ഇത് ഏത് തരം പ്രശ്നമാണ്? ഉദാ: {options}."
+    }
+  }
+}

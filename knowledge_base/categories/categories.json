@@ -1,0 +1,665 @@
+{
+  "_note": "DEMO CIVIC RULE / PROTOTYPE CONFIGURATION for the fictional 'Sample Municipal Corporation'. Written for the SPANDAN AI hackathon prototype. NOT official government policy. Non-English phrases are drafts pending native-speaker review.",
+  "source": {
+    "id": "SRC-DEMO-CATEGORIES",
+    "name": "SPANDAN AI prototype civic category configuration",
+    "type": "prototype_configuration",
+    "version": "2026.09-demo.1",
+    "official": false,
+    "label": "DEMO CIVIC RULE"
+  },
+  "items": [
+    {
+      "id": "CAT-STREETLIGHT",
+      "category": "streetlight",
+      "display_name": "Streetlight Maintenance",
+      "display_names": {
+        "ta": "தெரு விளக்கு பராமரிப்பு",
+        "te": "వీధి దీపాల నిర్వహణ",
+        "hi": "स्ट्रीट लाइट रखरखाव",
+        "kn": "ಬೀದಿ ದೀಪ ನಿರ್ವಹಣೆ",
+        "ml": "തെരുവുവിളക്ക് പരിപാലനം"
+      },
+      "description": "Street lights and lamp posts that do not switch on, flicker, stay on in daytime, or have a broken fitting or pole.",
+      "issue_patterns": {
+        "en": [
+          "street light",
+          "streetlight",
+          "street lamp",
+          "lamp post",
+          "light pole",
+          "streetlamp"
+        ],
+        "ta": [
+          "தெரு விளக்கு",
+          "தெருவிளக்கு",
+          "விளக்கு கம்பம்",
+          "ஸ்ட்ரீட் லைட்",
+          "theru vilakku",
+          "street light"
+        ],
+        "te": [
+          "వీధి దీపం",
+          "వీధి దీపాలు",
+          "వీధిదీపం",
+          "స్ట్రీట్ లైట్",
+          "veedhi deepam"
+        ],
+        "hi": [
+          "स्ट्रीट लाइट",
+          "स्ट्रीट लाईट",
+          "खंभे की लाइट",
+          "सड़क की बत्ती",
+          "street light"
+        ],
+        "kn": [
+          "ಬೀದಿ ದೀಪ",
+          "ಬೀದಿದೀಪ",
+          "ಸ್ಟ್ರೀಟ್ ಲೈಟ್",
+          "beedi deepa"
+        ],
+        "ml": [
+          "തെരുവ് വിളക്ക",
+          "തെരുവുവിളക്ക",
+          "സ്ട്രീറ്റ് ലൈറ്റ",
+          "theruvu vilakku"
+        ]
+      },
+      "aliases": [
+        "streetlight not working",
+        "lights out on the street",
+        "dark street",
+        "lamp not glowing",
+        "flickering street light"
+      ],
+      "department_id": "DEPT-ELECTRICAL",
+      "optional_fields": [
+        "duration",
+        "landmark",
+        "pole_identifier"
+      ],
+      "service_guideline": "Report the nearest landmark or house number and the pole number if visible, so the pole can be found.",
+      "service_timeline_id": "SLA-STREETLIGHT",
+      "guideline_doc_ids": [
+        "KB-RULE-STREETLIGHT-01"
+      ],
+      "suppresses": [
+        "broken_infrastructure"
+      ],
+      "jurisdiction_type": "ward",
+      "jurisdiction_required": true,
+      "required_fields": [
+        "issue",
+        "location"
+      ],
+      "location_precision": "specific",
+      "active": true
+    },
+    {
+      "id": "CAT-GARBAGE",
+      "category": "garbage",
+      "display_name": "Garbage Collection",
+      "display_names": {
+        "ta": "குப்பை சேகரிப்பு",
+        "te": "చెత్త సేకరణ",
+        "hi": "कचरा संग्रह",
+        "kn": "ಕಸ ಸಂಗ್ರಹಣೆ",
+        "ml": "മാലിന്യ ശേഖരണം"
+      },
+      "description": "Household or street garbage that has not been collected, overflowing garbage bins, or garbage dumped in public places.",
+      "issue_patterns": {
+        "en": [
+          "garbage",
+          "trash",
+          "rubbish",
+          "waste collection",
+          "waste not collected",
+          "dustbin",
+          "garbage bin",
+          "litter"
+        ],
+        "ta": [
+          "குப்பை",
+          "kuppai"
+        ],
+        "te": [
+          "చెత్త",
+          "chetta"
+        ],
+        "hi": [
+          "कचरा",
+          "कूड़ा",
+          "कूडा",
+          "kachra",
+          "kooda"
+        ],
+        "kn": [
+          "ಕಸ",
+          "kasa"
+        ],
+        "ml": [
+          "മാലിന്യ",
+          "ചവറ്",
+          "maalinyam"
+        ]
+      },
+      "aliases": [
+        "garbage not collected",
+        "overflowing bin",
+        "waste dumped on the road",
+        "missed garbage pickup"
+      ],
+      "department_id": "DEPT-SANITATION",
+      "optional_fields": [
+        "duration",
+        "frequency",
+        "waste_type"
+      ],
+      "service_guideline": "Mention the street or locality and how many days collection has been missed.",
+      "service_timeline_id": "SLA-GARBAGE",
+      "guideline_doc_ids": [
+        "KB-RULE-GARBAGE-01"
+      ],
+      "suppresses": [
+        "sanitation"
+      ],
+      "jurisdiction_type": "ward",
+      "jurisdiction_required": true,
+      "required_fields": [
+        "issue",
+        "location"
+      ],
+      "location_precision": "specific",
+      "active": true
+    },
+    {
+      "id": "CAT-WATER-LEAKAGE",
+      "category": "water_leakage",
+      "display_name": "Water Leakage",
+      "display_names": {
+        "ta": "தண்ணீர் கசிவு",
+        "te": "నీటి లీకేజీ",
+        "hi": "पानी का रिसाव",
+        "kn": "ನೀರಿನ ಸೋರಿಕೆ",
+        "ml": "ജലച്ചോർച്ച"
+      },
+      "description": "Water leaking from a public pipeline, a burst or broken water pipe, or treated water flowing onto the road.",
+      "issue_patterns": {
+        "en": [
+          "leak",
+          "leaking",
+          "leakage",
+          "pipe burst",
+          "burst pipe",
+          "broken pipe",
+          "pipeline burst",
+          "water leak"
+        ],
+        "ta": [
+          "கசிவு",
+          "கசிகிற",
+          "குழாய் உடைந்",
+          "பைப் உடைந்",
+          "kasivu"
+        ],
+        "te": [
+          "లీక్",
+          "లీకేజీ",
+          "పైపు పగిలి",
+          "పైప్ పగిలి"
+        ],
+        "hi": [
+          "लीक",
+          "रिसाव",
+          "पाइप फट",
+          "पाइपलाइन फट",
+          "paani leak"
+        ],
+        "kn": [
+          "ಸೋರಿಕೆ",
+          "ಸೋರುತ್ತಿದೆ",
+          "ಪೈಪ್ ಒಡೆದ",
+          "ಲೀಕ್"
+        ],
+        "ml": [
+          "ചോർച്ച",
+          "ചോരുന്നു",
+          "പൈപ്പ് പൊട്ടി",
+          "ലീക്ക"
+        ]
+      },
+      "aliases": [
+        "water pipe leaking",
+        "burst water main",
+        "water wasted from pipeline"
+      ],
+      "department_id": "DEPT-WATER",
+      "optional_fields": [
+        "duration",
+        "severity",
+        "visible_flow"
+      ],
+      "service_guideline": "Say where the water is coming out and whether it is flowing continuously.",
+      "service_timeline_id": "SLA-WATER-LEAKAGE",
+      "guideline_doc_ids": [
+        "KB-RULE-WATER-01"
+      ],
+      "suppresses": [],
+      "jurisdiction_type": "ward",
+      "jurisdiction_required": true,
+      "required_fields": [
+        "issue",
+        "location"
+      ],
+      "location_precision": "specific",
+      "active": true
+    },
+    {
+      "id": "CAT-WATER-SUPPLY",
+      "category": "water_supply",
+      "display_name": "Water Supply Interruption",
+      "display_names": {
+        "ta": "குடிநீர் விநியோகத் தடை",
+        "te": "నీటి సరఫరా అంతరాయం",
+        "hi": "जल आपूर्ति बाधा",
+        "kn": "ನೀರು ಪೂರೈಕೆ ಅಡಚಣೆ",
+        "ml": "ജലവിതരണ തടസ്സം"
+      },
+      "description": "No piped water supply, very low pressure, or supply stopped for an area.",
+      "issue_patterns": {
+        "en": [
+          "no water",
+          "no water supply",
+          "water supply stopped",
+          "water supply interrupted",
+          "water supply problem",
+          "water not coming",
+          "water is not coming",
+          "dry tap",
+          "taps are dry",
+          "low water pressure",
+          "water cut"
+        ],
+        "ta": [
+          "தண்ணீர் வரவில்லை",
+          "தண்ணி வரல",
+          "தண்ணி வரவில்லை",
+          "குடிநீர் வரவில்லை",
+          "thanni varala"
+        ],
+        "te": [
+          "నీళ్లు రావడం లేదు",
+          "నీరు రావడం లేదు",
+          "నీటి సరఫరా లేదు",
+          "నీళ్ళు రావడం లేదు"
+        ],
+        "hi": [
+          "पानी नहीं आ",
+          "पानी की सप्लाई बंद",
+          "जल आपूर्ति बंद",
+          "पानी नहीं है",
+          "paani nahi aa"
+        ],
+        "kn": [
+          "ನೀರು ಬರುತ್ತಿಲ್ಲ",
+          "ನೀರು ಬರ್ತಿಲ್ಲ",
+          "ನೀರಿನ ಸರಬರಾಜು ಇಲ್ಲ",
+          "ನೀರು ಬಂದಿಲ್ಲ"
+        ],
+        "ml": [
+          "വെള്ളം വരുന്നില്ല",
+          "കുടിവെള്ളം ഇല്ല",
+          "വെള്ളം കിട്ടുന്നില്ല"
+        ]
+      },
+      "aliases": [
+        "no drinking water",
+        "supply interruption",
+        "water not supplied"
+      ],
+      "department_id": "DEPT-WATER",
+      "optional_fields": [
+        "duration",
+        "affected_area"
+      ],
+      "service_guideline": "Say which area is affected and since when there has been no water.",
+      "service_timeline_id": "SLA-WATER-SUPPLY",
+      "guideline_doc_ids": [
+        "KB-RULE-WATER-01"
+      ],
+      "suppresses": [],
+      "jurisdiction_type": "ward",
+      "jurisdiction_required": true,
+      "required_fields": [
+        "issue",
+        "location"
+      ],
+      "location_precision": "specific",
+      "active": true
+    },
+    {
+      "id": "CAT-DRAINAGE",
+      "category": "drainage",
+      "display_name": "Drainage and Sewerage",
+      "display_names": {
+        "ta": "வடிகால் மற்றும் கழிவுநீர்",
+        "te": "డ్రైనేజీ మరియు మురుగు",
+        "hi": "नाली और सीवर",
+        "kn": "ಚರಂಡಿ ಮತ್ತು ಒಳಚರಂಡಿ",
+        "ml": "ഓടയും മലിനജലവും"
+      },
+      "description": "Blocked or overflowing drains, open or overflowing sewers and manholes, and stagnant sewage.",
+      "issue_patterns": {
+        "en": [
+          "drain",
+          "drainage",
+          "sewer",
+          "sewage",
+          "manhole",
+          "gutter",
+          "nullah"
+        ],
+        "ta": [
+          "சாக்கடை",
+          "கழிவுநீர்",
+          "வடிகால்",
+          "saakkadai"
+        ],
+        "te": [
+          "డ్రైనేజీ",
+          "మురుగు",
+          "మురికి కాలువ",
+          "murugu"
+        ],
+        "hi": [
+          "नाली",
+          "नाला",
+          "सीवर",
+          "गटर",
+          "naali"
+        ],
+        "kn": [
+          "ಚರಂಡಿ",
+          "ಒಳಚರಂಡಿ",
+          "ಡ್ರೈನೇಜ್",
+          "charandi"
+        ],
+        "ml": [
+          "അഴുക്കുചാൽ",
+          "ഡ്രെയിനേജ",
+          "ഓടയിൽ",
+          "ഓട നിറഞ്ഞ"
+        ]
+      },
+      "aliases": [
+        "blocked drain",
+        "overflowing sewer",
+        "open manhole",
+        "sewage on the road"
+      ],
+      "department_id": "DEPT-DRAINAGE",
+      "optional_fields": [
+        "duration",
+        "severity"
+      ],
+      "service_guideline": "Say where the drain or manhole is and whether sewage is overflowing onto the road.",
+      "service_timeline_id": "SLA-DRAINAGE",
+      "guideline_doc_ids": [
+        "KB-RULE-DRAINAGE-01"
+      ],
+      "suppresses": [
+        "sanitation"
+      ],
+      "jurisdiction_type": "ward",
+      "jurisdiction_required": true,
+      "required_fields": [
+        "issue",
+        "location"
+      ],
+      "location_precision": "specific",
+      "active": true
+    },
+    {
+      "id": "CAT-ROAD-DAMAGE",
+      "category": "road_damage",
+      "display_name": "Pothole and Road Damage",
+      "display_names": {
+        "ta": "சாலை குழி மற்றும் சேதம்",
+        "te": "రోడ్డు గుంతలు మరియు నష్టం",
+        "hi": "गड्ढे और सड़क क्षति",
+        "kn": "ರಸ್ತೆ ಗುಂಡಿ ಮತ್ತು ಹಾನಿ",
+        "ml": "റോഡിലെ കുഴിയും കേടും"
+      },
+      "description": "Potholes, cracked, broken or caved-in road surfaces.",
+      "issue_patterns": {
+        "en": [
+          "pothole",
+          "potholes",
+          "road damage",
+          "damaged road",
+          "road is damaged",
+          "broken road",
+          "road is broken",
+          "road caved",
+          "crater"
+        ],
+        "ta": [
+          "குழி",
+          "பள்ளம்",
+          "சாலை சேதம்",
+          "kuzhi"
+        ],
+        "te": [
+          "గుంత",
+          "గుంతలు",
+          "రోడ్డు దెబ్బతిన్న",
+          "gunta"
+        ],
+        "hi": [
+          "गड्ढा",
+          "गड्ढे",
+          "सड़क टूटी",
+          "gaddha"
+        ],
+        "kn": [
+          "ಗುಂಡಿ",
+          "ರಸ್ತೆ ಹಾಳಾಗಿದೆ",
+          "gundi"
+        ],
+        "ml": [
+          "കുഴി",
+          "റോഡ് തകർന്ന",
+          "kuzhi"
+        ]
+      },
+      "aliases": [
+        "big hole in the road",
+        "road surface broken"
+      ],
+      "department_id": "DEPT-ROADS",
+      "optional_fields": [
+        "duration",
+        "severity",
+        "landmark"
+      ],
+      "service_guideline": "Mention the road name and a nearby landmark so the damaged stretch can be found.",
+      "service_timeline_id": "SLA-ROAD-DAMAGE",
+      "guideline_doc_ids": [
+        "KB-RULE-ROADS-01"
+      ],
+      "suppresses": [
+        "broken_infrastructure"
+      ],
+      "jurisdiction_type": "ward",
+      "jurisdiction_required": true,
+      "required_fields": [
+        "issue",
+        "location"
+      ],
+      "location_precision": "specific",
+      "active": true
+    },
+    {
+      "id": "CAT-SANITATION",
+      "category": "sanitation",
+      "display_name": "Sanitation",
+      "display_names": {
+        "ta": "சுகாதாரம்",
+        "te": "పారిశుధ్యం",
+        "hi": "स्वच्छता",
+        "kn": "ನೈರ್ಮಲ್ಯ",
+        "ml": "ശുചിത്വം"
+      },
+      "description": "Dirty or unusable public toilets, unclean public places, bad smell, dead animals or mosquito breeding in public areas.",
+      "issue_patterns": {
+        "en": [
+          "public toilet",
+          "toilet",
+          "urinal",
+          "dirty",
+          "unclean",
+          "filthy",
+          "bad smell",
+          "stench",
+          "dead animal",
+          "mosquito",
+          "open defecation"
+        ],
+        "ta": [
+          "கழிப்பறை",
+          "அசுத்தம்",
+          "துர்நாற்றம்",
+          "கொசு"
+        ],
+        "te": [
+          "మరుగుదొడ్డి",
+          "అపరిశుభ్ర",
+          "దుర్వాసన",
+          "దోమలు"
+        ],
+        "hi": [
+          "शौचालय",
+          "गंदगी",
+          "बदबू",
+          "मच्छर"
+        ],
+        "kn": [
+          "ಶೌಚಾಲಯ",
+          "ಅಶುಚಿ",
+          "ದುರ್ವಾಸನೆ",
+          "ಸೊಳ್ಳೆ"
+        ],
+        "ml": [
+          "ശൗചാലയ",
+          "വൃത്തിഹീന",
+          "ദുർഗന്ധ",
+          "കൊതുക"
+        ]
+      },
+      "aliases": [
+        "public place not cleaned",
+        "unhygienic toilet"
+      ],
+      "department_id": "DEPT-SANITATION",
+      "optional_fields": [
+        "duration",
+        "severity"
+      ],
+      "service_guideline": "Say which public place is affected and what the sanitation problem is.",
+      "service_timeline_id": "SLA-SANITATION",
+      "guideline_doc_ids": [
+        "KB-RULE-SANITATION-01"
+      ],
+      "suppresses": [],
+      "jurisdiction_type": "ward",
+      "jurisdiction_required": true,
+      "required_fields": [
+        "issue",
+        "location"
+      ],
+      "location_precision": "specific",
+      "active": true
+    },
+    {
+      "id": "CAT-BROKEN-INFRASTRUCTURE",
+      "category": "broken_infrastructure",
+      "display_name": "Broken Civic Infrastructure",
+      "display_names": {
+        "ta": "சேதமடைந்த பொது வசதிகள்",
+        "te": "దెబ్బతిన్న పౌర మౌలిక సదుపాయాలు",
+        "hi": "टूटी सार्वजनिक सुविधाएँ",
+        "kn": "ಹಾಳಾದ ನಾಗರಿಕ ಸೌಲಭ್ಯಗಳು",
+        "ml": "തകർന്ന പൊതു സൗകര്യങ്ങൾ"
+      },
+      "description": "Broken public benches, railings, footpaths, bus shelters, park fixtures and other public structures.",
+      "issue_patterns": {
+        "en": [
+          "bench",
+          "railing",
+          "footpath",
+          "pavement",
+          "sidewalk",
+          "bus shelter",
+          "park gate",
+          "compound wall",
+          "signboard",
+          "playground equipment"
+        ],
+        "ta": [
+          "பெஞ்ச்",
+          "நடைபாதை",
+          "தடுப்பு கம்பி",
+          "பேருந்து நிழற்குடை"
+        ],
+        "te": [
+          "బెంచీ",
+          "ఫుట్‌పాత్",
+          "రెయిలింగ్",
+          "బస్ షెల్టర్"
+        ],
+        "hi": [
+          "बेंच",
+          "फुटपाथ",
+          "रेलिंग",
+          "बस शेल्टर"
+        ],
+        "kn": [
+          "ಬೆಂಚ್",
+          "ಫುಟ್‌ಪಾತ್",
+          "ಪಾದಚಾರಿ ಮಾರ್ಗ",
+          "ಬಸ್ ತಂಗುದಾಣ"
+        ],
+        "ml": [
+          "ബെഞ്ച",
+          "നടപ്പാത",
+          "കൈവരി",
+          "ബസ് ഷെൽട്ടർ"
+        ]
+      },
+      "aliases": [
+        "damaged public property",
+        "broken park bench"
+      ],
+      "department_id": "DEPT-PUBLIC-WORKS",
+      "optional_fields": [
+        "duration",
+        "landmark",
+        "severity"
+      ],
+      "service_guideline": "Say which structure is broken and where it is.",
+      "service_timeline_id": "SLA-BROKEN-INFRASTRUCTURE",
+      "guideline_doc_ids": [
+        "KB-RULE-INFRASTRUCTURE-01"
+      ],
+      "suppresses": [],
+      "jurisdiction_type": "ward",
+      "jurisdiction_required": true,
+      "required_fields": [
+        "issue",
+        "location"
+      ],
+      "location_precision": "specific",
+      "active": true
+    }
+  ]
+}

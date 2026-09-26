@@ -1,6 +1,6 @@
 """Contracts for the Mock Government Grievance API (hackathon simulation only).
 
-AGENT X never talks to a real government portal. Every response from the mock
+SPANDAN AI never talks to a real government portal. Every response from the mock
 carries `simulation: true`.
 """
 

@@ -1,4 +1,4 @@
-"""The five cooperating AGENT X agents."""
+"""The five cooperating SPANDAN AI agents."""
 
 from app.agents.base import AgentContext, BaseAgent
 from app.agents.classification import ClassificationAgent

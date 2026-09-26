@@ -1,7 +1,10 @@
 from app.services.external.interfaces import (
+    DetectedLanguage,
     EscalationNotifier,
     KnowledgeRetriever,
+    LanguageDetector,
     MockGovernmentGrievanceAPI,
+    SpeechToTextProvider,
     Transcript,
     TranscriptionProvider,
     Translation,
@@ -9,6 +12,9 @@ from app.services.external.interfaces import (
 )
 
 __all__ = [
+    "DetectedLanguage",
+    "LanguageDetector",
+    "SpeechToTextProvider",
     "EscalationNotifier",
     "KnowledgeRetriever",
     "MockGovernmentGrievanceAPI",

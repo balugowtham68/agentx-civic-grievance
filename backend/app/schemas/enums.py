@@ -10,7 +10,7 @@ from enum import StrEnum
 
 
 class ComplaintStatus(StrEnum):
-    """Lifecycle status of a complaint inside AGENT X.
+    """Lifecycle status of a complaint inside SPANDAN AI.
 
     UNDERSTAND -> CLASSIFY -> DRAFT -> FILE -> MONITOR -> DECIDE -> ESCALATE -> EXPLAIN
     Allowed moves are defined in app/core/state_machine.py.
@@ -18,10 +18,13 @@ class ComplaintStatus(StrEnum):
 
     CREATED = "CREATED"
     NEEDS_INFO = "NEEDS_INFO"  # a required fact is missing; citizen is asked
-    UNDERSTOOD = "UNDERSTOOD"
-    CLASSIFIED = "CLASSIFIED"
-    NEEDS_REVIEW = "NEEDS_REVIEW"  # classification not grounded in the knowledge base
-    DRAFTED = "DRAFTED"
+    UNDERSTANDING = "UNDERSTANDING"  # intake complete; waiting for the citizen to confirm
+    UNDERSTOOD = "UNDERSTOOD"  # citizen confirmed what was understood (ready for Phase 3)
+    CLASSIFYING = "CLASSIFYING"  # Phase 3 classification is running
+    CLASSIFIED = "CLASSIFIED"  # category, department and jurisdiction grounded in the knowledge base
+    NEEDS_REVIEW = "NEEDS_REVIEW"  # classification not grounded in the knowledge base (UNSUPPORTED_CLASSIFICATION)
+    DRAFTING = "DRAFTING"  # Phase 4: a draft exists and awaits the citizen's review
+    DRAFTED = "DRAFTED"  # the citizen approved a draft version (ready for Phase 5 filing)
     FILED = "FILED"
     FILING_FAILED = "FILING_FAILED"
     MONITORING = "MONITORING"
@@ -88,9 +91,41 @@ class AuditEventType(StrEnum):
     COMPLAINT_TRANSLATED = "complaint.translated"
     COMPLAINT_UNDERSTOOD = "complaint.understood"
     COMPLAINT_INFO_REQUESTED = "complaint.info_requested"
+    # Citizen intake (Phase 2)
+    INTAKE_RECEIVED = "intake.received"
+    INTAKE_LANGUAGE_DETECTED = "intake.language_detected"
+    INTAKE_TRANSLATION_FAILED = "intake.translation_failed"
+    INTAKE_FACTS_EXTRACTED = "intake.facts_extracted"
+    INTAKE_FACTS_REJECTED = "intake.facts_rejected"
+    INTAKE_MISSING_INFO_DETECTED = "intake.missing_info_detected"
+    INTAKE_CLARIFICATION_ANSWERED = "intake.clarification_answered"
+    INTAKE_CORRECTED = "intake.corrected"
+    INTAKE_CONFIRMED = "intake.confirmed"
+    INTAKE_FAILED = "intake.failed"
+    # Classification & Reasoning (Phase 3)
+    CLASSIFICATION_STARTED = "classification.started"
     KNOWLEDGE_RETRIEVED = "knowledge.retrieved"
+    CLASSIFICATION_CANDIDATES_GENERATED = "classification.candidates"
+    CLASSIFICATION_RULE_MATCHED = "classification.rule_matched"
+    CLASSIFICATION_NEEDS_INFO = "classification.needs_info"
+    CLASSIFICATION_AMBIGUOUS = "classification.ambiguous"
+    CLASSIFICATION_COMPLETED = "classification.completed"
+    CLASSIFICATION_REJECTED = "classification.rejected"
+    CLASSIFICATION_ANSWERED = "classification.answered"
     COMPLAINT_CLASSIFIED = "complaint.classified"
     COMPLAINT_NEEDS_REVIEW = "complaint.needs_review"
+    # Complaint drafting (Phase 4)
+    DRAFTING_STARTED = "drafting.started"
+    DRAFTING_SOURCE_LOADED = "drafting.source_loaded"
+    DRAFTING_GENERATED = "drafting.generated"
+    DRAFTING_VALIDATION_PASSED = "drafting.validation_passed"
+    DRAFTING_VALIDATION_FAILED = "drafting.validation_failed"
+    DRAFTING_EDITED = "drafting.edited"
+    DRAFTING_VERSION_CREATED = "drafting.version_created"
+    DRAFTING_FALLBACK = "drafting.fallback"
+    DRAFTING_APPROVED = "drafting.approved"
+    DRAFTING_APPROVAL_WITHDRAWN = "drafting.approval_withdrawn"
+    DRAFTING_COMPLETED = "drafting.completed"
     COMPLAINT_DRAFTED = "complaint.drafted"
     COMPLAINT_DRAFT_CORRECTED = "complaint.draft_corrected"
     COMPLAINT_CONFIRMED = "complaint.confirmed"

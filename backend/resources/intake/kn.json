@@ -1,0 +1,395 @@
+{
+  "language": "kn",
+  "note": "Kannada (script and romanised). Draft resource; needs native-speaker review and expansion.",
+  "number_words": {
+    "ಒಂದು": 1,
+    "ಎರಡು": 2,
+    "ಮೂರು": 3,
+    "ನಾಲ್ಕು": 4,
+    "ಐದು": 5,
+    "ಆರು": 6,
+    "ಏಳು": 7,
+    "ಎಂಟು": 8,
+    "ಹತ್ತು": 10,
+    "ondu": 1,
+    "eradu": 2,
+    "mooru": 3,
+    "naalku": 4,
+    "aidu": 5,
+    "hattu": 10
+  },
+  "duration_units": [
+    {
+      "unit": "hour",
+      "patterns": [
+        "ಗಂಟೆಗಳಿಂದ",
+        "ಗಂಟೆಯಿಂದ",
+        "gantegalinda"
+      ]
+    },
+    {
+      "unit": "day",
+      "patterns": [
+        "ದಿನಗಳಿಂದ",
+        "ದಿನದಿಂದ",
+        "ದಿನಗಳ",
+        "ದಿನ",
+        "dinagalinda",
+        "dinadinda",
+        "dina"
+      ]
+    },
+    {
+      "unit": "week",
+      "patterns": [
+        "ವಾರಗಳಿಂದ",
+        "ವಾರದಿಂದ",
+        "ವಾರ",
+        "vaaragalinda",
+        "vaaradinda",
+        "vaara"
+      ]
+    },
+    {
+      "unit": "month",
+      "patterns": [
+        "ತಿಂಗಳುಗಳಿಂದ",
+        "ತಿಂಗಳಿಂದ",
+        "ತಿಂಗಳು",
+        "tingalinda",
+        "tingalu"
+      ]
+    }
+  ],
+  "issue_subjects": [
+    {
+      "value": "street light",
+      "patterns": [
+        "ಬೀದಿ ದೀಪ",
+        "ಬೀದಿದೀಪ",
+        "ಸ್ಟ್ರೀಟ್ ಲೈಟ್",
+        "ಸ್ಟ್ರೀಟ್‌ಲೈಟ್",
+        "ದೀಪ",
+        "ಲೈಟ್",
+        "street light",
+        "streetlight",
+        "light"
+      ]
+    },
+    {
+      "value": "garbage",
+      "patterns": [
+        "ಕಸ",
+        "kasa",
+        "garbage"
+      ]
+    },
+    {
+      "value": "drain",
+      "patterns": [
+        "ಒಳಚರಂಡಿ",
+        "ಚರಂಡಿ",
+        "charandi",
+        "drainage",
+        "drain"
+      ]
+    },
+    {
+      "value": "water supply",
+      "patterns": [
+        "ಕುಡಿಯುವ ನೀರು",
+        "ನೀರು",
+        "neeru",
+        "water"
+      ]
+    },
+    {
+      "value": "road",
+      "patterns": [
+        "ಗುಂಡಿ",
+        "gundi",
+        "pothole"
+      ]
+    },
+    {
+      "value": "power supply",
+      "patterns": [
+        "ಕರೆಂಟ್",
+        "ವಿದ್ಯುತ್",
+        "current"
+      ]
+    }
+  ],
+  "problem_states": [
+    {
+      "value": "not working",
+      "patterns": [
+        "ಕೆಲಸ ಮಾಡುತ್ತಿಲ್ಲ",
+        "ಕೆಲಸ ಮಾಡ್ತಿಲ್ಲ",
+        "ಕೆಲಸ ಮಾಡುವುದಿಲ್ಲ",
+        "ಉರಿಯುತ್ತಿಲ್ಲ",
+        "ಉರಿತಿಲ್ಲ",
+        "ಹತ್ತುತ್ತಿಲ್ಲ",
+        "kelasa maaduttilla",
+        "kelsa madtilla",
+        "uriyuttilla",
+        "urithilla",
+        "work aagtilla"
+      ]
+    },
+    {
+      "value": "not collected",
+      "patterns": [
+        "ತೆಗೆದಿಲ್ಲ",
+        "ತೆಗೆಯುತ್ತಿಲ್ಲ",
+        "tegedilla",
+        "tegeyuttilla"
+      ]
+    },
+    {
+      "value": "is lying there",
+      "patterns": [
+        "ಬಿದ್ದಿದೆ",
+        "ಇದೆ",
+        "biddide",
+        "ide"
+      ]
+    },
+    {
+      "value": "blocked",
+      "patterns": [
+        "ಕಟ್ಟಿಕೊಂಡಿದೆ",
+        "ಬ್ಲಾಕ್ ಆಗಿದೆ",
+        "block aagide",
+        "kattikondide"
+      ]
+    },
+    {
+      "value": "overflowing",
+      "patterns": [
+        "ಉಕ್ಕಿ ಹರಿಯುತ್ತಿದೆ",
+        "ತುಂಬಿ ಹರಿಯುತ್ತಿದೆ",
+        "ಹರಿಯುತ್ತಿದೆ",
+        "hariyuttide"
+      ]
+    },
+    {
+      "value": "not coming",
+      "patterns": [
+        "ಬರುತ್ತಿಲ್ಲ",
+        "ಬರ್ತಿಲ್ಲ",
+        "ಬಂದಿಲ್ಲ",
+        "baruttilla",
+        "bartilla",
+        "bandilla"
+      ]
+    },
+    {
+      "value": "damaged",
+      "patterns": [
+        "ಹಾಳಾಗಿದೆ",
+        "ಮುರಿದಿದೆ",
+        "haalagide",
+        "muridide"
+      ]
+    }
+  ],
+  "place_nouns": [
+    {
+      "value": "street",
+      "patterns": [
+        "ಬೀದಿ",
+        "beedi",
+        "street"
+      ]
+    },
+    {
+      "value": "house",
+      "patterns": [
+        "ಮನೆ",
+        "mane"
+      ]
+    },
+    {
+      "value": "road",
+      "patterns": [
+        "ರಸ್ತೆ",
+        "ರೋಡ್",
+        "rasthe",
+        "road"
+      ]
+    },
+    {
+      "value": "school",
+      "patterns": [
+        "ಶಾಲೆ",
+        "ಸ್ಕೂಲ್",
+        "shaale",
+        "school"
+      ]
+    },
+    {
+      "value": "temple",
+      "patterns": [
+        "ದೇವಸ್ಥಾನ",
+        "ಗುಡಿ",
+        "devasthana",
+        "gudi",
+        "temple"
+      ]
+    },
+    {
+      "value": "market",
+      "patterns": [
+        "ಮಾರುಕಟ್ಟೆ",
+        "ಮಾರ್ಕೆಟ್",
+        "market"
+      ]
+    },
+    {
+      "value": "bus stand",
+      "patterns": [
+        "ಬಸ್ ನಿಲ್ದಾಣ",
+        "ಬಸ್ ಸ್ಟ್ಯಾಂಡ್",
+        "bus stand",
+        "bus stop"
+      ]
+    },
+    {
+      "value": "hospital",
+      "patterns": [
+        "ಆಸ್ಪತ್ರೆ",
+        "aaspatre",
+        "hospital"
+      ]
+    },
+    {
+      "value": "area",
+      "patterns": [
+        "ಪ್ರದೇಶ",
+        "ಏರಿಯಾ",
+        "area"
+      ]
+    },
+    {
+      "value": "colony",
+      "patterns": [
+        "ಬಡಾವಣೆ",
+        "ಕಾಲೋನಿ",
+        "badavane",
+        "colony"
+      ]
+    },
+    {
+      "value": "village",
+      "patterns": [
+        "ಗ್ರಾಮ",
+        "ಊರು",
+        "grama",
+        "ooru"
+      ]
+    },
+    {
+      "value": "nagar",
+      "patterns": [
+        "ನಗರ",
+        "nagar"
+      ]
+    }
+  ],
+  "generic_places": [
+    "street",
+    "house",
+    "road",
+    "area",
+    "colony",
+    "village"
+  ],
+  "possessives": [
+    {
+      "value": "our",
+      "patterns": [
+        "ನಮ್ಮ",
+        "namma"
+      ]
+    },
+    {
+      "value": "my",
+      "patterns": [
+        "ನನ್ನ",
+        "nanna"
+      ]
+    }
+  ],
+  "proximity": [
+    {
+      "value": "near",
+      "patterns": [
+        "ಹತ್ತಿರ",
+        "ಬಳಿ",
+        "ಪಕ್ಕ",
+        "hattira",
+        "bali",
+        "pakka"
+      ]
+    },
+    {
+      "value": "in front of",
+      "patterns": [
+        "ಎದುರು",
+        "ಮುಂದೆ",
+        "eduru",
+        "munde"
+      ]
+    },
+    {
+      "value": "behind",
+      "patterns": [
+        "ಹಿಂದೆ",
+        "hinde"
+      ]
+    }
+  ],
+  "identifier_markers": [
+    "ಸಂಖ್ಯೆ",
+    "ನಂಬರ್",
+    "number",
+    "no"
+  ],
+  "latin_markers": [
+    "namma",
+    "illa",
+    "ide",
+    "dina",
+    "dinagalinda",
+    "hattira",
+    "maaduttilla",
+    "madtilla",
+    "beedi",
+    "kasa",
+    "neeru",
+    "baruttilla",
+    "nanna",
+    "aagide",
+    "mooru",
+    "rasthe",
+    "mane"
+  ],
+  "correction_phrases": [
+    "ಇಲ್ಲ",
+    "ಅಲ್ಲ",
+    "illa",
+    "alla"
+  ],
+  "confirmation_phrases": [
+    "ಹೌದು",
+    "ಸರಿ",
+    "houdu",
+    "sari"
+  ],
+  "questions": {
+    "issue": "ನೀವು ದೂರು ನೀಡಲು ಬಯಸುವ ಸಮಸ್ಯೆ ಏನು?",
+    "location": "ಈ ಸಮಸ್ಯೆ ಎಲ್ಲಿದೆ? ಬೀದಿ, ಪ್ರದೇಶ ಅಥವಾ ಹತ್ತಿರದ ಗುರುತನ್ನು ತಿಳಿಸಿ.",
+    "duration": "ಈ ಸಮಸ್ಯೆ ಎಷ್ಟು ಸಮಯದಿಂದ ಇದೆ?"
+  }
+}

@@ -1,9 +1,17 @@
 {
-  "_note": "DEMO KNOWLEDGE-BASE DATA for the fictional 'Sample Municipal Corporation'. Not real government rules. Hackathon prototype only.",
+  "_note": "DEMO KNOWLEDGE-BASE DATA / PROTOTYPE CONFIGURATION for the fictional 'Sample Municipal Corporation'. Not real government rules. Hackathon prototype only.",
+  "source": {
+    "id": "SRC-DEMO-DEPARTMENTS",
+    "name": "SPANDAN AI prototype department configuration",
+    "type": "prototype_configuration",
+    "version": "2026.09-demo.1",
+    "official": false,
+    "label": "DEMO CIVIC RULE"
+  },
   "items": [
     {
       "id": "DEPT-ELECTRICAL",
-      "name": "Electrical Maintenance Department",
+      "name": "Electrical Maintenance Department (demo)",
       "description": "Street lighting and public electrical fixtures (demo).",
       "categories": [
         "streetlight"
@@ -11,18 +19,44 @@
     },
     {
       "id": "DEPT-SANITATION",
-      "name": "Sanitation Department",
-      "description": "Solid waste collection (demo).",
+      "name": "Sanitation Department (demo)",
+      "description": "Solid waste collection and public sanitation (demo).",
       "categories": [
-        "garbage"
+        "garbage",
+        "sanitation"
       ]
     },
     {
       "id": "DEPT-DRAINAGE",
-      "name": "Drainage & Public Works Department",
-      "description": "Storm drains and sewer blockages (demo).",
+      "name": "Drainage & Public Works Department (demo)",
+      "description": "Storm drains, sewers and manholes (demo).",
       "categories": [
         "drainage"
+      ]
+    },
+    {
+      "id": "DEPT-WATER",
+      "name": "Water Supply Department (demo)",
+      "description": "Piped water supply and water pipelines (demo).",
+      "categories": [
+        "water_leakage",
+        "water_supply"
+      ]
+    },
+    {
+      "id": "DEPT-ROADS",
+      "name": "Roads Maintenance Department (demo)",
+      "description": "Road surfaces and potholes (demo).",
+      "categories": [
+        "road_damage"
+      ]
+    },
+    {
+      "id": "DEPT-PUBLIC-WORKS",
+      "name": "Civic Infrastructure Maintenance Department (demo)",
+      "description": "Benches, railings, footpaths, bus shelters and other public structures (demo).",
+      "categories": [
+        "broken_infrastructure"
       ]
     }
   ]

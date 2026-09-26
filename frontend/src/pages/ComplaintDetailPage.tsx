@@ -3,7 +3,7 @@ import { ErrorState, LoadingState } from '../components/AsyncStates'
 import { PageHeader } from '../components/Layout'
 import { StatusBadge } from '../components/StatusBadge'
 import { useApi } from '../hooks/useApi'
-import { agentXApi } from '../services/agentxApi'
+import { spandanApi } from '../services/spandanApi'
 
 /** Complaint detail + audit trail. Tracking, SLA and explanations are added in Phase 9. */
 export function ComplaintDetailPage() {
@@ -11,8 +11,8 @@ export function ComplaintDetailPage() {
   const detail = useApi(
     async (signal) => {
       const [complaint, audit] = await Promise.all([
-        agentXApi.getComplaint(id, signal),
-        agentXApi.getComplaintAudit(id, signal),
+        spandanApi.getComplaint(id, signal),
+        spandanApi.getComplaintAudit(id, signal),
       ])
       return { complaint, audit }
     },

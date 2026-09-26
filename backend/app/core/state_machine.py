@@ -13,14 +13,26 @@ from app.schemas.enums import ComplaintStatus as S
 # Authority can close a complaint at any point after it is filed.
 _POST_FILING_EXITS = {S.RESOLVED, S.CLOSED}
 
+# Phase 2 (intake): CREATED -> NEEDS_INFO <-> UNDERSTANDING -> UNDERSTOOD (citizen confirms).
+# A correction after confirmation reopens the intake (UNDERSTOOD -> UNDERSTANDING/NEEDS_INFO).
+# CREATED/NEEDS_INFO -> UNDERSTOOD stay allowed for the generic Phase 1 contract, but the
+# intake service only reaches UNDERSTOOD through citizen confirmation.
+# Phase 3 (classification): UNDERSTOOD -> CLASSIFYING -> CLASSIFIED | NEEDS_INFO | NEEDS_REVIEW.
+# After the citizen answers a Phase 3 question: NEEDS_INFO -> CLASSIFYING -> ... again.
+# There is no direct edge into CLASSIFIED: classification must run (CLASSIFYING) first.
 ALLOWED_TRANSITIONS: dict[S, frozenset[S]] = {
-    S.CREATED: frozenset({S.UNDERSTOOD, S.NEEDS_INFO}),
-    S.NEEDS_INFO: frozenset({S.UNDERSTOOD}),
-    S.UNDERSTOOD: frozenset({S.CLASSIFIED, S.NEEDS_INFO}),
-    S.CLASSIFIED: frozenset({S.DRAFTED, S.NEEDS_INFO, S.NEEDS_REVIEW}),
-    S.NEEDS_REVIEW: frozenset({S.CLASSIFIED, S.CLOSED}),
+    S.CREATED: frozenset({S.UNDERSTANDING, S.UNDERSTOOD, S.NEEDS_INFO}),
+    S.NEEDS_INFO: frozenset({S.UNDERSTANDING, S.UNDERSTOOD, S.CLASSIFYING}),
+    S.UNDERSTANDING: frozenset({S.UNDERSTOOD, S.NEEDS_INFO}),
+    S.UNDERSTOOD: frozenset({S.CLASSIFYING, S.NEEDS_INFO, S.UNDERSTANDING}),
+    S.CLASSIFYING: frozenset({S.CLASSIFIED, S.NEEDS_INFO, S.NEEDS_REVIEW}),
+    S.CLASSIFIED: frozenset({S.DRAFTING, S.NEEDS_INFO, S.NEEDS_REVIEW}),
+    # Phase 4: DRAFTING = draft generated, awaiting citizen review; DRAFTED = citizen approved.
+    # Editing an approved draft reopens the review (DRAFTED -> DRAFTING).
+    S.DRAFTING: frozenset({S.DRAFTED}),
+    S.NEEDS_REVIEW: frozenset({S.CLASSIFYING, S.CLOSED}),
     # Citizen correction sends the complaint back through intake.
-    S.DRAFTED: frozenset({S.FILED, S.FILING_FAILED, S.UNDERSTOOD}),
+    S.DRAFTED: frozenset({S.DRAFTING, S.FILED, S.FILING_FAILED, S.UNDERSTOOD}),
     S.FILING_FAILED: frozenset({S.FILED}),
     S.FILED: frozenset({S.MONITORING}),
     S.MONITORING: frozenset({S.WARNING} | _POST_FILING_EXITS),

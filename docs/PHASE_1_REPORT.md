@@ -54,6 +54,9 @@ creation, knowledge-base validation (fails fast on broken references). CORS limi
 JSON. One error format for all failures; unexpected errors return a generic 500 with no
 trace. Pydantic validation and text sanitisation on input. Config via environment;
 `APP_ENV=production` refuses to start without `GEMINI_API_KEY` and `MOCK_GOV_API_KEY`.
+*(Superseded in the Phase 1–4 consolidation: the system is offline-first, so production no
+longer requires these keys; it now rejects unsafe settings instead — see
+`PHASE_1_4_CONSOLIDATION_REPORT.md`.)*
 
 ## 6. Frontend
 

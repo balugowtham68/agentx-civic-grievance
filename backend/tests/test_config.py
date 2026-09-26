@@ -34,17 +34,35 @@ def test_blank_secret_counts_as_missing(monkeypatch: pytest.MonkeyPatch) -> None
     assert Settings(_env_file=None).gemini_api_key is None
 
 
-def test_production_fails_clearly_when_secrets_missing() -> None:
-    with pytest.raises(ValidationError, match="GEMINI_API_KEY"):
-        Settings(_env_file=None, app_env=AppEnvironment.PRODUCTION)
+def test_production_starts_offline_without_optional_or_future_secrets() -> None:
+    """Offline-first: Gemini is optional and the mock government API is Phase 5 (not implemented)."""
+    settings = Settings(_env_file=None, app_env=AppEnvironment.PRODUCTION)
+    assert settings.gemini_api_key is None and settings.mock_gov_api_key is None
 
 
-def test_production_accepts_complete_secrets() -> None:
+@pytest.mark.parametrize(
+    ("override", "message"),
+    [
+        ({"frontend_origin": "*"}, "FRONTEND_ORIGIN"),
+        ({"log_level": "debug"}, "LOG_LEVEL=DEBUG"),
+    ],
+)
+def test_production_fails_clearly_on_unsafe_settings(override: dict[str, str], message: str) -> None:
+    with pytest.raises(ValidationError, match=message):
+        Settings(_env_file=None, app_env=AppEnvironment.PRODUCTION, **override)
+
+
+def test_feature_secret_is_required_by_the_feature_that_uses_it() -> None:
+    with pytest.raises(ValidationError, match="OPENAI_API_KEY"):
+        Settings(_env_file=None, speech_to_text_provider="whisper")
+
+
+def test_production_accepts_complete_settings() -> None:
     settings = Settings(
         _env_file=None,
         app_env=AppEnvironment.PRODUCTION,
         gemini_api_key="k1",
-        mock_gov_api_key="k2",
+        frontend_origin="https://spandan.example",
     )
     assert settings.app_env is AppEnvironment.PRODUCTION
 

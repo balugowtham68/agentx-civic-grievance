@@ -1,0 +1,62 @@
+{
+  "language": "en",
+  "note": "English intake resources. Location and duration also use the pattern rules in engine.py (prepositions such as 'near', 'for three days').",
+  "location_style": "preposition",
+  "number_words": {"a": 1, "an": 1, "one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "six": 6, "seven": 7, "eight": 8, "nine": 9, "ten": 10, "eleven": 11, "twelve": 12},
+  "duration_units": [
+    {"unit": "hour", "patterns": ["hour", "hours"]},
+    {"unit": "day", "patterns": ["day", "days", "night", "nights"]},
+    {"unit": "week", "patterns": ["week", "weeks"]},
+    {"unit": "month", "patterns": ["month", "months"]},
+    {"unit": "year", "patterns": ["year", "years"]}
+  ],
+  "issue_subjects": [
+    {"value": "street light", "patterns": ["street light", "streetlight", "street lights", "streetlights", "street lamp", "lamp post", "light"]},
+    {"value": "garbage", "patterns": ["garbage", "trash", "waste", "rubbish", "dustbin"]},
+    {"value": "drain", "patterns": ["drainage", "drain", "sewage", "sewer", "gutter", "manhole"]},
+    {"value": "water supply", "patterns": ["water supply", "drinking water", "water", "tap"]},
+    {"value": "road", "patterns": ["pothole", "potholes", "road"]},
+    {"value": "power supply", "patterns": ["power supply", "electricity", "power", "current"]},
+    {"value": "stray animals", "patterns": ["stray dogs", "stray dog", "stray cattle", "stray animals"]}
+  ],
+  "problem_states": [
+    {"value": "not working", "patterns": ["has not been working", "have not been working", "not been working", "is not working", "are not working", "not working", "has not worked", "hasn't worked", "isn't working", "aren't working", "does not work", "doesn't work", "stopped working", "not functioning", "not switching on", "not on", "is off", "is dark"]},
+    {"value": "not collected", "patterns": ["has not been collected", "not been collected", "not collected", "not picked up", "not been cleared", "not cleared"]},
+    {"value": "piled up", "patterns": ["piled up", "piling up", "dumped", "lying"]},
+    {"value": "blocked", "patterns": ["blocked", "clogged", "choked"]},
+    {"value": "overflowing", "patterns": ["overflowing", "overflow", "flooding"]},
+    {"value": "leaking", "patterns": ["leaking", "leakage", "leak", "burst"]},
+    {"value": "not coming", "patterns": ["not coming", "no supply", "not available", "cut off"]},
+    {"value": "damaged", "patterns": ["broken", "damaged", "cracked", "fallen", "collapsed"]}
+  ],
+  "place_nouns": [
+    {"value": "street", "patterns": ["street"]},
+    {"value": "road", "patterns": ["road"]},
+    {"value": "lane", "patterns": ["lane"]},
+    {"value": "house", "patterns": ["house", "home"]},
+    {"value": "area", "patterns": ["area", "locality", "neighbourhood", "neighborhood"]},
+    {"value": "colony", "patterns": ["colony"]},
+    {"value": "building", "patterns": ["building", "apartment", "flat"]},
+    {"value": "village", "patterns": ["village"]}
+  ],
+  "generic_places": ["street", "road", "lane", "house", "area", "colony", "building", "village"],
+  "possessives": [
+    {"value": "our", "patterns": ["our"]},
+    {"value": "my", "patterns": ["my"]}
+  ],
+  "proximity": [
+    {"value": "near", "patterns": ["near", "near to", "close to", "beside", "next to"]},
+    {"value": "in front of", "patterns": ["in front of", "opposite"]},
+    {"value": "behind", "patterns": ["behind"]}
+  ],
+  "identifier_markers": ["pole", "house", "door", "plot", "flat", "meter", "ward", "shop"],
+  "latin_markers": ["the", "is", "are", "not", "has", "have", "been", "for", "near", "my", "our", "in", "on", "at", "of", "and", "it", "this", "there", "since", "days", "working", "broken", "please", "no", "with", "from", "was", "a"],
+  "correction_phrases": ["no", "not", "actually", "sorry", "correction", "it is", "it's", "its"],
+  "confirmation_phrases": ["yes", "correct", "right", "ok", "okay"],
+  "questions": {
+    "issue": "What is the problem you want to report?",
+    "location": "Where is the problem? Please mention a street, area or nearby landmark.",
+    "location_with_issue": "I understood: {issue}. Where is this? Please mention a street, area or nearby landmark.",
+    "duration": "How long has this problem been happening?"
+  }
+}

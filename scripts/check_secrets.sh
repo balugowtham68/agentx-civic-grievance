@@ -15,7 +15,7 @@ patterns=(
   'AIza[0-9A-Za-z_-]{35}'                               # Google / Gemini API key
   'sk-[A-Za-z0-9]{20,}'                                 # OpenAI-style key (Whisper)
   '-----BEGIN [A-Z ]*PRIVATE KEY-----'
-  '(GEMINI|MOCK_GOV)_API_KEY=[A-Za-z0-9_-]{8,}'           # a filled-in key line
+  '(GEMINI|MOCK_GOV|OPENAI)_API_KEY=[A-Za-z0-9_-]{8,}'           # a filled-in key line
 )
 
 files=$(git ls-files --cached --others --exclude-standard | grep -v -E '(^|/)(package-lock\.json)$' || true)

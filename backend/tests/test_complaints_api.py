@@ -77,14 +77,19 @@ def test_invalid_query_parameters_rejected(client: TestClient) -> None:
 
 
 def test_unknown_complaint_and_tracking_id_return_404(client: TestClient) -> None:
+    unknown = "00000000-0000-0000-0000-000000000000"
     for path in [
-        "/api/v1/complaints/does-not-exist",
-        "/api/v1/complaints/does-not-exist/audit",
+        f"/api/v1/complaints/{unknown}",
+        f"/api/v1/complaints/{unknown}/audit",
         "/api/v1/track/CIV-2026-9999",
     ]:
         response = client.get(path)
         assert response.status_code == 404, path
         assert response.json()["error"]["code"] == "not_found"
+    # Malformed ids are rejected before any lookup (consolidation: UUID validation on every route).
+    for path in ["/api/v1/complaints/does-not-exist", "/api/v1/complaints/x/audit", "/api/v1/track/../../etc/passwd"]:
+        assert client.get(path).status_code in {404, 422}, path
+    assert client.get("/api/v1/complaints/does-not-exist").json()["error"]["code"] == "validation_error"
 
 
 def test_unknown_route_uses_same_error_format(client: TestClient) -> None:

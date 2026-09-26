@@ -14,3 +14,5 @@ class HealthResponse(BaseModel):
     environment: str
     database: Literal["ok", "unavailable"]
     configuration: dict[str, object]
+    # Phase 3: civic knowledge base readiness (records, embedder, stale). No secrets.
+    knowledge_base: dict[str, object] | None = None

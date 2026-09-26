@@ -35,10 +35,11 @@ class ComplaintService:
         self.repo = ComplaintRepository(session)
         self.audit = AuditService(session, self.clock)
 
-    def create(self, request: ComplaintCreateRequest) -> Complaint:
+    def create(self, request: ComplaintCreateRequest, *, complaint_id: str | None = None) -> Complaint:
         now = self.clock.now()
         complaint = self.repo.add(
             Complaint(
+                **({"id": complaint_id} if complaint_id else {}),
                 citizen_input=request.citizen_input,
                 input_channel=request.channel,
                 language=request.language,

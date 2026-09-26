@@ -1,0 +1,424 @@
+{
+  "_note": "SPANDAN AI drafting configuration (Phase 4). Wording templates only: they contain no facts. Placeholders are filled from the fact-locked DraftFactSet ({location}, {duration}). States are the Phase 2 English issue labels (e.g. 'not working'). Department and jurisdiction are NOT configured here; they come from Phase 3. administrative_vocabulary: neutral words optional AI wording may use in addition to the template wording and the citizen's own words; any other content word in AI wording is treated as a new, unsupported fact (fail closed).",
+  "version": "drafting-templates-v1",
+  "draft_languages": [
+    "en"
+  ],
+  "limits": {
+    "subject_chars": 160,
+    "section_chars": 1500,
+    "body_chars": 6000,
+    "edit_field_chars": 1500
+  },
+  "duration_phrase": " for approximately {duration}",
+  "location_phrase": {
+    "citizen_english": "{location}",
+    "citizen_other_language": "at the location described by the citizen as “{location}”"
+  },
+  "templates": {
+    "streetlight": {
+      "subject": {
+        "default": "Complaint regarding streetlight issue",
+        "not working": "Complaint regarding non-functional streetlight",
+        "damaged": "Complaint regarding damaged streetlight"
+      },
+      "summary": {
+        "default": "A streetlight issue has been reported {location}{duration}.",
+        "not working": "A streetlight {location} has reportedly not been functioning{duration}.",
+        "damaged": "A streetlight {location} has reportedly been damaged{duration}."
+      },
+      "issue_label": {
+        "not working": "Non-functional streetlight",
+        "damaged": "Damaged streetlight",
+        "default": "Streetlight issue"
+      },
+      "requested_action": "Kindly inspect the reported streetlight and take the necessary maintenance action."
+    },
+    "garbage": {
+      "subject": {
+        "default": "Complaint regarding garbage",
+        "not collected": "Complaint regarding uncollected garbage",
+        "piled up": "Complaint regarding garbage accumulation",
+        "is lying there": "Complaint regarding garbage accumulation"
+      },
+      "summary": {
+        "default": "A garbage-related issue has been reported {location}{duration}.",
+        "not collected": "Garbage {location} has reportedly not been collected{duration}.",
+        "piled up": "Garbage has reportedly piled up {location}{duration}.",
+        "is lying there": "Garbage has reportedly been lying {location}{duration}."
+      },
+      "issue_label": {
+        "not collected": "Garbage not collected",
+        "piled up": "Garbage accumulation",
+        "is lying there": "Garbage accumulation",
+        "default": "Garbage issue"
+      },
+      "requested_action": "Kindly inspect the reported location and take the necessary sanitation action."
+    },
+    "water_leakage": {
+      "subject": {
+        "default": "Complaint regarding water leakage"
+      },
+      "summary": {
+        "default": "Water leakage has been reported {location}{duration}."
+      },
+      "issue_label": {
+        "default": "Water leakage"
+      },
+      "requested_action": "Kindly inspect the reported leakage and take the necessary maintenance action."
+    },
+    "water_supply": {
+      "subject": {
+        "default": "Complaint regarding water supply interruption"
+      },
+      "summary": {
+        "default": "An interruption of the water supply has been reported {location}{duration}."
+      },
+      "issue_label": {
+        "default": "Water supply interruption"
+      },
+      "requested_action": "Kindly inspect the reported supply interruption and take the necessary action."
+    },
+    "drainage": {
+      "subject": {
+        "default": "Complaint regarding drainage issue",
+        "blocked": "Complaint regarding blocked drain",
+        "overflowing": "Complaint regarding overflowing drain"
+      },
+      "summary": {
+        "default": "A drainage issue has been reported {location}{duration}.",
+        "blocked": "A drain {location} has reportedly been blocked{duration}.",
+        "overflowing": "A drain {location} has reportedly been overflowing{duration}."
+      },
+      "issue_label": {
+        "blocked": "Blocked drain",
+        "overflowing": "Overflowing drain",
+        "default": "Drainage issue"
+      },
+      "requested_action": "Kindly inspect the reported drain and take the necessary action."
+    },
+    "road_damage": {
+      "subject": {
+        "default": "Complaint regarding damaged road"
+      },
+      "summary": {
+        "default": "Road damage has been reported {location}{duration}."
+      },
+      "issue_label": {
+        "default": "Road damage"
+      },
+      "requested_action": "Kindly inspect the reported road damage and take the necessary action."
+    },
+    "sanitation": {
+      "subject": {
+        "default": "Complaint regarding sanitation issue"
+      },
+      "summary": {
+        "default": "A sanitation issue has been reported {location}{duration}."
+      },
+      "issue_label": {
+        "default": "Sanitation issue"
+      },
+      "requested_action": "Kindly inspect the reported location and take the necessary sanitation action."
+    },
+    "broken_infrastructure": {
+      "subject": {
+        "default": "Complaint regarding damaged public infrastructure"
+      },
+      "summary": {
+        "default": "Damage to public infrastructure has been reported {location}{duration}."
+      },
+      "issue_label": {
+        "default": "Damaged public infrastructure"
+      },
+      "requested_action": "Kindly inspect the reported structure and take the necessary repair action."
+    }
+  },
+  "forbidden_claims": {
+    "resolution": [
+      "has been resolved",
+      "been fixed",
+      "already fixed",
+      "has been repaired",
+      "been repaired",
+      "is resolved",
+      "was resolved",
+      "work has been completed",
+      "issue is closed",
+      "fixed the issue",
+      "problem is solved",
+      "was repaired",
+      "was fixed",
+      "were repaired",
+      "got fixed",
+      "got repaired",
+      "has been fixed",
+      "has been restored",
+      "was restored"
+    ],
+    "filing": [
+      "has been filed",
+      "was filed",
+      "filed with",
+      "has been submitted",
+      "was submitted",
+      "tracking id",
+      "tracking number",
+      "reference number",
+      "complaint number",
+      "complaint no"
+    ],
+    "government_action": [
+      "inspected",
+      "inspection was",
+      "officials visited",
+      "official visited",
+      "has agreed to",
+      "agreed to act",
+      "assured",
+      "will be resolved",
+      "will be fixed",
+      "will be repaired",
+      "has been assigned",
+      "acknowledged by",
+      "action has been taken",
+      "action was taken"
+    ],
+    "cause": [
+      "caused by",
+      "due to",
+      "because of",
+      "as a result of",
+      "short circuit",
+      "circuit",
+      "negligence",
+      "failure of",
+      "fault in"
+    ],
+    "severity": [
+      "serious",
+      "dangerous",
+      "hazard",
+      "urgent",
+      "emergency",
+      "life-threatening",
+      "critical",
+      "severe",
+      "risk to",
+      "accident"
+    ],
+    "legal": [
+      "section ",
+      "under the act",
+      "regulation",
+      "penalty",
+      "violation",
+      "liable",
+      "legal action",
+      "court"
+    ],
+    "evidence": [
+      "attached",
+      "photograph",
+      "photo",
+      "video",
+      "enclosed",
+      "annexure",
+      "eyewitness",
+      "witness"
+    ],
+    "official": [
+      "mr.",
+      "mrs.",
+      "ms.",
+      "shri ",
+      "smt.",
+      "commissioner",
+      "officer",
+      "engineer",
+      "inspector",
+      "councillor",
+      "mla"
+    ],
+    "date": [
+      "january",
+      "february",
+      "march",
+      "april",
+      "june",
+      "july",
+      "august",
+      "september",
+      "october",
+      "november",
+      "december",
+      "monday",
+      "tuesday",
+      "wednesday",
+      "thursday",
+      "friday",
+      "saturday",
+      "sunday",
+      "yesterday",
+      "today",
+      "tomorrow",
+      "last week",
+      "last month"
+    ],
+    "affected_people": [
+      "residents",
+      "families",
+      "people are affected",
+      "households",
+      "villagers",
+      "commuters"
+    ]
+  },
+  "administrative_vocabulary": [
+    "about",
+    "according",
+    "accumulated",
+    "accumulation",
+    "action",
+    "actions",
+    "address",
+    "also",
+    "appropriate",
+    "approximately",
+    "area",
+    "around",
+    "asked",
+    "attend",
+    "attention",
+    "authority",
+    "blockage",
+    "blocked",
+    "broken",
+    "category",
+    "citizen",
+    "citizens",
+    "collected",
+    "collection",
+    "complaint",
+    "complaints",
+    "concerned",
+    "concerning",
+    "configuration",
+    "continue",
+    "continues",
+    "continuing",
+    "damage",
+    "damaged",
+    "day",
+    "days",
+    "demo",
+    "department",
+    "described",
+    "describes",
+    "details",
+    "drain",
+    "drainage",
+    "drains",
+    "duration",
+    "examine",
+    "following",
+    "functional",
+    "functioning",
+    "further",
+    "garbage",
+    "given",
+    "hour",
+    "hours",
+    "identifier",
+    "identifiers",
+    "information",
+    "infrastructure",
+    "inspect",
+    "interrupted",
+    "interruption",
+    "into",
+    "issue",
+    "issues",
+    "jurisdiction",
+    "kindly",
+    "lamp",
+    "lamps",
+    "leak",
+    "leakage",
+    "leaking",
+    "light",
+    "lighting",
+    "lights",
+    "located",
+    "location",
+    "look",
+    "maintenance",
+    "matched",
+    "matter",
+    "mentioned",
+    "month",
+    "months",
+    "near",
+    "nearby",
+    "necessary",
+    "needed",
+    "non-functional",
+    "nonfunctional",
+    "noted",
+    "operating",
+    "operational",
+    "overflow",
+    "overflowing",
+    "period",
+    "place",
+    "please",
+    "pothole",
+    "potholes",
+    "problem",
+    "problems",
+    "prototype",
+    "provided",
+    "public",
+    "regarding",
+    "relevant",
+    "remain",
+    "remains",
+    "repair",
+    "repairs",
+    "report",
+    "reported",
+    "reportedly",
+    "reports",
+    "request",
+    "requested",
+    "requesting",
+    "requests",
+    "required",
+    "respectfully",
+    "responsible",
+    "road",
+    "roads",
+    "sanitation",
+    "since",
+    "state",
+    "stated",
+    "statement",
+    "states",
+    "street",
+    "streetlight",
+    "streetlights",
+    "structure",
+    "structures",
+    "supply",
+    "uncollected",
+    "verbatim",
+    "vicinity",
+    "ward",
+    "waste",
+    "water",
+    "week",
+    "weeks",
+    "words",
+    "working"
+  ]
+}

@@ -1,7 +1,9 @@
 """Create a couple of sample complaints in the local database for UI development.
 
 Usage (from backend/):  python ../scripts/seed_dev.py
-Only creates CREATED complaints - the Phase 1 foundation has no agent behaviour yet.
+Only creates raw CREATED complaints (no intake run) so the Complaints list has rows to show.
+For the full citizen journey (intake -> classification -> drafting) use the UI or
+scripts/demo_intake.py, scripts/demo_classification.py and scripts/demo_drafting.py.
 """
 
 from __future__ import annotations

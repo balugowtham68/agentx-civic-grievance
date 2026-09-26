@@ -49,8 +49,8 @@ def test_every_status_has_a_transition_entry() -> None:
 
 
 def test_main_lifecycle_path_is_allowed() -> None:
-    path = [
-        S.CREATED, S.UNDERSTOOD, S.CLASSIFIED, S.DRAFTED, S.FILED, S.MONITORING,
+    path = [  # Phase 3: classification runs (CLASSIFYING); Phase 4: drafts are reviewed (DRAFTING)
+        S.CREATED, S.UNDERSTOOD, S.CLASSIFYING, S.CLASSIFIED, S.DRAFTING, S.DRAFTED, S.FILED, S.MONITORING,
         S.WARNING, S.BREACHED, S.ESCALATED, S.RESOLVED, S.CLOSED,
     ]
     for current, target in zip(path, path[1:]):
@@ -180,10 +180,18 @@ def test_five_agents_have_identity_and_contracts() -> None:
 
 
 def test_unimplemented_agent_reports_its_phase_honestly() -> None:
-    agent = IntakeAgent(ai=GeminiProvider(api_key=None, model="m"))
+    # Phase 3 implemented Classification (this test used it before); Filing is still Phase 5.
+    from app.agents import FilingAgent
+    from app.schemas.agents import FilingRequest
 
-    with pytest.raises(NotImplementedYetError, match="Phase 2"):
-        asyncio.run(agent.execute(IntakeRequest(complaint_id="c1", text="hi"), AgentContext("c1")))
+    agent = FilingAgent(mock_gov=None, reference=None)  # type: ignore[arg-type]
+    with pytest.raises(NotImplementedYetError, match="Phase 5"):
+        asyncio.run(
+            agent.execute(
+                FilingRequest(complaint_id="c1", draft=_draft(), citizen_confirmed=True),
+                AgentContext("c1"),
+            )
+        )
 
 
 def test_agent_rejects_wrong_input_contract() -> None:

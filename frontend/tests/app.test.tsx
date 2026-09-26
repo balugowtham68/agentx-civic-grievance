@@ -4,7 +4,7 @@ import { MemoryRouter } from 'react-router-dom'
 import { describe, expect, it, vi } from 'vitest'
 import { AppRoutes } from '../src/App'
 
-const health = { status: 'ok', service: 'AGENT X', version: '0.1.0', environment: 'test', database: 'ok', configuration: {} }
+const health = { status: 'ok', service: 'SPANDAN AI', version: '0.1.0', environment: 'test', database: 'ok', configuration: {} }
 const complaint = {
   id: 'c1',
   tracking_id: null,

@@ -11,6 +11,7 @@ from typing import Annotated
 from fastapi import APIRouter, Query, status
 
 from app.api.deps import AuditServiceDep, ComplaintServiceDep
+from app.api.params import ComplaintId, TrackingId
 from app.core.errors import ErrorResponse
 from app.schemas.audit import AuditEventListResponse, AuditEventRead
 from app.schemas.complaint import (
@@ -57,7 +58,7 @@ def list_complaints(
 
 
 @router.get("/complaints/{complaint_id}", response_model=ComplaintRead, responses={404: _errors[404]})
-def get_complaint(complaint_id: str, service: ComplaintServiceDep) -> ComplaintRead:
+def get_complaint(complaint_id: ComplaintId, service: ComplaintServiceDep) -> ComplaintRead:
     return ComplaintRead.model_validate(service.get(complaint_id))
 
 
@@ -66,7 +67,7 @@ def get_complaint(complaint_id: str, service: ComplaintServiceDep) -> ComplaintR
     response_model=ComplaintStatusResponse,
     responses={404: _errors[404]},
 )
-def get_complaint_status(complaint_id: str, service: ComplaintServiceDep) -> ComplaintStatusResponse:
+def get_complaint_status(complaint_id: ComplaintId, service: ComplaintServiceDep) -> ComplaintStatusResponse:
     return service.status(complaint_id)
 
 
@@ -76,7 +77,7 @@ def get_complaint_status(complaint_id: str, service: ComplaintServiceDep) -> Com
     responses={404: _errors[404]},
 )
 def get_complaint_audit(
-    complaint_id: str,
+    complaint_id: ComplaintId,
     complaints: ComplaintServiceDep,
     audit: AuditServiceDep,
     limit: Annotated[int, Query(ge=1, le=500)] = 200,
@@ -90,6 +91,6 @@ def get_complaint_audit(
 @router.get(
     "/track/{tracking_id}", response_model=ComplaintStatusResponse, responses={404: _errors[404]}
 )
-def track(tracking_id: str, service: ComplaintServiceDep) -> ComplaintStatusResponse:
+def track(tracking_id: TrackingId, service: ComplaintServiceDep) -> ComplaintStatusResponse:
     """Citizen tracking by mock-government tracking ID (IDs exist from Phase 5)."""
     return service.status(service.get_by_tracking_id(tracking_id).id)

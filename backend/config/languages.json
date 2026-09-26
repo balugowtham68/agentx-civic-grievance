@@ -1,0 +1,96 @@
+{
+  "_note": "Language registry for SPANDAN AI citizen intake. Support levels describe what works OFFLINE (no network, no API key) unless stated: SUPPORTED = implemented and tested end to end; PARTIALLY_SUPPORTED = works offline for common civic complaints via the draft lexicon in backend/resources/intake/<code>.json (tested on demo sentences, limited vocabulary), or depends on the browser; FALLBACK = degrades safely (e.g. original text kept, English UI); UNAVAILABLE = not available. Add a language by adding an entry here, a resource file, and UI strings - no code change.",
+  "processing_language": "en",
+  "items": [
+    {
+      "code": "en",
+      "display_name": "English",
+      "native_name": "English",
+      "script": "Latin",
+      "speech_locale": "en-IN",
+      "enabled": true,
+      "support": {
+        "text_intake": "SUPPORTED",
+        "speech_to_text": "PARTIALLY_SUPPORTED",
+        "translation": "SUPPORTED",
+        "ui": "SUPPORTED"
+      },
+      "notes": "Offline: pattern rules + lexicon (tested). Optional Gemini only fills facts the offline engine could not find. No translation needed."
+    },
+    {
+      "code": "ta",
+      "display_name": "Tamil",
+      "native_name": "தமிழ்",
+      "script": "Tamil",
+      "speech_locale": "ta-IN",
+      "enabled": true,
+      "support": {
+        "text_intake": "PARTIALLY_SUPPORTED",
+        "speech_to_text": "PARTIALLY_SUPPORTED",
+        "translation": "FALLBACK",
+        "ui": "PARTIALLY_SUPPORTED"
+      },
+      "notes": "Offline: Tamil script and romanised Tamil via draft lexicon (tested on demo sentences). Translation to English needs the optional AI provider; otherwise the original is kept. UI strings are drafts."
+    },
+    {
+      "code": "te",
+      "display_name": "Telugu",
+      "native_name": "తెలుగు",
+      "script": "Telugu",
+      "speech_locale": "te-IN",
+      "enabled": true,
+      "support": {
+        "text_intake": "PARTIALLY_SUPPORTED",
+        "speech_to_text": "PARTIALLY_SUPPORTED",
+        "translation": "FALLBACK",
+        "ui": "PARTIALLY_SUPPORTED"
+      },
+      "notes": "Offline: Telugu script and romanised Telugu via draft lexicon (tested on demo sentences). Translation needs the optional AI provider. UI strings are drafts."
+    },
+    {
+      "code": "hi",
+      "display_name": "Hindi",
+      "native_name": "हिन्दी",
+      "script": "Devanagari",
+      "speech_locale": "hi-IN",
+      "enabled": true,
+      "support": {
+        "text_intake": "PARTIALLY_SUPPORTED",
+        "speech_to_text": "PARTIALLY_SUPPORTED",
+        "translation": "FALLBACK",
+        "ui": "PARTIALLY_SUPPORTED"
+      },
+      "notes": "Offline: Devanagari and romanised Hindi via draft lexicon (tested on demo sentences). Devanagari is detected as Hindi. Translation needs the optional AI provider. UI strings are drafts."
+    },
+    {
+      "code": "kn",
+      "display_name": "Kannada",
+      "native_name": "ಕನ್ನಡ",
+      "script": "Kannada",
+      "speech_locale": "kn-IN",
+      "enabled": true,
+      "support": {
+        "text_intake": "PARTIALLY_SUPPORTED",
+        "speech_to_text": "PARTIALLY_SUPPORTED",
+        "translation": "FALLBACK",
+        "ui": "FALLBACK"
+      },
+      "notes": "Offline: Kannada script and romanised Kannada via draft lexicon (tested on demo sentences). Translation needs the optional AI provider. UI falls back to English."
+    },
+    {
+      "code": "ml",
+      "display_name": "Malayalam",
+      "native_name": "മലയാളം",
+      "script": "Malayalam",
+      "speech_locale": "ml-IN",
+      "enabled": true,
+      "support": {
+        "text_intake": "PARTIALLY_SUPPORTED",
+        "speech_to_text": "PARTIALLY_SUPPORTED",
+        "translation": "FALLBACK",
+        "ui": "FALLBACK"
+      },
+      "notes": "Offline: Malayalam script and romanised Malayalam via draft lexicon (tested on demo sentences). Translation needs the optional AI provider. UI falls back to English."
+    }
+  ]
+}

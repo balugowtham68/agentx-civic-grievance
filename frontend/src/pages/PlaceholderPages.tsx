@@ -7,7 +7,8 @@ export function AuthorityPage() {
     <>
       <PageHeader title="Authority dashboard" subtitle="For ward officers and departments." />
       <p className="rounded-lg border border-dashed border-slate-300 bg-white p-6 text-slate-600">
-        Escalation queue and officer actions (acknowledge, in progress, resolve, close) will appear here.
+        Future phase — not part of this prototype checkpoint. The escalation queue and officer actions
+        (acknowledge, in progress, resolve, close) arrive in later phases; nothing here works yet.
       </p>
     </>
   )
