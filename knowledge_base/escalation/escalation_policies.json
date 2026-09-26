@@ -33,5 +33,13 @@
         "CLOSED"
       ]
     }
-  ]
+  ],
+  "source": {
+    "id": "SRC-DEMO-ESCALATION",
+    "name": "SPANDAN AI prototype escalation configuration (Phase 8 reference data)",
+    "type": "prototype_configuration",
+    "version": "2026.09-demo.1",
+    "official": false,
+    "label": "DEMO CIVIC RULE"
+  }
 }

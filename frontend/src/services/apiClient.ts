@@ -27,6 +27,8 @@ type Query = Record<string, string | number | boolean | string[] | undefined | n
 export interface RequestOptions {
   method?: 'GET' | 'POST' | 'PATCH' | 'DELETE'
   body?: unknown
+  /** Sent as-is (e.g. an audio Blob) instead of JSON. */
+  rawBody?: Blob
   query?: Query
   signal?: AbortSignal
 }
@@ -61,18 +63,22 @@ export class ApiClient {
   }
 
   async request<T>(path: string, options: RequestOptions = {}): Promise<T> {
-    const { method = 'GET', body, query, signal } = options
+    const { method = 'GET', body, rawBody, query, signal } = options
+    const headers: Record<string, string> = { Accept: 'application/json' }
+    let payload: BodyInit | undefined
+    if (rawBody !== undefined) {
+      headers['Content-Type'] = rawBody.type || 'application/octet-stream'
+      payload = rawBody
+    } else if (body !== undefined) {
+      headers['Content-Type'] = 'application/json'
+      payload = JSON.stringify(body)
+    }
     let response: Response
     try {
-      response = await this.fetchImpl(buildUrl(this.baseUrl, path, query), {
-        method,
-        signal,
-        headers: body === undefined ? { Accept: 'application/json' } : { Accept: 'application/json', 'Content-Type': 'application/json' },
-        body: body === undefined ? undefined : JSON.stringify(body),
-      })
+      response = await this.fetchImpl(buildUrl(this.baseUrl, path, query), { method, signal, headers, body: payload })
     } catch (cause) {
       if (cause instanceof DOMException && cause.name === 'AbortError') throw cause
-      throw new ApiError(0, 'network_error', 'Cannot reach the AGENT X server. Check that the backend is running.')
+      throw new ApiError(0, 'network_error', 'Cannot reach the SPANDAN AI server. Check that the backend is running.')
     }
 
     const text = await response.text()

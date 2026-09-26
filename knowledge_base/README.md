@@ -3,16 +3,19 @@
 Configured civic knowledge used by the Classification & Reasoning Agent (RAG) and by
 the SLA and escalation logic.
 
-> **Everything here is demo knowledge-base data** for the fictional
-> "Sample Municipal Corporation". It is not real government policy. Replacing it with a
-> real municipality's rules requires no code changes.
+> **Everything here is DEMO CIVIC RULE / PROTOTYPE CONFIGURATION** for the fictional
+> "Sample Municipal Corporation". It is not real government policy. Every JSON file carries a
+> `source` block (`type: prototype_configuration`, `official: false`); a prototype source
+> cannot be marked official. Replacing it with a real municipality's rules requires no code
+> changes. Non-English phrases are drafts pending native-speaker review.
 
 ## Layout
 
 | Folder | Structured config (loaded + validated at startup) | Documents (indexed for RAG in Phase 3) |
 | --- | --- | --- |
+| `categories/` | `categories.json`, `ambiguity_groups.json`, `classification_settings.json` (Phase 3) | — |
 | `departments/` | `departments.json` | department charters (`*.md`) |
-| `jurisdictions/` | `jurisdictions.json` (wards, localities, landmarks) | ward notes (`*.md`) |
+| `jurisdictions/` | `jurisdictions.json` (PROTOTYPE JURISDICTION CONFIGURATION: wards, localities, landmarks, aliases) | ward notes (`*.md`) |
 | `rules/` | — | civic rules, one per grievance type (`*.md`) |
 | `timelines/` | `sla_policies.json` | service timeline notes (`*.md`) |
 | `escalation/` | `authorities.json`, `escalation_policies.json` | escalation hierarchy notes (`*.md`) |
@@ -41,6 +44,10 @@ demo_data: true
 Body in short sections.
 ```
 
-Pipeline (Phase 3): documents → chunking by section → embeddings → ChromaDB → retrieval →
-classification/reasoning. The classifier may only choose IDs that appear in a retrieved
-document's `config_refs`.
+Pipeline (Phase 3, implemented): records and documents → chunks (category summary + phrases
+per language, one per `## ` section) → local hashing n-gram embeddings → local ChromaDB →
+top-k retrieval with metadata filters → configured rule validation → classification.
+Only configured category, department and jurisdiction IDs can be chosen.
+
+Ingest / validate: `python scripts/ingest_civic_kb.py` (`--check` to validate only).
+See [`docs/classification.md`](../docs/classification.md).

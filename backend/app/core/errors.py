@@ -83,6 +83,26 @@ class NotImplementedYetError(AppError):
     code = "not_implemented"
 
 
+class PayloadTooLargeError(AppError):
+    status_code = 413  # Content Too Large
+    code = "payload_too_large"
+
+
+class UnsupportedMediaTypeError(AppError):
+    status_code = status.HTTP_415_UNSUPPORTED_MEDIA_TYPE
+    code = "unsupported_media_type"
+
+
+class ServiceUnavailableError(AppError):
+    status_code = status.HTTP_503_SERVICE_UNAVAILABLE
+    code = "service_unavailable"
+
+
+class ExternalServiceTimeoutError(ExternalServiceError):
+    status_code = status.HTTP_504_GATEWAY_TIMEOUT
+    code = "external_service_timeout"
+
+
 def _body(code: str, message: str, details: list[ErrorDetail] | None = None) -> dict[str, Any]:
     return ErrorResponse(
         error=ErrorBody(
@@ -105,7 +125,7 @@ async def _validation_handler(_: Request, exc: RequestValidationError) -> JSONRe
         for err in exc.errors()
     ]
     return JSONResponse(
-        status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        status_code=422,  # Unprocessable Content
         content=_body("validation_error", "Request validation failed", details),
     )
 

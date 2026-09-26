@@ -12,7 +12,7 @@ def test_health_reports_running_service_and_database(client: TestClient) -> None
     assert response.status_code == 200
     body = response.json()
     assert body["status"] == "ok"
-    assert body["service"] == "AGENT X"
+    assert body["service"] == "SPANDAN AI"  # project renamed from AGENT X (Phase 2 brief)
     assert body["database"] == "ok"
     assert body["environment"] == "test"
 

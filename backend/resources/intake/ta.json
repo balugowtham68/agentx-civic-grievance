@@ -1,0 +1,475 @@
+{
+  "language": "ta",
+  "note": "Tamil (script and romanised). Draft resource: phrases cover common civic complaints; needs native-speaker review and expansion.",
+  "number_words": {
+    "ஒரு": 1,
+    "ஒன்று": 1,
+    "ஒண்ணு": 1,
+    "இரண்டு": 2,
+    "ரெண்டு": 2,
+    "மூன்று": 3,
+    "மூணு": 3,
+    "நான்கு": 4,
+    "நாலு": 4,
+    "ஐந்து": 5,
+    "அஞ்சு": 5,
+    "ஆறு": 6,
+    "ஏழு": 7,
+    "எட்டு": 8,
+    "பத்து": 10,
+    "oru": 1,
+    "onnu": 1,
+    "rendu": 2,
+    "irandu": 2,
+    "moonu": 3,
+    "munu": 3,
+    "moondru": 3,
+    "naalu": 4,
+    "anju": 5,
+    "aaru": 6,
+    "ezhu": 7,
+    "ettu": 8,
+    "pathu": 10
+  },
+  "duration_units": [
+    {
+      "unit": "hour",
+      "patterns": [
+        "மணி நேரமா",
+        "மணிநேரமாக",
+        "மணி நேரமாக",
+        "mani neramaa",
+        "mani neram"
+      ]
+    },
+    {
+      "unit": "day",
+      "patterns": [
+        "நாட்களாக",
+        "நாளாக",
+        "நாளா",
+        "நாளாச்சு",
+        "நாள்",
+        "naalaa",
+        "naala",
+        "naalaga",
+        "naal"
+      ]
+    },
+    {
+      "unit": "week",
+      "patterns": [
+        "வாரமாக",
+        "வாரமா",
+        "வாரம்",
+        "vaaramaa",
+        "vaarama",
+        "vaaram"
+      ]
+    },
+    {
+      "unit": "month",
+      "patterns": [
+        "மாதமாக",
+        "மாசமா",
+        "மாதம்",
+        "மாசம்",
+        "maasamaa",
+        "maasama",
+        "maasam"
+      ]
+    }
+  ],
+  "issue_subjects": [
+    {
+      "value": "street light",
+      "patterns": [
+        "தெரு விளக்கு",
+        "தெருவிளக்கு",
+        "ஸ்ட்ரீட் லைட்",
+        "ஸ்ட்ரீட்லைட்",
+        "விளக்கு",
+        "லைட்",
+        "street light",
+        "streetlight",
+        "light"
+      ]
+    },
+    {
+      "value": "garbage",
+      "patterns": [
+        "குப்பை",
+        "kuppai",
+        "garbage"
+      ]
+    },
+    {
+      "value": "drain",
+      "patterns": [
+        "சாக்கடை",
+        "கழிவுநீர்",
+        "கால்வாய்",
+        "saakkadai",
+        "sakkadai",
+        "drainage",
+        "drain"
+      ]
+    },
+    {
+      "value": "water supply",
+      "patterns": [
+        "குடிநீர்",
+        "தண்ணீர்",
+        "தண்ணி",
+        "thanneer",
+        "thanni",
+        "water"
+      ]
+    },
+    {
+      "value": "road",
+      "patterns": [
+        "குழி",
+        "pothole"
+      ]
+    },
+    {
+      "value": "power supply",
+      "patterns": [
+        "கரண்ட்",
+        "மின்சாரம்",
+        "current"
+      ]
+    }
+  ],
+  "problem_states": [
+    {
+      "value": "not working",
+      "patterns": [
+        "எரியவில்லை",
+        "எரியலை",
+        "எரியல",
+        "எரியாமல்",
+        "வேலை செய்யவில்லை",
+        "வேலை செய்யலை",
+        "வேலை செய்யல",
+        "ஒர்க் ஆகல",
+        "வொர்க் ஆகல",
+        "சரியில்லை",
+        "சரியில்ல",
+        "சரி இல்லை",
+        "சரி இல்ல",
+        "eriyalai",
+        "eriyala",
+        "eriyaama",
+        "work aagala",
+        "work agala",
+        "velai seyyala",
+        "velai seiyala",
+        "sariyilla",
+        "sari illa"
+      ]
+    },
+    {
+      "value": "not collected",
+      "patterns": [
+        "எடுக்கவில்லை",
+        "எடுக்கல",
+        "அள்ளவில்லை",
+        "அள்ளல",
+        "edukkala",
+        "allala"
+      ]
+    },
+    {
+      "value": "is lying there",
+      "patterns": [
+        "குவிஞ்சு கிடக்கு",
+        "குவிந்து கிடக்கிறது",
+        "கிடக்கு",
+        "கிடக்கிறது",
+        "இருக்கு",
+        "kidakku",
+        "irukku",
+        "iruku"
+      ]
+    },
+    {
+      "value": "blocked",
+      "patterns": [
+        "அடைச்சிருக்கு",
+        "அடைத்துள்ளது",
+        "அடைப்பு",
+        "adachirukku",
+        "adaippu"
+      ]
+    },
+    {
+      "value": "overflowing",
+      "patterns": [
+        "நிரம்பி வழியுது",
+        "வழியுது",
+        "வழிகிறது",
+        "vazhiyudhu",
+        "vazhiyuthu"
+      ]
+    },
+    {
+      "value": "not coming",
+      "patterns": [
+        "வரவில்லை",
+        "வரல",
+        "வருவதில்லை",
+        "varalai",
+        "varala"
+      ]
+    },
+    {
+      "value": "damaged",
+      "patterns": [
+        "உடைஞ்சிருக்கு",
+        "உடைந்துள்ளது",
+        "உடைஞ்சு",
+        "உடைந்து",
+        "சேதம்",
+        "udanjirukku",
+        "odanju"
+      ]
+    }
+  ],
+  "place_nouns": [
+    {
+      "value": "street",
+      "patterns": [
+        "தெரு",
+        "theru",
+        "street"
+      ]
+    },
+    {
+      "value": "house",
+      "patterns": [
+        "வீட்டு",
+        "வீடு",
+        "veettu",
+        "veetu",
+        "veedu"
+      ]
+    },
+    {
+      "value": "road",
+      "patterns": [
+        "ரோடு",
+        "சாலை",
+        "road"
+      ]
+    },
+    {
+      "value": "lane",
+      "patterns": [
+        "சந்து",
+        "sandhu"
+      ]
+    },
+    {
+      "value": "school",
+      "patterns": [
+        "பள்ளி",
+        "ஸ்கூல்",
+        "palli",
+        "school"
+      ]
+    },
+    {
+      "value": "temple",
+      "patterns": [
+        "கோவில்",
+        "கோயில்",
+        "kovil",
+        "koil",
+        "temple"
+      ]
+    },
+    {
+      "value": "market",
+      "patterns": [
+        "மார்க்கெட்",
+        "சந்தை",
+        "sandhai",
+        "market"
+      ]
+    },
+    {
+      "value": "bus stand",
+      "patterns": [
+        "பஸ் ஸ்டாண்ட்",
+        "பேருந்து நிலையம்",
+        "bus stand",
+        "bus stop"
+      ]
+    },
+    {
+      "value": "hospital",
+      "patterns": [
+        "மருத்துவமனை",
+        "ஆஸ்பத்திரி",
+        "aaspathiri",
+        "hospital"
+      ]
+    },
+    {
+      "value": "area",
+      "patterns": [
+        "ஏரியா",
+        "பகுதி",
+        "pagudhi",
+        "area"
+      ]
+    },
+    {
+      "value": "colony",
+      "patterns": [
+        "காலனி",
+        "colony"
+      ]
+    },
+    {
+      "value": "village",
+      "patterns": [
+        "கிராமம்",
+        "ஊர்",
+        "gramam",
+        "ooru"
+      ]
+    },
+    {
+      "value": "nagar",
+      "patterns": [
+        "நகர",
+        "nagar"
+      ]
+    }
+  ],
+  "generic_places": [
+    "street",
+    "house",
+    "road",
+    "lane",
+    "area",
+    "colony",
+    "village"
+  ],
+  "possessives": [
+    {
+      "value": "our",
+      "patterns": [
+        "எங்கள்",
+        "எங்களோட",
+        "எங்க",
+        "engaloda",
+        "engal",
+        "enga"
+      ]
+    },
+    {
+      "value": "my",
+      "patterns": [
+        "என்னோட",
+        "எனது",
+        "என்",
+        "ennoda",
+        "en"
+      ]
+    }
+  ],
+  "proximity": [
+    {
+      "value": "near",
+      "patterns": [
+        "பக்கத்துல",
+        "பக்கத்தில்",
+        "அருகில்",
+        "அருகே",
+        "கிட்ட",
+        "pakkathula",
+        "pakkathile",
+        "pakkathil",
+        "kitta",
+        "arugil"
+      ]
+    },
+    {
+      "value": "in front of",
+      "patterns": [
+        "முன்னாடி",
+        "முன்னால்",
+        "எதிரே",
+        "munnadi",
+        "ethire"
+      ]
+    },
+    {
+      "value": "behind",
+      "patterns": [
+        "பின்னாடி",
+        "பின்னால்",
+        "pinnadi"
+      ]
+    }
+  ],
+  "identifier_markers": [
+    "எண்",
+    "நம்பர்",
+    "number",
+    "no"
+  ],
+  "latin_markers": [
+    "enga",
+    "illa",
+    "irukku",
+    "iruku",
+    "naala",
+    "naalaa",
+    "pakkathula",
+    "aagala",
+    "agala",
+    "eriyala",
+    "theru",
+    "theruvula",
+    "sari",
+    "varala",
+    "kuppai",
+    "thanni",
+    "romba",
+    "veetuku",
+    "veettu",
+    "ennoda",
+    "kitta",
+    "moonu",
+    "rendu",
+    "kidakku",
+    "edukkala"
+  ],
+  "correction_phrases": [
+    "இல்லைங்க",
+    "இல்லை",
+    "இல்ல",
+    "illainga",
+    "illai",
+    "illa"
+  ],
+  "confirmation_phrases": [
+    "ஆமாம்",
+    "ஆமா",
+    "ஆம்",
+    "சரி",
+    "aamaam",
+    "aama",
+    "sari"
+  ],
+  "questions": {
+    "issue": "நீங்கள் புகார் செய்ய விரும்பும் பிரச்சினை என்ன?",
+    "location": "இந்தப் பிரச்சினை எங்கே உள்ளது? தெரு, பகுதி அல்லது அருகிலுள்ள அடையாளத்தைச் சொல்லுங்கள்.",
+    "duration": "இந்தப் பிரச்சினை எவ்வளவு காலமாக உள்ளது?"
+  }
+}

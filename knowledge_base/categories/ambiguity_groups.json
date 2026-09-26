@@ -1,0 +1,100 @@
+{
+  "_note": "DEMO CIVIC RULE / PROTOTYPE CONFIGURATION for the fictional 'Sample Municipal Corporation'. Written for the SPANDAN AI hackathon prototype. NOT official government policy. Non-English phrases are drafts pending native-speaker review.",
+  "source": {
+    "id": "SRC-DEMO-AMBIGUITY",
+    "name": "SPANDAN AI prototype ambiguity rules",
+    "type": "prototype_configuration",
+    "version": "2026.09-demo.1",
+    "official": false,
+    "label": "DEMO CIVIC RULE"
+  },
+  "items": [
+    {
+      "id": "AMBIG-WATER",
+      "terms": {
+        "en": [
+          "water problem",
+          "water issue",
+          "problem with water",
+          "water trouble",
+          "water complaint",
+          "problem with the water"
+        ],
+        "ta": [
+          "தண்ணீர் பிரச்சினை",
+          "தண்ணீர் பிரச்சனை",
+          "தண்ணி பிரச்சனை"
+        ],
+        "te": [
+          "నీటి సమస్య",
+          "నీళ్ల సమస్య"
+        ],
+        "hi": [
+          "पानी की समस्या",
+          "पानी की दिक्कत",
+          "पानी की परेशानी"
+        ],
+        "kn": [
+          "ನೀರಿನ ಸಮಸ್ಯೆ"
+        ],
+        "ml": [
+          "വെള്ളത്തിന്റെ പ്രശ്നം",
+          "ജല പ്രശ്നം"
+        ]
+      },
+      "categories": [
+        "water_leakage",
+        "water_supply",
+        "drainage"
+      ],
+      "question": {
+        "en": "Is the issue a water leak, no water supply, or a drainage problem?",
+        "ta": "இது தண்ணீர் கசிவா, தண்ணீர் வரவில்லையா, அல்லது வடிகால் பிரச்சினையா?",
+        "te": "ఇది నీటి లీకేజీనా, నీళ్లు రావడం లేదా, లేదా డ్రైనేజీ సమస్యా?",
+        "hi": "क्या यह पानी का रिसाव है, पानी नहीं आ रहा है, या नाली की समस्या है?",
+        "kn": "ಇದು ನೀರಿನ ಸೋರಿಕೆಯೇ, ನೀರು ಬರುತ್ತಿಲ್ಲವೇ, ಅಥವಾ ಚರಂಡಿ ಸಮಸ್ಯೆಯೇ?",
+        "ml": "ഇത് വെള്ളം ചോരുന്നതാണോ, വെള്ളം വരാത്തതാണോ, അതോ ഓടയുടെ പ്രശ്നമാണോ?"
+      }
+    },
+    {
+      "id": "AMBIG-ROAD",
+      "terms": {
+        "en": [
+          "road problem",
+          "problem on the road",
+          "road issue",
+          "problem with the road"
+        ],
+        "ta": [
+          "சாலை பிரச்சினை",
+          "ரோடு பிரச்சனை"
+        ],
+        "te": [
+          "రోడ్డు సమస్య"
+        ],
+        "hi": [
+          "सड़क की समस्या"
+        ],
+        "kn": [
+          "ರಸ್ತೆ ಸಮಸ್ಯೆ"
+        ],
+        "ml": [
+          "റോഡ് പ്രശ്നം"
+        ]
+      },
+      "categories": [
+        "road_damage",
+        "drainage",
+        "broken_infrastructure"
+      ],
+      "question": {
+        "en": "Is it a pothole or damaged road, a drainage problem, or a broken footpath or other structure?",
+        "ta": "இது சாலை குழியா, வடிகால் பிரச்சினையா, அல்லது உடைந்த நடைபாதை போன்றதா?",
+        "te": "ఇది రోడ్డు గుంతా, డ్రైనేజీ సమస్యా, లేదా దెబ్బతిన్న ఫుట్‌పాత్ వంటిదా?",
+        "hi": "क्या यह गड्ढा या टूटी सड़क है, नाली की समस्या है, या टूटा फुटपाथ जैसी संरचना है?",
+        "kn": "ಇದು ರಸ್ತೆ ಗುಂಡಿಯೇ, ಚರಂಡಿ ಸಮಸ್ಯೆಯೇ, ಅಥವಾ ಹಾಳಾದ ಫುಟ್‌ಪಾತ್ ಇತ್ಯಾದಿಯೇ?",
+        "ml": "ഇത് റോഡിലെ കുഴിയാണോ, ഓടയുടെ പ്രശ്നമാണോ, അതോ തകർന്ന നടപ്പാത പോലുള്ളതാണോ?"
+      }
+    }
+  ]
+}

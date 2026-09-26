@@ -26,13 +26,22 @@ class FixedClock:
         self.current += timedelta(**kwargs)
 
 
+@pytest.fixture(scope="session")
+def kb_vector_dir(tmp_path_factory: pytest.TempPathFactory) -> Path:
+    """One local ChromaDB directory per test session (ingested once, reused; never backend/data)."""
+    return tmp_path_factory.mktemp("chroma")
+
+
 @pytest.fixture
-def settings(tmp_path: Path) -> Settings:
+def settings(tmp_path: Path, kb_vector_dir: Path) -> Settings:
     return Settings(
         _env_file=None,  # never read a developer's real .env in tests
         app_env=AppEnvironment.TEST,
         database_url=f"sqlite:///{tmp_path / 'test.db'}",
         log_level="WARNING",
+        kb_vector_dir=kb_vector_dir,
+        gemini_api_key=None,  # offline by default
+        openai_api_key=None,
     )
 
 

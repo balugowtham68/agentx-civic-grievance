@@ -21,8 +21,9 @@ export function Layout() {
       <SimulationBanner />
       <header className="border-b border-slate-200 bg-white">
         <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 px-4 py-3">
-          <NavLink to="/" className="text-xl font-bold tracking-tight">
-            AGENT X
+          <NavLink to="/" className="flex flex-col leading-tight" aria-label="SPANDAN AI home">
+            <span className="text-xl font-bold tracking-tight">SPANDAN AI</span>
+            <span className="text-sm text-slate-600">Listen. Respond. Resolve.</span>
           </NavLink>
           <nav aria-label="Main">
             <ul className="flex flex-wrap gap-1">
@@ -47,7 +48,7 @@ export function Layout() {
         <Outlet />
       </main>
       <footer className="border-t border-slate-200 px-4 py-4 text-center text-sm text-slate-500">
-        AGENT X — Autonomous Civic Grievance Redressal Agent · Build for Billions
+        SPANDAN AI — Listen. Respond. Resolve. · Build for Billions
       </footer>
     </div>
   )

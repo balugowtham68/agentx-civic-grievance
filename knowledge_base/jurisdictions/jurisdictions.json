@@ -1,5 +1,13 @@
 {
-  "_note": "DEMO KNOWLEDGE-BASE DATA for the fictional 'Sample Municipal Corporation'. Not real government rules. Hackathon prototype only.",
+  "_note": "DEMO KNOWLEDGE-BASE DATA / PROTOTYPE CONFIGURATION for the fictional 'Sample Municipal Corporation'. Not real government rules. Hackathon prototype only. PROTOTYPE JURISDICTION CONFIGURATION: ward names, localities and landmarks are invented for the demo. Aliases are draft spellings in the six supported languages.",
+  "source": {
+    "id": "SRC-DEMO-JURISDICTIONS",
+    "name": "SPANDAN AI prototype jurisdiction configuration",
+    "type": "prototype_configuration",
+    "version": "2026.09-demo.1",
+    "official": false,
+    "label": "DEMO CIVIC RULE"
+  },
   "items": [
     {
       "id": "WARD-12",
@@ -12,7 +20,89 @@
       "landmarks": [
         "Ramalayam temple",
         "Government school"
-      ]
+      ],
+      "aliases": {
+        "Gandhi Nagar": [
+          "காந்தி நகர",
+          "గాంధీ నగర",
+          "गांधी नगर",
+          "गाँधी नगर",
+          "ಗಾಂಧಿ ನಗರ",
+          "ഗാന്ധി നഗര",
+          "ഗാന്ധി നഗറ",
+          "gandhinagar"
+        ],
+        "Station Road": [
+          "ஸ்டேஷன் ரோடு",
+          "ஸ்டேஷன் சாலை",
+          "స్టేషన్ రోడ్",
+          "स्टेशन रोड",
+          "ಸ್ಟೇಷನ್ ರಸ್ತೆ",
+          "ಸ್ಟೇಷನ್ ರೋಡ್",
+          "സ്റ്റേഷൻ റോഡ"
+        ],
+        "Ramalayam temple": [
+          "Ramalayam",
+          "ராமாலயம்",
+          "రామాలయం",
+          "रामालयम",
+          "ರಾಮಾಲಯ",
+          "രാമാലയ"
+        ],
+        "Government school": [
+          "அரசு பள்ளி",
+          "ప్రభుత్వ పాఠశాల",
+          "सरकारी स्कूल",
+          "ಸರ್ಕಾರಿ ಶಾಲೆ",
+          "സർക്കാർ സ്കൂൾ"
+        ]
+      }
+    },
+    {
+      "id": "WARD-7",
+      "name": "Ward 7 (demo)",
+      "type": "ward",
+      "localities": [
+        "Main Road",
+        "Market Street"
+      ],
+      "landmarks": [
+        "Central bus stand",
+        "Clock tower"
+      ],
+      "aliases": {
+        "Main Road": [
+          "மெயின் ரோடு",
+          "மெயின் சாலை",
+          "మెయిన్ రోడ్",
+          "मेन रोड",
+          "ಮೇನ್ ರೋಡ್",
+          "ಮುಖ್ಯ ರಸ್ತೆ",
+          "മെയിൻ റോഡ"
+        ],
+        "Market Street": [
+          "மார்க்கெட் தெரு",
+          "మార్కెట్ వీధి",
+          "मार्केट स्ट्रीट",
+          "ಮಾರುಕಟ್ಟೆ ಬೀದಿ",
+          "മാർക്കറ്റ് സ്ട്രീറ്റ"
+        ],
+        "Central bus stand": [
+          "bus stand",
+          "பஸ் ஸ்டாண்ட்",
+          "బస్ స్టాండ్",
+          "बस स्टैंड",
+          "ಬಸ್ ನಿಲ್ದಾಣ",
+          "ബസ് സ്റ്റാൻഡ"
+        ],
+        "Clock tower": [
+          "மணிக்கூண்டு",
+          "క్లాక్ టవర్",
+          "घंटाघर",
+          "ಗಡಿಯಾರ ಗೋಪುರ",
+          "ക്ലോക്ക് ടവർ"
+        ]
+      }
     }
   ]
 }

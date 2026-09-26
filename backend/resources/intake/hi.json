@@ -1,0 +1,457 @@
+{
+  "language": "hi",
+  "note": "Hindi (Devanagari and romanised). Draft resource; needs native-speaker review and expansion.",
+  "number_words": {
+    "एक": 1,
+    "दो": 2,
+    "तीन": 3,
+    "चार": 4,
+    "पांच": 5,
+    "पाँच": 5,
+    "छह": 6,
+    "सात": 7,
+    "आठ": 8,
+    "दस": 10,
+    "ek": 1,
+    "do": 2,
+    "teen": 3,
+    "char": 4,
+    "chaar": 4,
+    "paanch": 5,
+    "panch": 5,
+    "das": 10
+  },
+  "duration_units": [
+    {
+      "unit": "hour",
+      "patterns": [
+        "घंटों",
+        "घंटे",
+        "ghanton",
+        "ghante"
+      ]
+    },
+    {
+      "unit": "day",
+      "patterns": [
+        "दिनों",
+        "दिन",
+        "dino",
+        "dinon",
+        "din"
+      ]
+    },
+    {
+      "unit": "week",
+      "patterns": [
+        "हफ़्तों",
+        "हफ्तों",
+        "हफ़्ते",
+        "हफ्ते",
+        "हफ्ता",
+        "सप्ताह",
+        "hafton",
+        "hafte",
+        "hafta"
+      ]
+    },
+    {
+      "unit": "month",
+      "patterns": [
+        "महीनों",
+        "महीने",
+        "महीना",
+        "mahino",
+        "mahine",
+        "mahina"
+      ]
+    }
+  ],
+  "duration_particles": [
+    "से",
+    "se"
+  ],
+  "issue_subjects": [
+    {
+      "value": "street light",
+      "patterns": [
+        "स्ट्रीट लाइट",
+        "स्ट्रीटलाइट",
+        "खंभे की लाइट",
+        "बत्ती",
+        "लाइट",
+        "street light",
+        "streetlight",
+        "light",
+        "batti"
+      ]
+    },
+    {
+      "value": "garbage",
+      "patterns": [
+        "कूड़ा",
+        "कूडा",
+        "कचरा",
+        "kooda",
+        "kuda",
+        "kachra",
+        "garbage"
+      ]
+    },
+    {
+      "value": "drain",
+      "patterns": [
+        "नाली",
+        "नाला",
+        "सीवर",
+        "गटर",
+        "naali",
+        "nali",
+        "sewer",
+        "gutter",
+        "drain"
+      ]
+    },
+    {
+      "value": "water supply",
+      "patterns": [
+        "पानी",
+        "नल",
+        "paani",
+        "water"
+      ]
+    },
+    {
+      "value": "road",
+      "patterns": [
+        "गड्ढा",
+        "गड्ढे",
+        "gaddha",
+        "pothole"
+      ]
+    },
+    {
+      "value": "power supply",
+      "patterns": [
+        "बिजली",
+        "bijli"
+      ]
+    }
+  ],
+  "problem_states": [
+    {
+      "value": "not working",
+      "patterns": [
+        "काम नहीं कर रही",
+        "काम नहीं कर रहा",
+        "काम नहीं कर रहे",
+        "काम नहीं करती",
+        "काम नहीं करता",
+        "नहीं जल रही",
+        "नहीं जल रहा",
+        "नहीं जलती",
+        "बंद पड़ी",
+        "खराब है",
+        "ख़राब है",
+        "kaam nahi kar rahi",
+        "kaam nahi kar raha",
+        "nahi jal rahi",
+        "nahi jal raha",
+        "kharab hai"
+      ]
+    },
+    {
+      "value": "not collected",
+      "patterns": [
+        "नहीं उठाया गया",
+        "नहीं उठाया",
+        "नहीं उठ रहा",
+        "उठाया नहीं",
+        "nahi uthaya",
+        "nahi uth raha"
+      ]
+    },
+    {
+      "value": "is lying there",
+      "patterns": [
+        "पड़ा हुआ है",
+        "पड़ा है",
+        "जमा है",
+        "pada hai",
+        "jama hai"
+      ]
+    },
+    {
+      "value": "blocked",
+      "patterns": [
+        "जाम है",
+        "जाम",
+        "चोक",
+        "jaam",
+        "choke"
+      ]
+    },
+    {
+      "value": "overflowing",
+      "patterns": [
+        "उफन रहा",
+        "बह रहा",
+        "भर गया",
+        "ओवरफ्लो",
+        "beh raha",
+        "overflow"
+      ]
+    },
+    {
+      "value": "not coming",
+      "patterns": [
+        "नहीं आ रहा",
+        "नहीं आता",
+        "नहीं आया",
+        "nahi aa raha",
+        "nahi aata"
+      ]
+    },
+    {
+      "value": "damaged",
+      "patterns": [
+        "टूट गया",
+        "टूटा",
+        "टूटी",
+        "toot gaya",
+        "toota",
+        "tooti"
+      ]
+    }
+  ],
+  "place_nouns": [
+    {
+      "value": "lane",
+      "patterns": [
+        "गली",
+        "gali"
+      ]
+    },
+    {
+      "value": "road",
+      "patterns": [
+        "सड़क",
+        "सडक",
+        "रोड",
+        "sadak",
+        "road"
+      ]
+    },
+    {
+      "value": "house",
+      "patterns": [
+        "घर",
+        "मकान",
+        "ghar",
+        "makaan"
+      ]
+    },
+    {
+      "value": "school",
+      "patterns": [
+        "स्कूल",
+        "विद्यालय",
+        "school"
+      ]
+    },
+    {
+      "value": "temple",
+      "patterns": [
+        "मंदिर",
+        "mandir",
+        "temple"
+      ]
+    },
+    {
+      "value": "market",
+      "patterns": [
+        "बाज़ार",
+        "बाजार",
+        "मार्केट",
+        "bazaar",
+        "bazar",
+        "market"
+      ]
+    },
+    {
+      "value": "bus stand",
+      "patterns": [
+        "बस स्टैंड",
+        "बस अड्डा",
+        "bus stand",
+        "bus adda"
+      ]
+    },
+    {
+      "value": "hospital",
+      "patterns": [
+        "अस्पताल",
+        "aspatal",
+        "hospital"
+      ]
+    },
+    {
+      "value": "colony",
+      "patterns": [
+        "कॉलोनी",
+        "colony"
+      ]
+    },
+    {
+      "value": "area",
+      "patterns": [
+        "मोहल्ले",
+        "मोहल्ला",
+        "इलाके",
+        "इलाका",
+        "mohalla",
+        "ilaka"
+      ]
+    },
+    {
+      "value": "village",
+      "patterns": [
+        "गांव",
+        "गाँव",
+        "gaon"
+      ]
+    },
+    {
+      "value": "nagar",
+      "patterns": [
+        "नगर",
+        "nagar"
+      ]
+    }
+  ],
+  "generic_places": [
+    "lane",
+    "road",
+    "house",
+    "colony",
+    "area",
+    "village"
+  ],
+  "possessives": [
+    {
+      "value": "our",
+      "patterns": [
+        "हमारी",
+        "हमारे",
+        "हमारा",
+        "hamari",
+        "hamare",
+        "hamara"
+      ]
+    },
+    {
+      "value": "my",
+      "patterns": [
+        "मेरी",
+        "मेरे",
+        "मेरा",
+        "meri",
+        "mere",
+        "mera"
+      ]
+    }
+  ],
+  "proximity": [
+    {
+      "value": "near",
+      "patterns": [
+        "के पास",
+        "के नज़दीक",
+        "पास",
+        "ke paas",
+        "paas"
+      ]
+    },
+    {
+      "value": "in front of",
+      "patterns": [
+        "के सामने",
+        "सामने",
+        "ke saamne",
+        "saamne"
+      ]
+    },
+    {
+      "value": "behind",
+      "patterns": [
+        "के पीछे",
+        "ke peeche"
+      ]
+    },
+    {
+      "value": "in",
+      "patterns": [
+        "में",
+        "mein"
+      ]
+    }
+  ],
+  "particles": [
+    "की",
+    "का",
+    "के",
+    "ki",
+    "ka",
+    "ke"
+  ],
+  "identifier_markers": [
+    "नंबर",
+    "संख्या",
+    "number",
+    "no"
+  ],
+  "latin_markers": [
+    "nahi",
+    "hai",
+    "se",
+    "din",
+    "ki",
+    "ka",
+    "ke",
+    "mein",
+    "raha",
+    "rahi",
+    "kar",
+    "hamari",
+    "hamare",
+    "mera",
+    "meri",
+    "gali",
+    "kachra",
+    "paani",
+    "bijli",
+    "gaya",
+    "bahut",
+    "kaam",
+    "pas",
+    "paas"
+  ],
+  "correction_phrases": [
+    "नहीं",
+    "नही",
+    "nahi",
+    "nahin"
+  ],
+  "confirmation_phrases": [
+    "हाँ",
+    "हां",
+    "सही",
+    "haan",
+    "sahi"
+  ],
+  "questions": {
+    "issue": "आप किस समस्या की शिकायत करना चाहते हैं?",
+    "location": "यह समस्या कहाँ है? कृपया गली, इलाका या पास का कोई निशान बताइए।",
+    "duration": "यह समस्या कितने समय से है?"
+  }
+}

@@ -3,14 +3,14 @@ import { EmptyState, ErrorState, LoadingState } from '../components/AsyncStates'
 import { PageHeader } from '../components/Layout'
 import { StatusBadge } from '../components/StatusBadge'
 import { useApi } from '../hooks/useApi'
-import { agentXApi } from '../services/agentxApi'
+import { spandanApi } from '../services/spandanApi'
 
 export function ComplaintsPage() {
-  const complaints = useApi((signal) => agentXApi.listComplaints({}, signal), 'complaints')
+  const complaints = useApi((signal) => spandanApi.listComplaints({}, signal), 'complaints')
 
   return (
     <>
-      <PageHeader title="Complaints" subtitle="Every grievance AGENT X is handling." />
+      <PageHeader title="Complaints" subtitle="Every grievance SPANDAN AI has received." />
       {complaints.status === 'loading' && <LoadingState label="Loading complaints…" />}
       {complaints.status === 'error' && <ErrorState error={complaints.error} onRetry={complaints.reload} />}
       {complaints.status === 'success' &&

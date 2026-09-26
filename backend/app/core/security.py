@@ -15,6 +15,9 @@ _TAG_RE = re.compile(r"<[^>]*>")
 _SCRIPT_RE = re.compile(r"<(script|style)\b[^>]*>.*?</\1\s*>", re.IGNORECASE | re.DOTALL)
 _WS_RE = re.compile(r"[ \t\f\v]+")
 _MULTI_NEWLINE_RE = re.compile(r"\n{3,}")
+# Zero-width non-joiner / joiner are part of correct spelling in Indic scripts (Malayalam chillu,
+# Hindi/Kannada half forms), so they are kept. Other format characters (e.g. bidi overrides) are dropped.
+_KEEP_FORMAT_CHARS = {"\u200c", "\u200d"}
 
 
 def sanitize_text(value: str) -> str:
@@ -26,9 +29,9 @@ def sanitize_text(value: str) -> str:
     text = _SCRIPT_RE.sub(" ", text)
     text = _TAG_RE.sub(" ", text)
     text = html.unescape(text)
-    # Drop control characters except newline and tab.
+    # Drop control/format characters except newline, tab and the Indic joiners.
     text = "".join(
-        ch for ch in text if ch in "\n\t" or unicodedata.category(ch)[0] != "C"
+        ch for ch in text if ch in "\n\t" or ch in _KEEP_FORMAT_CHARS or unicodedata.category(ch)[0] != "C"
     )
     text = text.replace("\r", "")
     text = _WS_RE.sub(" ", text)

@@ -1,7 +1,9 @@
 # Runtime dependencies (each one is justified in docs/architecture.md#dependencies)
-fastapi==0.115.12
-uvicorn[standard]==0.34.2
+fastapi==0.141.1
+starlette==1.7.0   # pinned explicitly: >=1.3.1 fixes the 0.46.x advisories (consolidation dependency audit)
+uvicorn[standard]==0.54.0
 pydantic==2.11.4
 pydantic-settings==2.9.1
 SQLAlchemy==2.0.40
 httpx==0.28.1
+chromadb==1.5.9   # Phase 3: embedded local vector store for the civic knowledge base (no server, telemetry off)

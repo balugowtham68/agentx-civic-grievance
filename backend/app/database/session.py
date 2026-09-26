@@ -4,7 +4,8 @@ One `Database` object per application instance (stored on `app.state.db`), so
 tests can run against an isolated temporary database.
 
 Schema creation uses `create_all` for the hackathon MVP; there are no migrations.
-Changing a column means deleting `backend/data/agentx.db` locally.
+Adding tables is automatic; changed columns are detected at start-up (verify_schema) and
+reported with instructions - the database is never modified destructively.
 """
 
 from __future__ import annotations
@@ -13,7 +14,7 @@ from collections.abc import Iterator
 from contextlib import contextmanager
 from pathlib import Path
 
-from sqlalchemy import Engine, create_engine, event, text
+from sqlalchemy import Engine, create_engine, event, inspect, text
 from sqlalchemy.engine.url import make_url
 from sqlalchemy.orm import Session, sessionmaker
 
@@ -21,6 +22,10 @@ from app.core.logging import get_logger
 from app.database.base import Base
 
 logger = get_logger(__name__)
+
+
+class SchemaMismatchError(RuntimeError):
+    """The existing database file does not match the current models."""
 
 
 def _prepare_sqlite(url: str) -> None:
@@ -58,7 +63,30 @@ class Database:
         import app.models  # noqa: F401
 
         Base.metadata.create_all(self.engine)
+        self.verify_schema()
         logger.info("database schema ready", extra={"tables": sorted(Base.metadata.tables)})
+
+    def verify_schema(self) -> None:
+        """create_all adds missing TABLES but never missing COLUMNS. If a local database was
+        created by an older build, fail clearly at start-up instead of erroring mid-request.
+        No destructive migration is ever performed automatically."""
+        inspector = inspect(self.engine)
+        problems: list[str] = []
+        for name, table in Base.metadata.tables.items():
+            if not inspector.has_table(name):
+                problems.append(f"table {name} is missing")
+                continue
+            existing = {c["name"] for c in inspector.get_columns(name)}
+            missing = sorted(c.name for c in table.columns if c.name not in existing)
+            if missing:
+                problems.append(f"table {name} lacks column(s) {', '.join(missing)}")
+        if problems:
+            raise SchemaMismatchError(
+                "The local database was created by an older SPANDAN AI build ("
+                + "; ".join(problems)
+                + "). Back it up if needed, then delete it (default: backend/data/agentx.db) or point "
+                "DATABASE_URL to a new file; it is recreated on the next start."
+            )
 
     def is_reachable(self) -> bool:
         try:

@@ -1,13 +1,13 @@
 ---
 doc_id: KB-RULE-STREETLIGHT-01
 type: civic_rule
-config_refs: [DEPT-ELECTRICAL, SLA-STREETLIGHT]
+config_refs: [CAT-STREETLIGHT, DEPT-ELECTRICAL, SLA-STREETLIGHT]
 demo_data: true
 ---
 
 # Non-working streetlights (demo rule)
 
-> Demo knowledge-base data for the fictional Sample Municipal Corporation. Not a real rule.
+> DEMO CIVIC RULE for the fictional Sample Municipal Corporation. Not a real government rule.
 
 A streetlight that does not switch on at night, flickers, or has a broken fitting is a
 **streetlight** grievance. It is handled by the Electrical Maintenance Department
@@ -22,4 +22,4 @@ A streetlight that does not switch on at night, flickers, or has a broken fittin
 ## Service timeline
 
 Repair within 3 days (`SLA-STREETLIGHT`). A warning is raised after 2 days if the
-complaint is not resolved.
+complaint is not resolved. Reference data only.

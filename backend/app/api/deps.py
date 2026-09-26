@@ -12,7 +12,10 @@ from app.core.config import Settings
 from app.database import Database
 from app.repositories import ReferenceRepository
 from app.services.audit_service import AuditService
+from app.services.classification.service import ClassificationService
 from app.services.complaint_service import ComplaintService
+from app.services.drafting.service import DraftingService
+from app.services.intake.service import IntakeService
 
 
 def get_app_settings(request: Request) -> Settings:
@@ -40,8 +43,29 @@ def get_audit_service(session: Annotated[Session, Depends(get_session)]) -> Audi
     return AuditService(session)
 
 
+def get_intake_service(
+    request: Request, session: Annotated[Session, Depends(get_session)]
+) -> IntakeService:
+    state = request.app.state
+    return IntakeService(session, state.intake_agent, state.languages, state.settings)
+
+
+def get_classification_service(
+    request: Request, session: Annotated[Session, Depends(get_session)]
+) -> ClassificationService:
+    state = request.app.state
+    return ClassificationService(session, state.classification_agent, state.knowledge, state.settings)
+
+
+def get_drafting_service(request: Request, session: Annotated[Session, Depends(get_session)]) -> DraftingService:
+    return DraftingService(session, request.app.state.drafting_agent)
+
+
 SettingsDep = Annotated[Settings, Depends(get_app_settings)]
 DatabaseDep = Annotated[Database, Depends(get_database)]
 ReferenceDep = Annotated[ReferenceRepository, Depends(get_reference)]
 ComplaintServiceDep = Annotated[ComplaintService, Depends(get_complaint_service)]
 AuditServiceDep = Annotated[AuditService, Depends(get_audit_service)]
+IntakeServiceDep = Annotated[IntakeService, Depends(get_intake_service)]
+ClassificationServiceDep = Annotated[ClassificationService, Depends(get_classification_service)]
+DraftingServiceDep = Annotated[DraftingService, Depends(get_drafting_service)]

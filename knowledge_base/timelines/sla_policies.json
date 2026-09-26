@@ -1,5 +1,5 @@
 {
-  "_note": "DEMO KNOWLEDGE-BASE DATA for the fictional 'Sample Municipal Corporation'. Not real government rules. Hackathon prototype only.",
+  "_note": "DEMO KNOWLEDGE-BASE DATA / PROTOTYPE CONFIGURATION for the fictional 'Sample Municipal Corporation'. Not real government rules. Hackathon prototype only. Service timelines are REFERENCE DATA; Phase 3 does not start or monitor any SLA.",
   "items": [
     {
       "id": "SLA-STREETLIGHT",
@@ -21,6 +21,49 @@
       "department_id": "DEPT-DRAINAGE",
       "duration_hours": 72,
       "warning_after_hours": 48
+    },
+    {
+      "id": "SLA-WATER-LEAKAGE",
+      "category": "water_leakage",
+      "department_id": "DEPT-WATER",
+      "duration_hours": 48,
+      "warning_after_hours": 24
+    },
+    {
+      "id": "SLA-WATER-SUPPLY",
+      "category": "water_supply",
+      "department_id": "DEPT-WATER",
+      "duration_hours": 24,
+      "warning_after_hours": 12
+    },
+    {
+      "id": "SLA-ROAD-DAMAGE",
+      "category": "road_damage",
+      "department_id": "DEPT-ROADS",
+      "duration_hours": 168,
+      "warning_after_hours": 120
+    },
+    {
+      "id": "SLA-SANITATION",
+      "category": "sanitation",
+      "department_id": "DEPT-SANITATION",
+      "duration_hours": 48,
+      "warning_after_hours": 24
+    },
+    {
+      "id": "SLA-BROKEN-INFRASTRUCTURE",
+      "category": "broken_infrastructure",
+      "department_id": "DEPT-PUBLIC-WORKS",
+      "duration_hours": 168,
+      "warning_after_hours": 120
     }
-  ]
+  ],
+  "source": {
+    "id": "SRC-DEMO-TIMELINES",
+    "name": "SPANDAN AI prototype service timelines (reference data only)",
+    "type": "prototype_configuration",
+    "version": "2026.09-demo.1",
+    "official": false,
+    "label": "DEMO CIVIC RULE"
+  }
 }

@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
 import { ApiClient, ApiError, buildUrl } from '../src/services/apiClient'
-import { createAgentXApi } from '../src/services/agentxApi'
+import { createSpandanApi } from '../src/services/spandanApi'
 
 function jsonResponse(body: unknown, status = 200): Response {
   return new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json' } })
@@ -17,7 +17,7 @@ describe('buildUrl', () => {
 describe('ApiClient', () => {
   it('sends JSON and returns the parsed body', async () => {
     const fetchMock = vi.fn().mockResolvedValue(jsonResponse({ id: 'c1', status: 'CREATED' }, 201))
-    const api = createAgentXApi(new ApiClient('http://api.test', fetchMock))
+    const api = createSpandanApi(new ApiClient('http://api.test', fetchMock))
 
     const result = await api.createComplaint({ citizen_input: 'Streetlight not working' })
 

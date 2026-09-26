@@ -1,0 +1,23 @@
+{
+  "_note": "Phrases that look like instructions to a machine. Detecting them does not change processing (citizen text is always treated as data); it is recorded as a safety flag for the audit trail.",
+  "instruction_like_phrases": [
+    "ignore previous instructions",
+    "ignore all previous instructions",
+    "ignore the above",
+    "disregard previous",
+    "disregard all",
+    "system prompt",
+    "developer mode",
+    "you are now",
+    "reveal your",
+    "api key",
+    "print your instructions",
+    "act as",
+    "ignore your instructions",
+    "ignore all instructions",
+    "ignore the instructions",
+    "disregard your instructions",
+    "override the rules",
+    "assign this to the prime minister"
+  ]
+}

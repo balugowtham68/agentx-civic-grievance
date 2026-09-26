@@ -1,0 +1,401 @@
+{
+  "language": "ml",
+  "note": "Malayalam (script and romanised). Chillu letters are normalised. Draft resource; needs native-speaker review and expansion.",
+  "number_words": {
+    "ഒരു": 1,
+    "ഒന്ന്": 1,
+    "രണ്ട്": 2,
+    "രണ്ടു": 2,
+    "മൂന്ന്": 3,
+    "മൂന്നു": 3,
+    "നാല്": 4,
+    "നാലു": 4,
+    "അഞ്ച്": 5,
+    "അഞ്ചു": 5,
+    "ആറ്": 6,
+    "ഏഴ്": 7,
+    "എട്ട്": 8,
+    "പത്ത്": 10,
+    "oru": 1,
+    "randu": 2,
+    "moonnu": 3,
+    "moonu": 3,
+    "naalu": 4,
+    "anchu": 5,
+    "pathu": 10
+  },
+  "duration_units": [
+    {
+      "unit": "hour",
+      "patterns": [
+        "മണിക്കൂറായി",
+        "മണിക്കൂർ",
+        "manikkoorayi"
+      ]
+    },
+    {
+      "unit": "day",
+      "patterns": [
+        "ദിവസത്തോളമായി",
+        "ദിവസങ്ങളായി",
+        "ദിവസമായി",
+        "ദിവസങ്ങൾ",
+        "ദിവസം",
+        "divasangalayi",
+        "divasamayi",
+        "divasam"
+      ]
+    },
+    {
+      "unit": "week",
+      "patterns": [
+        "ആഴ്ചകളായി",
+        "ആഴ്ചയായി",
+        "ആഴ്ച",
+        "aazhchayayi",
+        "azhchayayi",
+        "azhcha"
+      ]
+    },
+    {
+      "unit": "month",
+      "patterns": [
+        "മാസങ്ങളായി",
+        "മാസമായി",
+        "മാസം",
+        "maasamayi",
+        "masamayi"
+      ]
+    }
+  ],
+  "issue_subjects": [
+    {
+      "value": "street light",
+      "patterns": [
+        "തെരുവ് വിളക്കുകൾ",
+        "തെരുവ് വിളക്ക്",
+        "തെരുവുവിളക്ക്",
+        "സ്ട്രീറ്റ് ലൈറ്റ്",
+        "സ്ട്രീറ്റ്ലൈറ്റ്",
+        "വിളക്ക്",
+        "ലൈറ്റ്",
+        "street light",
+        "streetlight",
+        "light"
+      ]
+    },
+    {
+      "value": "garbage",
+      "patterns": [
+        "മാലിന്യങ്ങൾ",
+        "മാലിന്യം",
+        "ചവറ്",
+        "maalinyam",
+        "chavar",
+        "garbage"
+      ]
+    },
+    {
+      "value": "drain",
+      "patterns": [
+        "അഴുക്കുചാൽ",
+        "ഡ്രെയിനേജ്",
+        "ഓട",
+        "oda",
+        "drainage",
+        "drain"
+      ]
+    },
+    {
+      "value": "water supply",
+      "patterns": [
+        "കുടിവെള്ളം",
+        "വെള്ളം",
+        "vellam",
+        "water"
+      ]
+    },
+    {
+      "value": "road",
+      "patterns": [
+        "കുഴി",
+        "kuzhi",
+        "pothole"
+      ]
+    },
+    {
+      "value": "power supply",
+      "patterns": [
+        "കറന്റ്",
+        "വൈദ്യുതി",
+        "current"
+      ]
+    }
+  ],
+  "problem_states": [
+    {
+      "value": "not working",
+      "patterns": [
+        "പ്രവർത്തിക്കുന്നില്ല",
+        "കത്തുന്നില്ല",
+        "വർക്ക് ചെയ്യുന്നില്ല",
+        "work cheyyunnilla",
+        "kathunnilla",
+        "pravarthikkunnilla"
+      ]
+    },
+    {
+      "value": "not collected",
+      "patterns": [
+        "എടുക്കുന്നില്ല",
+        "നീക്കം ചെയ്തിട്ടില്ല",
+        "edukkunnilla"
+      ]
+    },
+    {
+      "value": "is lying there",
+      "patterns": [
+        "കിടക്കുന്നു",
+        "ഉണ്ട്",
+        "kidakkunnu",
+        "undu"
+      ]
+    },
+    {
+      "value": "blocked",
+      "patterns": [
+        "അടഞ്ഞു",
+        "ബ്ലോക്ക് ആയി",
+        "adanju",
+        "block aayi"
+      ]
+    },
+    {
+      "value": "overflowing",
+      "patterns": [
+        "നിറഞ്ഞൊഴുകുന്നു",
+        "ഒഴുകുന്നു",
+        "ozhukunnu"
+      ]
+    },
+    {
+      "value": "not coming",
+      "patterns": [
+        "വരുന്നില്ല",
+        "വന്നിട്ടില്ല",
+        "varunnilla",
+        "vannittilla"
+      ]
+    },
+    {
+      "value": "damaged",
+      "patterns": [
+        "തകർന്നു",
+        "പൊട്ടി",
+        "thakarnnu",
+        "potti"
+      ]
+    }
+  ],
+  "place_nouns": [
+    {
+      "value": "street",
+      "patterns": [
+        "തെരുവ",
+        "theruv",
+        "street"
+      ]
+    },
+    {
+      "value": "house",
+      "patterns": [
+        "വീട",
+        "veed",
+        "veedu"
+      ]
+    },
+    {
+      "value": "road",
+      "patterns": [
+        "റോഡ",
+        "road"
+      ]
+    },
+    {
+      "value": "school",
+      "patterns": [
+        "സ്കൂൾ",
+        "വിദ്യാലയ",
+        "school"
+      ]
+    },
+    {
+      "value": "temple",
+      "patterns": [
+        "ക്ഷേത്ര",
+        "അമ്പല",
+        "kshethram",
+        "ambalam",
+        "temple"
+      ]
+    },
+    {
+      "value": "market",
+      "patterns": [
+        "മാർക്കറ്റ",
+        "ചന്ത",
+        "chantha",
+        "market"
+      ]
+    },
+    {
+      "value": "bus stand",
+      "patterns": [
+        "ബസ് സ്റ്റാൻഡ",
+        "ബസ് സ്റ്റോപ്പ",
+        "bus stand",
+        "bus stop"
+      ]
+    },
+    {
+      "value": "hospital",
+      "patterns": [
+        "ആശുപത്രി",
+        "aashupathri",
+        "hospital"
+      ]
+    },
+    {
+      "value": "junction",
+      "patterns": [
+        "ജംഗ്ഷൻ",
+        "junction"
+      ]
+    },
+    {
+      "value": "area",
+      "patterns": [
+        "പ്രദേശ",
+        "ഏരിയ",
+        "area"
+      ]
+    },
+    {
+      "value": "colony",
+      "patterns": [
+        "കോളനി",
+        "colony"
+      ]
+    },
+    {
+      "value": "village",
+      "patterns": [
+        "ഗ്രാമ",
+        "gramam"
+      ]
+    },
+    {
+      "value": "nagar",
+      "patterns": [
+        "നഗര",
+        "നഗറ",
+        "nagar"
+      ]
+    }
+  ],
+  "generic_places": [
+    "street",
+    "house",
+    "road",
+    "area",
+    "colony",
+    "village"
+  ],
+  "possessives": [
+    {
+      "value": "our",
+      "patterns": [
+        "ഞങ്ങളുടെ",
+        "നമ്മുടെ",
+        "njangalude",
+        "nammude"
+      ]
+    },
+    {
+      "value": "my",
+      "patterns": [
+        "എന്റെ",
+        "ente"
+      ]
+    }
+  ],
+  "proximity": [
+    {
+      "value": "near",
+      "patterns": [
+        "അടുത്തുള്ള",
+        "അടുത്ത്",
+        "സമീപം",
+        "അരികിൽ",
+        "aduthu",
+        "adutthu",
+        "sameepam"
+      ]
+    },
+    {
+      "value": "in front of",
+      "patterns": [
+        "മുന്നിൽ",
+        "munnil"
+      ]
+    },
+    {
+      "value": "behind",
+      "patterns": [
+        "പിന്നിൽ",
+        "pinnil"
+      ]
+    }
+  ],
+  "identifier_markers": [
+    "നമ്പർ",
+    "number",
+    "no"
+  ],
+  "latin_markers": [
+    "njangalude",
+    "nammude",
+    "ente",
+    "illa",
+    "undu",
+    "divasamayi",
+    "divasam",
+    "aduthu",
+    "vellam",
+    "varunnilla",
+    "kathunnilla",
+    "cheyyunnilla",
+    "aayi",
+    "ippol",
+    "maalinyam",
+    "moonnu",
+    "theruvil"
+  ],
+  "correction_phrases": [
+    "അല്ല",
+    "ഇല്ല",
+    "alla",
+    "illa"
+  ],
+  "confirmation_phrases": [
+    "അതെ",
+    "ശരി",
+    "athe",
+    "shari"
+  ],
+  "questions": {
+    "issue": "നിങ്ങൾ പരാതിപ്പെടാൻ ആഗ്രഹിക്കുന്ന പ്രശ്നം എന്താണ്?",
+    "location": "ഈ പ്രശ്നം എവിടെയാണ്? തെരുവ്, പ്രദേശം അല്ലെങ്കിൽ അടുത്തുള്ള അടയാളം പറയുക.",
+    "duration": "ഈ പ്രശ്നം എത്ര കാലമായി ഉണ്ട്?"
+  }
+}

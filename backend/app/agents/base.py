@@ -1,4 +1,4 @@
-"""Base abstraction shared by the five AGENT X agents.
+"""Base abstraction shared by the five SPANDAN AI agents.
 
 Every agent:
 - has a fixed identity (`name`, `description`, `phase`)

@@ -12,93 +12,45 @@ from typing import Literal
 
 from pydantic import BaseModel, Field, field_validator
 
-from app.schemas.complaint import LANGUAGE_CODE_PATTERN, SLAStateRead
+from app.schemas.classification import (  # noqa: F401 - re-exported
+    ClassificationRequest,
+    ClassificationResult,
+)
+from app.schemas.complaint import SLAStateRead
+from app.schemas.drafting import (  # noqa: F401 - re-exported
+    DraftingRequest,
+    DraftingResult,
+)
 from app.schemas.enums import (
     AuthorityStatus,
     ComplaintStatus,
     EscalationState,
-    InputChannel,
     SLAStage,
+)
+from app.schemas.intake import (  # noqa: F401 - re-exported Phase 1 names
+    ExtractedEntity,
+    ExtractedField,
+    ExtractedGrievance,
+    IntakeRequest,
+    IntakeResponse,
+    IntakeResult,
 )
 
 # --------------------------------------------------------------------------
-# Agent 1 - Citizen Intake
+# Agent 1 - Citizen Intake: contracts live in app/schemas/intake.py (Phase 2).
+# Re-exported here so Phase 1 imports keep working.
 # --------------------------------------------------------------------------
-
-
-class ExtractedField(BaseModel):
-    """A fact extracted from the citizen's words.
-
-    `source_span` must quote the citizen. A field with no quote stays None and
-    is reported as missing - it is never guessed.
-    """
-
-    value: str
-    source_span: str
-
-
-class ExtractedEntity(BaseModel):
-    type: str  # e.g. "landmark", "pole_number", "street"
-    value: str
-    source_span: str
-
-
-class ExtractedGrievance(BaseModel):
-    issue: ExtractedField | None = None
-    location: ExtractedField | None = None
-    duration: ExtractedField | None = None
-    entities: list[ExtractedEntity] = Field(default_factory=list)
-
-
-class IntakeRequest(BaseModel):
-    complaint_id: str
-    channel: InputChannel = InputChannel.TEXT
-    text: str | None = Field(default=None, max_length=2000)
-    audio_ref: str | None = None  # uploaded audio reference for transcription
-    language_hint: str | None = Field(default=None, pattern=LANGUAGE_CODE_PATTERN)
-
-
-class IntakeResponse(BaseModel):
-    complaint_id: str
-    detected_language: str
-    transcript: str
-    translated_text: str  # working-language (English) version
-    extracted: ExtractedGrievance
-    missing_fields: list[str] = Field(default_factory=list)
-    follow_up_question: str | None = None  # in the citizen's language
-    status: Literal[ComplaintStatus.UNDERSTOOD, ComplaintStatus.NEEDS_INFO]
-
 
 # --------------------------------------------------------------------------
 # Agent 2 - Classification & Reasoning
 # --------------------------------------------------------------------------
 
 
-class Evidence(BaseModel):
-    doc_id: str
-    snippet: str
-    score: float | None = None
-
-
-class ClassificationRequest(BaseModel):
-    complaint_id: str
-    translated_text: str
-    extracted: ExtractedGrievance
-
-
-class ClassificationResponse(BaseModel):
-    complaint_id: str
-    category: str | None
-    department_id: str | None
-    jurisdiction_id: str | None
-    sla_policy_id: str | None
-    confidence: float = Field(ge=0.0, le=1.0)
-    evidence: list[Evidence] = Field(default_factory=list)
-    reasoning: str
-    missing_for_category: list[str] = Field(default_factory=list)
-    status: Literal[
-        ComplaintStatus.CLASSIFIED, ComplaintStatus.NEEDS_INFO, ComplaintStatus.NEEDS_REVIEW
-    ]
+# Contracts live in app/schemas/classification.py (Phase 3). The Phase 1 stub
+# (numeric confidence, NEEDS_REVIEW-only outcomes) was replaced: SPANDAN AI does not
+# emit fake confidence scores, and outcomes are CLASSIFIED / NEEDS_INFO / AMBIGUOUS /
+# UNSUPPORTED_CLASSIFICATION with a controlled confidence_state.
+ClassificationResponse = ClassificationResult
 
 
 # --------------------------------------------------------------------------
@@ -107,29 +59,30 @@ class ClassificationResponse(BaseModel):
 
 
 class DraftedComplaint(BaseModel):
+    """The citizen-approved draft as the Filing Agent (Phase 5) will consume it."""
+
     issue: str
     category: str
     department_id: str
-    jurisdiction_id: str
+    jurisdiction_id: str | None  # None only for categories that do not require one (none in the demo KB)
     location: str
     duration: str | None = None
     description: str
     requested_action: str
     supporting_details: list[str] = Field(default_factory=list)
     original_text: str  # citizen's own words, always attached
+    # Phase 4 additions (optional, so earlier callers keep working).
+    subject: str | None = None
+    body: str | None = None
+    draft_id: str | None = None
+    draft_version: int | None = None
 
 
-class DraftRequest(BaseModel):
-    complaint_id: str
-    intake: IntakeResponse
-    classification: ClassificationResponse
-
-
-class DraftResponse(BaseModel):
-    complaint_id: str
-    draft: DraftedComplaint
-    citizen_summary: str  # plain-language summary for review before filing
-    summary_language: str
+# Phase 4 contracts live in app/schemas/drafting.py (DraftingRequest -> DraftingResult).
+# DraftedComplaint above stays the Phase 5 filing payload; the drafting service fills it
+# from the citizen-approved draft.
+DraftRequest = DraftingRequest
+DraftResponse = DraftingResult
 
 
 # --------------------------------------------------------------------------

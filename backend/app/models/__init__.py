@@ -6,6 +6,9 @@ app.repositories.reference_repository.
 """
 
 from app.models.audit_event import AuditEvent
+from app.models.classification import ClassificationRecord
 from app.models.complaint import Complaint, EscalationRecord, SLARecord
+from app.models.draft import DraftRecord
+from app.models.intake import IntakeRecord
 
-__all__ = ["AuditEvent", "Complaint", "EscalationRecord", "SLARecord"]
+__all__ = ["AuditEvent", "ClassificationRecord", "Complaint", "DraftRecord", "EscalationRecord", "IntakeRecord", "SLARecord"]
