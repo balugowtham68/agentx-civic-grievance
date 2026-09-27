@@ -274,3 +274,102 @@ class WhisperTranscriptionProvider:
             raise InvalidAudioError("No speech was recognised in the recording. Please try again or type")
         # Whisper's json response has no confidence score; none is invented.
         return Transcript(text=text, language=language_hint, provider=f"remote_whisper:{self._model}")
+
+
+class GeminiTranscriptionProvider:
+    """Multimodal audio-level language identification and transcription using Gemini."""
+
+    name = "gemini_audio"
+
+    def __init__(
+        self,
+        api_key: str,
+        *,
+        model: str = "gemini-3.8-flash",
+        base_url: str = "https://generativelanguage.googleapis.com/v1beta",
+        timeout_seconds: float = 30.0,
+        transport: httpx.AsyncBaseTransport | None = None,
+    ) -> None:
+        self._api_key = api_key
+        self._model = model
+        self._url = f"{base_url.rstrip('/')}/models/{model}:generateContent"
+        self._timeout = timeout_seconds
+        self._transport = transport
+
+    @property
+    def available(self) -> bool:
+        return bool(self._api_key)
+
+    async def transcribe(
+        self, audio: bytes, *, audio_format: str, language_hint: str | None = None
+    ) -> Transcript:
+        import base64
+        import json
+
+        mime, _ = AUDIO_FORMATS.get(audio_format, ("audio/webm", "webm"))
+        audio_b64 = base64.b64encode(audio).decode("utf-8")
+
+        prompt_text = (
+            "You are an expert multilingual speech-to-text transcriber for Indian civic grievances.\n"
+            "1. Transcribe the audio exactly in the native script of the language spoken "
+            "(if spoken in Telugu, write native Telugu script; if Tamil, native Tamil script; etc.).\n"
+            "2. Identify the language code: te (Telugu), ta (Tamil), kn (Kannada), hi (Hindi), en (English), ml (Malayalam).\n"
+            "3. Return ONLY a single JSON object with keys:\n"
+            "   'transcript': string,\n"
+            "   'language': string,\n"
+            "   'confidence': float between 0.0 and 1.0."
+        )
+
+        body = {
+            "contents": [
+                {
+                    "parts": [
+                        {"inlineData": {"mimeType": mime, "data": audio_b64}},
+                        {"text": prompt_text},
+                    ]
+                }
+            ],
+            "generationConfig": {
+                "temperature": 0.0,
+                "responseMimeType": "application/json",
+            },
+        }
+
+        try:
+            async with httpx.AsyncClient(timeout=self._timeout, transport=self._transport) as client:
+                response = await client.post(
+                    self._url,
+                    json=body,
+                    headers={"x-goog-api-key": self._api_key},
+                )
+        except httpx.TimeoutException as exc:
+            raise SpeechToTextTimeoutError(
+                "Audio transcription took too long. Please try again."
+            ) from exc
+        except httpx.HTTPError as exc:
+            raise SpeechToTextError("Audio service could not be reached") from exc
+
+        if response.status_code >= 400:
+            logger.warning("gemini audio transcription error", extra={"status": response.status_code})
+            raise SpeechToTextError(f"Gemini audio transcription failed (HTTP {response.status_code})")
+
+        try:
+            data = response.json()
+            raw_text = data["candidates"][0]["content"]["parts"][0]["text"]
+            parsed = json.loads(raw_text)
+            text = str(parsed.get("transcript", "")).strip()
+            lang = str(parsed.get("language", language_hint or "und")).lower().strip()
+            conf = float(parsed.get("confidence", 0.95))
+        except (KeyError, IndexError, ValueError, TypeError) as exc:
+            raise SpeechToTextError("Could not parse transcription output") from exc
+
+        if not text:
+            raise InvalidAudioError("No clear speech recognised in the recording")
+
+        return Transcript(
+            text=text,
+            language=lang if lang != "und" else None,
+            provider="gemini_audio",
+            confidence=conf,
+        )
+

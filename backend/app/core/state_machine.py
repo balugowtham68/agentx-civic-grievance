@@ -10,8 +10,13 @@ from __future__ import annotations
 from app.core.errors import InvalidStateTransitionError
 from app.schemas.enums import ComplaintStatus as S
 
-# Authority can close a complaint at any point after it is filed.
-_POST_FILING_EXITS = {S.RESOLVED, S.CLOSED}
+# Authority can resolve, close, accept, or reject a complaint after it is filed.
+_POST_FILING_EXITS = {
+    S.RESOLVED,
+    S.CLOSED,
+    S.ACCEPTED_BY_AUTHORITY,
+    S.REJECTED,
+}
 
 # Phase 2 (intake): CREATED -> NEEDS_INFO <-> UNDERSTANDING -> UNDERSTOOD (citizen confirms).
 # A correction after confirmation reopens the intake (UNDERSTOOD -> UNDERSTANDING/NEEDS_INFO).
@@ -34,11 +39,15 @@ ALLOWED_TRANSITIONS: dict[S, frozenset[S]] = {
     # Citizen correction sends the complaint back through intake.
     S.DRAFTED: frozenset({S.DRAFTING, S.FILED, S.FILING_FAILED, S.UNDERSTOOD}),
     S.FILING_FAILED: frozenset({S.FILED}),
-    S.FILED: frozenset({S.MONITORING}),
+    S.FILED: frozenset({S.MONITORING} | _POST_FILING_EXITS),
     S.MONITORING: frozenset({S.WARNING} | _POST_FILING_EXITS),
     S.WARNING: frozenset({S.BREACHED} | _POST_FILING_EXITS),
     S.BREACHED: frozenset({S.ESCALATED} | _POST_FILING_EXITS),
-    S.ESCALATED: frozenset(_POST_FILING_EXITS),
+    S.ESCALATED: frozenset(_POST_FILING_EXITS | {S.ACCEPTED_BY_HIGHER_AUTHORITY}),
+    # Authority Review & Higher Official Workflow States
+    S.ACCEPTED_BY_AUTHORITY: frozenset({S.RESOLVED, S.CLOSED}),
+    S.REJECTED: frozenset({S.ESCALATED, S.CLOSED}),
+    S.ACCEPTED_BY_HIGHER_AUTHORITY: frozenset({S.RESOLVED, S.CLOSED}),
     S.RESOLVED: frozenset({S.CLOSED}),
     S.CLOSED: frozenset(),
 }

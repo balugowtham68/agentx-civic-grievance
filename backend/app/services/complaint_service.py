@@ -31,18 +31,30 @@ from app.services.audit_service import AuditService
 
 class ComplaintService:
     def __init__(self, session: Session, clock: Clock | None = None) -> None:
+        self.session = session
         self.clock = clock or get_clock()
         self.repo = ComplaintRepository(session)
         self.audit = AuditService(session, self.clock)
 
-    def create(self, request: ComplaintCreateRequest, *, complaint_id: str | None = None) -> Complaint:
+    def create(
+        self,
+        request: ComplaintCreateRequest,
+        *,
+        complaint_id: str | None = None,
+        tracking_id: str | None = None,
+        location: str | None = None,
+        drafted_complaint: dict[str, object] | None = None,
+    ) -> Complaint:
         now = self.clock.now()
         complaint = self.repo.add(
             Complaint(
                 **({"id": complaint_id} if complaint_id else {}),
+                tracking_id=tracking_id,
                 citizen_input=request.citizen_input,
                 input_channel=request.channel,
                 language=request.language,
+                location=location,
+                drafted_complaint=drafted_complaint,
                 status=ComplaintStatus.CREATED,
                 authority_status=AuthorityStatus.NONE,
                 created_at=now,
@@ -55,12 +67,16 @@ class ComplaintService:
                 event_type=AuditEventType.COMPLAINT_CREATED,
                 actor_type=ActorType.CITIZEN,
                 actor_name="citizen",
-                summary="Citizen submitted a grievance",
+                summary="Citizen submitted a grievance with photo proof and GPS location",
                 # Store length and channel, not the text itself: the text is on the complaint.
                 payload={
+                    "tracking_id": tracking_id,
                     "channel": request.channel.value,
                     "language_hint": request.language,
+                    "location": location,
                     "characters": len(request.citizen_input),
+                    "has_photo_proof": bool(drafted_complaint and drafted_complaint.get("photo_proof")),
+                    "gps": drafted_complaint.get("gps") if drafted_complaint else None,
                 },
             )
         )

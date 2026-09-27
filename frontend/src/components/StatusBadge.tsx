@@ -16,6 +16,9 @@ const TONE: Record<ComplaintStatus, string> = {
   WARNING: 'bg-amber-100 text-amber-900',
   BREACHED: 'bg-red-100 text-red-900',
   ESCALATED: 'bg-purple-100 text-purple-900',
+  ACCEPTED_BY_AUTHORITY: 'bg-emerald-100 text-emerald-900',
+  REJECTED: 'bg-rose-100 text-rose-900',
+  ACCEPTED_BY_HIGHER_AUTHORITY: 'bg-indigo-100 text-indigo-900',
   RESOLVED: 'bg-green-100 text-green-900',
   CLOSED: 'bg-green-100 text-green-900',
 }
@@ -36,6 +39,9 @@ const LABEL: Record<ComplaintStatus, string> = {
   WARNING: 'Deadline approaching',
   BREACHED: 'Deadline missed',
   ESCALATED: 'Escalated',
+  ACCEPTED_BY_AUTHORITY: 'Accepted by Authority',
+  REJECTED: 'Rejected by Authority',
+  ACCEPTED_BY_HIGHER_AUTHORITY: 'Accepted by Higher Authority',
   RESOLVED: 'Resolved',
   CLOSED: 'Closed',
 }

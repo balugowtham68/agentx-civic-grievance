@@ -16,7 +16,7 @@ from app.schemas.classification import (  # noqa: F401 - re-exported
     ClassificationRequest,
     ClassificationResult,
 )
-from app.schemas.complaint import SLAStateRead
+from app.schemas.complaint import SLAStateRead, EscalationRead
 from app.schemas.drafting import (  # noqa: F401 - re-exported
     DraftingRequest,
     DraftingResult,
@@ -145,6 +145,15 @@ class EscalationResult(BaseModel):
 
 class WatchdogEvaluationRequest(BaseModel):
     complaint_id: str
+    tracking_id: str
+    category: str
+    department_id: str
+    jurisdiction_id: str | None
+    current_status: ComplaintStatus
+    authority_status: AuthorityStatus
+    escalation_state: EscalationState
+    sla: SLAStateRead | None
+    escalations: list[EscalationRead]
     evaluated_at: datetime
 
 

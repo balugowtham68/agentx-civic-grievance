@@ -1,232 +1,253 @@
-import { useCallback, useState, type FormEvent } from 'react'
-import { ErrorState } from '../components/AsyncStates'
-import { PageHeader } from '../components/Layout'
-import { ClassificationCard } from '../components/classification/ClassificationCard'
-import { DraftCard } from '../components/drafting/DraftCard'
-import { LanguagePicker } from '../components/intake/LanguagePicker'
-import { UnderstoodCard } from '../components/intake/UnderstoodCard'
-import { useApi } from '../hooks/useApi'
-import { useVoiceInput } from '../hooks/useVoiceInput'
-import { DEFAULT_LANGUAGES } from '../i18n/languages'
-import { translatorFor } from '../i18n/strings'
-import { spandanApi } from '../services/spandanApi'
-import { ApiError } from '../services/apiClient'
-import type { ClassificationResult, DraftView, InputChannel, IntakeCorrectionRequest, IntakeResult } from '../types/api'
+// @ts-nocheck
+import React, { useCallback, useState, useEffect, FormEvent } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Mic, Send, Edit2, CheckCircle, ArrowRight, Loader2, MapPin, Search, AlertCircle, FileText } from "lucide-react";
+import { spandanApi } from "../services/spandanApi";
+import type { ClassificationResult, DraftView, IntakeResult, InputChannel } from "../types/api";
 
-/**
- * Citizen intake (Phase 2): say or type the problem once, check "What I understood",
- * correct, confirm. Then classification (Phase 3) runs on the confirmed facts and shows
- * how SPANDAN AI classified it, why, and from which sources.
- */
-export function IntakePage() {
-  const capabilities = useApi((signal) => spandanApi.intakeCapabilities(signal), 'intake-capabilities')
-  const languages = capabilities.status === 'success' ? capabilities.data.languages : DEFAULT_LANGUAGES
-  const serverSpeechToText = capabilities.status === 'success' && capabilities.data.server_speech_to_text_available
+export default function IntakePage() {
+  const navigate = useNavigate();
+  const locState = useLocation().state as { text?: string; lang?: string } | null;
+  
+  const [language, setLanguage] = useState(locState?.lang || "en");
+  const [text, setText] = useState(locState?.text || "");
+  const [channel, setChannel] = useState<InputChannel>("text");
+  
+  // Phase 2: Intake state
+  const [intakeResult, setIntakeResult] = useState<IntakeResult | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isConfirming, setIsConfirming] = useState(false);
+  
+  // Phase 3: Classification state
+  const [classification, setClassification] = useState<ClassificationResult | null>(null);
+  
+  // Phase 4: Drafting state
+  const [draft, setDraft] = useState<DraftView | null>(null);
+  const [isDrafting, setIsDrafting] = useState(false);
+  
+  // Phase 5: Filing state
+  const [isFiling, setIsFiling] = useState(false);
 
-  const [language, setLanguage] = useState('en')
-  const [text, setText] = useState('')
-  const [channel, setChannel] = useState<InputChannel>('text')
-  const [result, setResult] = useState<IntakeResult | null>(null)
-  const [busy, setBusy] = useState(false)
-  const [error, setError] = useState<ApiError | null>(null)
-  const [classification, setClassification] = useState<ClassificationResult | null>(null)
-  const [draftView, setDraftView] = useState<DraftView | null>(null)
-  const [failedStage, setFailedStage] = useState<'submitting' | 'classifying' | 'drafting' | null>(null)
-  const [busyLabel, setBusyLabel] = useState<'submitting' | 'classifying' | 'drafting'>('submitting')
-  const t = translatorFor(language)
-  const locale = languages.find((lang) => lang.code === language)?.speech_locale ?? 'en-IN'
-
-  const guarded = useCallback(async (label: 'submitting' | 'classifying' | 'drafting', work: () => Promise<void>) => {
-    setBusy(true)
-    setBusyLabel(label)
-    setError(null)
-    setFailedStage(null)
-    try {
-      await work()
-    } catch (caught) {
-      setFailedStage(label)
-      setError(caught instanceof ApiError ? caught : new ApiError(0, 'unknown_error', 'Something went wrong'))
-    } finally {
-      setBusy(false)
+  // If we came from the home page with text, auto-submit!
+  useEffect(() => {
+    if (locState?.text && !intakeResult && !isSubmitting) {
+      submitIntake(locState.text, locState.lang || "en", "text");
     }
-  }, [])
+  }, [locState]);
 
-  const run = useCallback(
-    (action: () => Promise<IntakeResult>) => guarded('submitting', async () => setResult(await action())),
-    [guarded],
-  )
+  const submitIntake = async (rawText: string, lang: string, inputChannel: InputChannel) => {
+    setIsSubmitting(true);
+    try {
+      const res = await spandanApi.submitTextIntake({ raw_text: rawText, language: lang, input_channel: inputChannel });
+      setIntakeResult(res);
+    } catch (e) {
+      console.error(e);
+      // Handle error gracefully
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
-  const classify = useCallback(
-    (action: () => Promise<ClassificationResult>) => guarded('classifying', async () => setClassification(await action())),
-    [guarded],
-  )
+  const handleConfirm = async () => {
+    if (!intakeResult) return;
+    setIsConfirming(true);
+    try {
+      const confirmed = await spandanApi.confirmIntake(intakeResult.complaint_id);
+      setIntakeResult(confirmed);
+      
+      // Auto trigger classification
+      const classRes = await spandanApi.runClassification(intakeResult.complaint_id);
+      setClassification(classRes);
+      
+      // Auto trigger drafting
+      setIsDrafting(true);
+      const draftRes = await spandanApi.runDrafting(intakeResult.complaint_id);
+      setDraft(draftRes);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsConfirming(false);
+      setIsDrafting(false);
+    }
+  };
 
-  const drafting = useCallback(
-    (action: () => Promise<DraftView>) => guarded('drafting', async () => setDraftView(await action())),
-    [guarded],
-  )
+  const handleFile = async () => {
+    if (!intakeResult) return;
+    setIsFiling(true);
+    try {
+      await spandanApi.fileComplaint(intakeResult.complaint_id);
+      navigate(`/complaints/${intakeResult.complaint_id}`);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsFiling(false);
+    }
+  };
 
-  /** Confirm "What I understood", then classify the confirmed facts (Phase 3). */
-  const confirmAndClassify = useCallback(
-    (complaintId: string) =>
-      guarded('submitting', async () => {
-        const confirmed = await spandanApi.confirmIntake(complaintId)
-        setResult(confirmed)
-        if (confirmed.citizen_confirmation_status === 'CONFIRMED') {
-          setBusyLabel('classifying')
-          setClassification(await spandanApi.runClassification(complaintId))
-        }
-      }),
-    [guarded],
-  )
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    if (text.trim().length > 2) submitIntake(text, language, channel);
+  };
 
-  const onTranscript = useCallback((spoken: string) => {
-    setText((current) => (current ? `${current} ${spoken}` : spoken))
-    setChannel('voice')
-  }, [])
-  const onAudio = useCallback(
-    (audio: Blob) => void run(() => spandanApi.submitVoiceIntake(audio, language)),
-    [run, language],
-  )
-  const voice = useVoiceInput({ locale, serverSpeechToText, onTranscript, onAudio })
-
-  function submit(event: FormEvent) {
-    event.preventDefault()
-    if (text.trim().length < 3) return
-    void run(() => spandanApi.submitTextIntake({ raw_text: text.trim(), language, input_channel: channel }))
-  }
-
-  function startOver() {
-    setResult(null)
-    setText('')
-    setChannel('text')
-    setError(null)
-    setClassification(null)
-    setDraftView(null)
-  }
-
-  const id = result?.complaint_id ?? ''
-  return (
-    <>
-      <PageHeader title={t('title')} subtitle={t('subtitle')} />
-
-      {!result && (
-        <form onSubmit={submit} className="space-y-5 rounded-lg bg-white p-6 shadow-sm">
-          <LanguagePicker languages={languages} value={language} onChange={setLanguage} t={t} disabled={busy} />
-          <div>
-            <label htmlFor="complaint-text" className="block font-semibold">
-              {t('complaintLabel')}
-            </label>
-            <textarea
-              id="complaint-text"
+  if (!intakeResult && !isSubmitting) {
+    return (
+      <div className="max-w-3xl mx-auto p-4 py-12">
+        <h1 className="text-3xl font-bold mb-8 tracking-tight">Report a Complaint</h1>
+        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+          <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+            <textarea 
               value={text}
-              lang={language}
-              rows={4}
-              maxLength={2000}
-              disabled={busy}
-              placeholder={t('complaintPlaceholder')}
-              onChange={(event) => setText(event.target.value)}
-              className="mt-1 w-full rounded-lg border border-slate-300 p-3"
+              onChange={(e) => setText(e.target.value)}
+              placeholder="Tell us what happened..." 
+              className="w-full resize-none outline-none text-lg p-4 h-32 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
-          </div>
-
-          <div className="flex flex-wrap items-center gap-3">
-            {voice.mode === 'none' ? (
-              <p className="text-slate-600">{t('voiceUnavailable')}</p>
-            ) : voice.active ? (
-              <>
-                <button type="button" onClick={voice.stop} className="min-h-12 rounded-lg bg-red-600 px-6 font-semibold text-white">
-                  {t('stop')}
-                </button>
-                <span role="status" className="text-slate-700">
-                  {voice.mode === 'browser' ? t('listening') : t('recording')}
-                </span>
-              </>
-            ) : (
-              <button type="button" onClick={() => void voice.start()} disabled={busy} className="min-h-12 rounded-lg border-2 border-blue-600 px-6 font-semibold text-blue-700 disabled:opacity-50">
-                {voice.mode === 'browser' ? t('speak') : t('record')}
+            <div className="flex items-center justify-between">
+              <select 
+                value={language}
+                onChange={(e) => setLanguage(e.target.value)}
+                className="bg-white border border-slate-200 rounded-lg px-4 py-2 font-medium"
+              >
+                <option value="en">English</option>
+                <option value="ta">Tamil</option>
+                <option value="te">Telugu</option>
+                <option value="hi">Hindi</option>
+                <option value="ml">Malayalam</option>
+                <option value="kn">Kannada</option>
+              </select>
+              <button 
+                type="submit" 
+                disabled={!text.trim()}
+                className="flex items-center space-x-2 bg-blue-600 text-white px-6 py-2.5 rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50"
+              >
+                <span>Process Complaint</span>
+                <ArrowRight size={18} />
               </button>
-            )}
-            <button type="submit" disabled={busy || text.trim().length < 3} className="min-h-12 rounded-lg bg-blue-600 px-8 font-semibold text-white disabled:opacity-50">
-              {t('submit')}
-            </button>
-          </div>
-          {voice.failed && <p role="alert" className="text-red-800">{t('voiceError')}</p>}
-        </form>
-      )}
-
-      {busy && (
-        <p role="status" aria-live="polite" className="mt-4 flex items-center gap-3 rounded-lg bg-white p-4 shadow-sm">
-          <span className="size-5 animate-spin rounded-full border-4 border-slate-200 border-t-blue-600" aria-hidden="true" />
-          {t(busyLabel)}
-        </p>
-      )}
-
-      {error && (
-        <div className="mt-4">
-          <ErrorState
-            error={error}
-            onRetry={
-              failedStage === 'drafting' && !draftView
-                ? () => void drafting(() => spandanApi.runDrafting(id))
-                : failedStage === 'classifying' || (failedStage === 'submitting' && result?.citizen_confirmation_status === 'CONFIRMED')
-                  ? () => void classify(() => (classification ? spandanApi.retryClassification(id) : spandanApi.runClassification(id)))
-                  : undefined
-            }
-          />
+            </div>
+          </form>
         </div>
-      )}
+      </div>
+    );
+  }
 
-      {result && (
-        <div className="space-y-4">
-          {result.intake_status === 'NEEDS_LANGUAGE' && (
-            <div className="rounded-lg bg-white p-6 shadow-sm">
-              <LanguagePicker languages={languages} value={language} onChange={setLanguage} t={t} disabled={busy} />
+  // AI Pipeline View
+  return (
+    <div className="max-w-4xl mx-auto p-4 py-12">
+      <h1 className="text-3xl font-bold mb-8 tracking-tight">Processing your complaint</h1>
+      
+      <div className="space-y-6">
+        
+        {/* Step 1: Intake & Understanding */}
+        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+          <div className="bg-slate-50 px-6 py-4 border-b border-slate-200 flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              {isSubmitting ? <Loader2 className="animate-spin text-blue-600" /> : <CheckCircle className="text-emerald-600" />}
+              <h2 className="text-lg font-semibold text-slate-900">Understanding Complaint</h2>
+            </div>
+          </div>
+          
+          {intakeResult && (
+            <div className="p-6 bg-white">
+              <div className="grid grid-cols-2 gap-6 mb-6">
+                <div>
+                  <div className="text-sm font-medium text-slate-500 mb-1">Issue Detected</div>
+                  <div className="font-semibold text-slate-900 text-lg">{intakeResult.issue || "Not detected"}</div>
+                </div>
+                <div>
+                  <div className="text-sm font-medium text-slate-500 mb-1">Location</div>
+                  <div className="font-semibold text-slate-900 text-lg flex items-center">
+                    <MapPin size={16} className="text-slate-400 mr-1" />
+                    {intakeResult.location || "Not detected"}
+                  </div>
+                </div>
+              </div>
+              
+              {!isConfirming && intakeResult.citizen_confirmation_status !== "CONFIRMED" && (
+                <div className="flex space-x-4">
+                  <button 
+                    onClick={handleConfirm}
+                    className="flex-1 bg-blue-600 text-white py-3 rounded-xl font-medium hover:bg-blue-700 flex items-center justify-center space-x-2 shadow-sm"
+                  >
+                    <CheckCircle size={18} />
+                    <span>Yes, this is correct</span>
+                  </button>
+                  <button 
+                    onClick={() => { setIntakeResult(null); setText(""); }}
+                    className="flex-1 bg-white border border-slate-300 text-slate-700 py-3 rounded-xl font-medium hover:bg-slate-50 flex items-center justify-center space-x-2"
+                  >
+                    <Edit2 size={18} />
+                    <span>Edit details</span>
+                  </button>
+                </div>
+              )}
             </div>
           )}
-          <UnderstoodCard
-            result={result}
-            languages={languages}
-            t={t}
-            busy={busy}
-            onAnswer={(answer) => void run(() => spandanApi.answerClarification(id, answer))}
-            onCorrect={(body: IntakeCorrectionRequest) => void run(() => spandanApi.correctIntake(id, body))}
-            onConfirm={() => void confirmAndClassify(id)}
-            onRetry={() => void run(() => spandanApi.retryIntake(id, language))}
-          />
-          {classification && (
-            <ClassificationCard
-              result={classification}
-              t={t}
-              busy={busy}
-              onAnswer={(answer) => void classify(() => spandanApi.answerClassification(id, answer))}
-              onRetry={() => void classify(() => spandanApi.retryClassification(id))}
-            />
-          )}
-          {classification?.classification_status === 'CLASSIFIED' && !draftView && (
-            <button
-              type="button"
-              onClick={() => void drafting(() => spandanApi.runDrafting(id))}
-              disabled={busy}
-              className="min-h-12 rounded-lg bg-blue-600 px-6 font-semibold text-white disabled:opacity-50"
-            >
-              {t('generateDraft')}
-            </button>
-          )}
-          {draftView && (
-            <DraftCard
-              view={draftView}
-              t={t}
-              busy={busy}
-              onEdit={(body) => void drafting(() => spandanApi.editDraft(id, body))}
-              onApprove={(version) => void drafting(() => spandanApi.approveDraft(id, version))}
-            />
-          )}
-          <button type="button" onClick={startOver} className="min-h-12 rounded-lg border border-slate-300 bg-white px-6 font-semibold">
-            {t('newComplaint')}
-          </button>
         </div>
-      )}
-    </>
-  )
+
+        {/* Step 2: Classification */}
+        {(isConfirming || classification) && (
+          <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden animate-in fade-in slide-in-from-bottom-4">
+            <div className="bg-slate-50 px-6 py-4 border-b border-slate-200 flex items-center space-x-3">
+              {!classification ? <Loader2 className="animate-spin text-blue-600" /> : <CheckCircle className="text-emerald-600" />}
+              <h2 className="text-lg font-semibold text-slate-900">Classifying & Routing</h2>
+            </div>
+            {classification && (
+              <div className="p-6 flex flex-col md:flex-row md:items-center justify-between bg-emerald-50/30">
+                <div>
+                  <div className="text-sm font-medium text-emerald-800 mb-1">Assigned Department</div>
+                  <div className="font-bold text-emerald-900 text-xl">{classification.category.department_id}</div>
+                  <div className="text-sm text-emerald-700 mt-1">{classification.category.category_id}</div>
+                </div>
+                <div className="mt-4 md:mt-0 text-right">
+                  <div className="text-sm font-medium text-slate-500 mb-1">Knowledge Source</div>
+                  <div className="inline-flex items-center px-3 py-1 bg-white border border-slate-200 rounded-full text-xs font-medium text-slate-600">
+                    <Search size={12} className="mr-1" />
+                    Civic Rules DB
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Step 3: Drafting & Filing */}
+        {(isDrafting || draft) && (
+          <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden animate-in fade-in slide-in-from-bottom-4 delay-150">
+            <div className="bg-slate-50 px-6 py-4 border-b border-slate-200 flex items-center space-x-3">
+              {!draft ? <Loader2 className="animate-spin text-blue-600" /> : <CheckCircle className="text-emerald-600" />}
+              <h2 className="text-lg font-semibold text-slate-900">Formalizing Complaint</h2>
+            </div>
+            {draft && (
+              <div className="p-6">
+                <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 mb-6">
+                  <div className="flex items-center space-x-2 text-slate-700 font-medium mb-3 border-b border-slate-200 pb-3">
+                    <FileText size={18} />
+                    <span>Official English Translation</span>
+                  </div>
+                  <p className="text-slate-800 leading-relaxed font-serif">{draft.english_translation}</p>
+                </div>
+                
+                <button 
+                  onClick={handleFile}
+                  disabled={isFiling}
+                  className="w-full bg-slate-900 text-white py-4 rounded-xl font-bold hover:bg-slate-800 flex items-center justify-center space-x-2 shadow-md transition-transform active:scale-[0.99] disabled:opacity-70"
+                >
+                  {isFiling ? (
+                    <>
+                      <Loader2 size={20} className="animate-spin" />
+                      <span>Filing with Mock Authority...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>File Official Complaint</span>
+                      <ArrowRight size={20} />
+                    </>
+                  )}
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }

@@ -19,6 +19,9 @@ export type ComplaintStatus =
   | 'WARNING'
   | 'BREACHED'
   | 'ESCALATED'
+  | 'ACCEPTED_BY_AUTHORITY'
+  | 'REJECTED'
+  | 'ACCEPTED_BY_HIGHER_AUTHORITY'
   | 'RESOLVED'
   | 'CLOSED'
 
@@ -466,3 +469,101 @@ export interface DraftView {
 }
 
 export type DraftEditRequest = { based_on_version: number } & Partial<DraftSections>
+
+export interface ProblemOption {
+  id: string
+  category: string
+  label: string
+  label_local?: string | null
+  department_id: string
+  department_name: string
+  description: string
+  sla_hours: number
+  db_count: number
+}
+
+export interface PostgresMatch {
+  tracking_id: string
+  issue: string
+  category?: string | null
+  status: string
+  location?: string | null
+}
+
+export interface GeneratedDraft {
+  subject: string
+  subject_local: string
+  body: string
+  department_id: string
+  department_name: string
+  jurisdiction: string
+  sla_hours: number
+  urgency: string
+}
+
+export interface ProblemDetectRequest {
+  text: string
+  language?: string | null
+  latitude?: number | null
+  longitude?: number | null
+  photo_data?: string | null
+  location?: string | null
+}
+
+export interface ProblemDetectResponse {
+  detected_problem: ProblemOption
+  related_options: ProblemOption[]
+  postgres_matches: PostgresMatch[]
+  draft: GeneratedDraft
+  location_summary: string
+  coordinates?: { latitude: number; longitude: number } | null
+  has_photo_proof: boolean
+  total_db_complaints: number
+}
+
+export interface ComplaintSubmitRequest {
+  text: string
+  language?: string | null
+  channel?: InputChannel
+  location?: string | null
+  latitude?: number | null
+  longitude?: number | null
+  photo_data?: string | null
+  confirmed_category?: string | null
+  confirmed_department?: string | null
+  draft_subject?: string | null
+  draft_body?: string | null
+}
+
+export interface FastAckResponse {
+  complaint_id: string
+  tracking_id: string
+  status: string
+  message: string
+  created_at: string
+  has_photo_proof?: boolean
+  location_summary?: string | null
+}
+
+export interface TimelineStage {
+  stage: string
+  label: string
+  description: string
+  timestamp?: string | null
+  status: 'COMPLETED' | 'IN_PROGRESS' | 'PENDING'
+}
+
+export interface TimelineResponse {
+  complaint_id: string
+  tracking_id: string
+  current_status: ComplaintStatus
+  stages: TimelineStage[]
+  department?: string | null
+  jurisdiction?: string | null
+  location?: string | null
+  issue?: string | null
+  sla_deadline?: string | null
+  photo_url?: string | null
+  has_photo_proof?: boolean
+  gps_coordinates?: { latitude: number; longitude: number } | null
+}

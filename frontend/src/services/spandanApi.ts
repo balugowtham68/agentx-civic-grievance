@@ -45,6 +45,44 @@ export function createSpandanApi(client: ApiClient = apiClient) {
     // ------------------------------------------------------------ citizen intake (Phase 2)
     intakeCapabilities: (signal?: AbortSignal) => client.get<IntakeCapabilities>(`${V1}/intake/capabilities`, { signal }),
 
+    detectLanguage: (text: string, audioLanguage?: string | null, audioConfidence?: number | null) =>
+      client.post<{
+        language: string | null
+        language_name: string
+        confidence: number
+        confidence_tier: 'HIGH' | 'MEDIUM' | 'LOW'
+        needs_confirmation: boolean
+        method: string
+        reason_code: string
+        signals: {
+          audio?: { language?: string | null; confidence?: number | null; source?: string } | null
+          script?: { dominant_script?: string | null; script_language?: string | null; native_char_ratio?: number; latin_char_ratio?: number; is_code_mixed?: boolean } | null
+          lexical?: { language?: string | null; confidence?: number; marker_scores?: Record<string, number>; matched_markers?: string[]; english_loanword_count?: number } | null
+          classifier?: { predicted_language?: string | null; confidence?: number; probabilities?: Record<string, number> } | null
+          llm?: { language?: string | null; confidence?: number; reason_code?: string | null; executed?: boolean } | null
+        }
+      }>(`/api/v1/language/detect`, {
+        text,
+        audio_language: audioLanguage ?? null,
+        audio_confidence: audioConfidence ?? null,
+      }),
+
+    detectAudio: (audioBlob: Blob) =>
+      client.request<{
+        transcript: string
+        language: string | null
+        language_name: string
+        confidence: number
+        confidence_tier: 'HIGH' | 'MEDIUM' | 'LOW'
+        needs_confirmation: boolean
+        method: string
+        reason_code: string
+        signals: Record<string, any>
+      }>(`/api/v1/language/detect-audio`, {
+        method: 'POST',
+        rawBody: audioBlob,
+      }),
+
     submitTextIntake: (body: TextIntakeRequest) => client.post<IntakeResult>(`${V1}/intake/text`, body),
 
     submitVoiceIntake: (audio: Blob, language?: string | null) =>
@@ -92,8 +130,24 @@ export function createSpandanApi(client: ApiClient = apiClient) {
     approveDraft: (id: string, version: number) =>
       client.post<DraftView>(`${V1}/drafting/${encodeURIComponent(id)}/approve`, { version }),
 
+    fileComplaint: (id: string) => 
+      client.post<Complaint>(`${V1}/complaints/${encodeURIComponent(id)}/file`, {}),
+
     classificationExplanation: (id: string, signal?: AbortSignal) =>
       client.get<ClassificationExplanation>(`${V1}/classification/${encodeURIComponent(id)}/explanation`, { signal }),
+
+    // ------------------------------------------------------------ fast async autonomous submit (Phase 1-4)
+    detectProblemAndOptions: (body: import('../types/api').ProblemDetectRequest) =>
+      client.post<import('../types/api').ProblemDetectResponse>(`${V1}/complaints/detect-options`, body),
+
+    submitFastComplaint: (body: import('../types/api').ComplaintSubmitRequest) =>
+      client.post<import('../types/api').FastAckResponse>(`${V1}/complaints/submit`, body),
+
+    getTimeline: (idOrTracking: string, signal?: AbortSignal) =>
+      client.get<import('../types/api').TimelineResponse>(`${V1}/complaints/${encodeURIComponent(idOrTracking)}/timeline`, { signal }),
+
+    confirmLocation: (complaintId: string, location: Record<string, any>) =>
+      client.post<{ status: string; location: Record<string, any> }>(`${V1}/complaints/${encodeURIComponent(complaintId)}/location/confirm`, location),
   }
 }
 

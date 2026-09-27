@@ -223,3 +223,41 @@ Kubernetes, Docker (optional later; local run needs only Python and Node).
   detected at start-up (`SchemaMismatchError`) and the local DB must be deleted or replaced.
 - **No authentication** in the prototype. Authentication, per-citizen authorization and rate
   limiting are production requirements before any deployment.
+
+## 10. Autonomous Event-Driven Architecture
+
+In this phase, SPANDAN AI evolved from a synchronous, step-by-step assistant into a **fully autonomous, event-driven civic grievance platform**:
+
+```
+[Citizen Input] ──► POST /api/v1/complaints/submit ──► FastAckResponse (< 200ms)
+                                │
+                                ▼ BackgroundTask / AsyncJobQueue
+                     [AutonomousWorkflowPipeline]
+                                │
+                                ├──► 1. UNDERSTOOD (Intake facts & language extracted)
+                                ├──► 2. LOCATION_RESOLVED (Gazetteer + GPS reverse geocoded)
+                                ├──► 3. CLASSIFIED (Department & Jurisdiction resolved via RAG)
+                                ├──► 4. DRAFTED (Formal bilingual grievance drafted)
+                                ├──► 5. FILED (Registered with mock civic authority)
+                                └──► 6. MONITORING (SLA watchdog monitoring initiated)
+```
+
+### Core Autonomous Components
+
+1. **Fast Acknowledgement (`POST /api/v1/complaints/submit`)**:
+   - Immediately returns `tracking_id` (`SPN-XXXXXX`) and `status: "RECEIVED"` in `< 200ms`.
+   - The citizen is free to leave the website; they do not need to wait for classification, drafting, or filing to finish.
+2. **Citizen Timeline API (`GET /api/v1/complaints/{id}/timeline`)**:
+   - Queryable by internal UUID or public `SPN-XXXXXX` tracking ID.
+   - Returns 6 citizen-friendly milestones with human-readable descriptions, completed timestamps, and live statuses (`COMPLETED`, `IN_PROGRESS`, `PENDING`).
+3. **EventBus Abstraction (`app.core.events.bus`)**:
+   - `LocalAsyncEventBus` provides publish/subscribe decoupling with wildcard routing (e.g. `complaint.*`).
+   - Easily swappable for Apache Kafka or Redis Streams in high-throughput deployments.
+4. **Idempotency Manager (`app.core.events.idempotency`)**:
+   - Guarantees at-most-once execution for jobs and event handlers via `execute_idempotent(key)`.
+5. **Multi-Signal Location Resolver (`app.services.location.resolver`)**:
+   - Hierarchical gazetteer resolution supporting bounding-box reverse geocoding for Indian metros (Hyderabad, Bengaluru, Chennai, Mumbai, Delhi) and raw text landmark extraction.
+6. **Notification Architecture (`app.services.notification.service`)**:
+   - Unified notification bus delivering in-app, SMS, and WhatsApp alerts upon status changes, SLA warnings, and escalations.
+7. **Cache Layer (`app.core.cache.cache`)**:
+   - Thread-safe TTL cache (`InMemoryTTLCache`) caching location resolutions and reference schemas, ready for Redis cluster backend.

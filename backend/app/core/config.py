@@ -43,17 +43,18 @@ class Settings(BaseSettings):
     app_name: str = "SPANDAN AI"
     app_version: str = "0.1.0"
     app_env: AppEnvironment = AppEnvironment.DEVELOPMENT
+    demo_mode: bool = False
     log_level: str = "INFO"
 
     # Persistence
-    database_url: str = f"sqlite:///{(BACKEND_DIR / 'data' / 'agentx.db').as_posix()}"
+    database_url: str = "postgresql://postgres:AgentX2026!@localhost/agentx"
 
     # HTTP
     frontend_origin: str = "http://localhost:5173"
 
     # AI provider (Phase 2+). Never exposed to the frontend.
     gemini_api_key: SecretStr | None = None
-    gemini_model: str = "gemini-2.5-flash"
+    gemini_model: str = "gemini-flash-lite-latest"
     gemini_base_url: str = "https://generativelanguage.googleapis.com/v1beta"
     ai_timeout_seconds: float = Field(default=20.0, gt=0, le=120)
     ai_max_output_tokens: int = Field(default=1024, ge=64, le=8192)
@@ -86,6 +87,16 @@ class Settings(BaseSettings):
     # `python scripts/ingest_civic_kb.py` is run.
     kb_auto_ingest: bool = True
 
+    # Demo Email & Authority Workflow Configuration
+    authority_review_email: str | None = None
+    higher_official_email: str | None = None
+    smtp_host: str = "smtp.gmail.com"
+    smtp_port: int = 587
+    smtp_user: str | None = None
+    smtp_password: SecretStr | None = None
+    smtp_from_email: str | None = None
+    app_base_url: str = "http://localhost:8000"
+
     @field_validator("log_level")
     @classmethod
     def _normalise_log_level(cls, value: str) -> str:
@@ -94,7 +105,7 @@ class Settings(BaseSettings):
             raise ValueError(f"LOG_LEVEL must be a standard logging level, got {value!r}")
         return level
 
-    @field_validator("gemini_api_key", "mock_gov_api_key", "openai_api_key", mode="before")
+    @field_validator("gemini_api_key", "mock_gov_api_key", "openai_api_key", "smtp_password", mode="before")
     @classmethod
     def _blank_secret_is_none(cls, value: object) -> object:
         # An empty `GEMINI_API_KEY=` line in .env means "not set".

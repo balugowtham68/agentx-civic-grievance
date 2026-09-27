@@ -7,3 +7,4 @@ pydantic-settings==2.9.1
 SQLAlchemy==2.0.40
 httpx==0.28.1
 chromadb==1.5.9   # Phase 3: embedded local vector store for the civic knowledge base (no server, telemetry off)
+psycopg2-binary==2.9.9

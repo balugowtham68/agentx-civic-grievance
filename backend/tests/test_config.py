@@ -10,7 +10,6 @@ def test_development_starts_without_secrets() -> None:
     settings = Settings(_env_file=None, app_env=AppEnvironment.DEVELOPMENT)
 
     assert settings.gemini_api_key is None
-    assert settings.is_sqlite
 
 
 def test_values_are_read_from_environment(monkeypatch: pytest.MonkeyPatch) -> None:

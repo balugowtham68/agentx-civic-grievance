@@ -31,6 +31,9 @@ class ComplaintStatus(StrEnum):
     WARNING = "WARNING"  # SLA approaching
     BREACHED = "BREACHED"  # SLA deadline passed
     ESCALATED = "ESCALATED"
+    ACCEPTED_BY_AUTHORITY = "ACCEPTED_BY_AUTHORITY"
+    REJECTED = "REJECTED"
+    ACCEPTED_BY_HIGHER_AUTHORITY = "ACCEPTED_BY_HIGHER_AUTHORITY"
     RESOLVED = "RESOLVED"
     CLOSED = "CLOSED"
 
@@ -139,5 +142,11 @@ class AuditEventType(StrEnum):
     SLA_STOPPED = "sla.stopped"
     ESCALATION_RULE_EVALUATED = "escalation.rule_evaluated"
     ESCALATION_TRIGGERED = "escalation.triggered"
+    # Authority Review & Escalation Workflow
+    AUTHORITY_REVIEW_SENT = "authority.review_sent"
+    AUTHORITY_ACCEPTED = "authority.accepted"
+    AUTHORITY_REJECTED = "authority.rejected"
+    ESCALATION_EMAIL_SENT = "escalation.email_sent"
+    HIGHER_OFFICIAL_ACCEPTED = "higher_official.accepted"
     COMPLAINT_RESOLVED = "complaint.resolved"
     COMPLAINT_CLOSED = "complaint.closed"

@@ -11,6 +11,7 @@ from app.services.ai import build_ai_provider
 from app.services.external import TranscriptionProvider
 from app.services.intake.speech_to_text import (
     ChainTranscriptionProvider,
+    GeminiTranscriptionProvider,
     LocalWhisperProvider,
     WhisperTranscriptionProvider,
 )
@@ -19,16 +20,29 @@ from app.services.intake.speech_to_text import (
 def build_transcription_provider(
     settings: Settings, transport: httpx.AsyncBaseTransport | None = None
 ) -> TranscriptionProvider:
-    """Offline first: local model, then (optionally) remote Whisper."""
+    """Multi-tiered transcription: local model, Gemini audio, or remote Whisper."""
     mode = settings.speech_to_text_provider
     providers: list[object] = []
     if mode in {"auto", "local"}:
         providers.append(LocalWhisperProvider(settings.local_stt_model_path))
-    key = settings.secret("openai_api_key")
-    if mode in {"auto", "whisper"} and key is not None:
+
+    gemini_key = settings.secret("gemini_api_key")
+    if gemini_key is not None:
+        providers.append(
+            GeminiTranscriptionProvider(
+                gemini_key,
+                model=settings.gemini_model,
+                base_url=settings.gemini_base_url,
+                timeout_seconds=settings.stt_timeout_seconds,
+                transport=transport,
+            )
+        )
+
+    openai_key = settings.secret("openai_api_key")
+    if mode in {"auto", "whisper"} and openai_key is not None:
         providers.append(
             WhisperTranscriptionProvider(
-                key,
+                openai_key,
                 model=settings.whisper_model,
                 base_url=settings.whisper_base_url,
                 timeout_seconds=settings.stt_timeout_seconds,

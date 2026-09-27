@@ -1,0 +1,314 @@
+[
+  {
+    "id": "te_native_01",
+    "text": "మా వీధిలో మూడు రోజులుగా స్ట్రీట్ లైట్ పని చేయడం లేదు.",
+    "expected_language": "te",
+    "category": "Telugu native script"
+  },
+  {
+    "id": "te_native_02",
+    "text": "రోడ్డు మీద పెద్ద గుంతలు ఉన్నాయి, వర్షం పడితే నీరు నిలిచిపోతుంది.",
+    "expected_language": "te",
+    "category": "Telugu native script"
+  },
+  {
+    "id": "te_native_03",
+    "text": "మంచినీటి పైపులైన్ పగిలి నీరు మొత్తం రోడ్డుపైకి వస్తోంది.",
+    "expected_language": "te",
+    "category": "Telugu native script"
+  },
+  {
+    "id": "te_native_04",
+    "text": "మా కాలనీలో వారం రోజుల నుంచి చెత్త తీయడం లేదు, విపరీతమైన దుర్వాసన.",
+    "expected_language": "te",
+    "category": "Telugu native script"
+  },
+  {
+    "id": "te_native_05",
+    "text": "కరెంట్ పోయి ఐదు గంటలు అయ్యింది, అధికారులు పట్టించుకోవడం లేదు.",
+    "expected_language": "te",
+    "category": "Telugu native script"
+  },
+  {
+    "id": "te_native_short_01",
+    "text": "లైట్ లేదు",
+    "expected_language": "te",
+    "category": "Telugu short utterance"
+  },
+  {
+    "id": "te_native_short_02",
+    "text": "నీరు రావడం లేదు",
+    "expected_language": "te",
+    "category": "Telugu short utterance"
+  },
+  {
+    "id": "te_codemixed_01",
+    "text": "మా street లో light పని చేయడం లేదు.",
+    "expected_language": "te",
+    "category": "Telugu code-mixed"
+  },
+  {
+    "id": "te_codemixed_02",
+    "text": "మా colony లో drainage problem వల్ల చాలా smell వస్తోంది.",
+    "expected_language": "te",
+    "category": "Telugu code-mixed"
+  },
+  {
+    "id": "te_codemixed_03",
+    "text": "నా complaint ని వెంటనే register చేయండి సార్.",
+    "expected_language": "te",
+    "category": "Telugu code-mixed"
+  },
+  {
+    "id": "te_romanized_01",
+    "text": "maa street lo light pani cheyyatledu",
+    "expected_language": "te",
+    "category": "Telugu Romanized"
+  },
+  {
+    "id": "te_romanized_02",
+    "text": "moodu rojuluga water ravadam ledu ikkada",
+    "expected_language": "te",
+    "category": "Telugu Romanized"
+  },
+  {
+    "id": "te_romanized_03",
+    "text": "road meeda pedda gunthalu unnayi accident avtundi",
+    "expected_language": "te",
+    "category": "Telugu Romanized"
+  },
+  {
+    "id": "te_romanized_04",
+    "text": "drainage water antha road meedhaki vachindi cheppandi evarikaina",
+    "expected_language": "te",
+    "category": "Telugu Romanized"
+  },
+  {
+    "id": "te_romanized_05",
+    "text": "current bill ekkuva vachindi meter check cheyyali",
+    "expected_language": "te",
+    "category": "Telugu Romanized"
+  },
+  {
+    "id": "ta_native_01",
+    "text": "எங்கள் தெருவில் மூன்று நாட்களாக தெருவிளக்கு வேலை செய்யவில்லை.",
+    "expected_language": "ta",
+    "category": "Tamil native script"
+  },
+  {
+    "id": "ta_native_02",
+    "text": "குடிநீர் விநியோகம் இரண்டு வாரங்களாக தடைபட்டுள்ளது.",
+    "expected_language": "ta",
+    "category": "Tamil native script"
+  },
+  {
+    "id": "ta_native_03",
+    "text": "சாலையில் குப்பைகள் தேங்கி தொற்றுநோய் பரவும் அபாயம் உள்ளது.",
+    "expected_language": "ta",
+    "category": "Tamil native script"
+  },
+  {
+    "id": "ta_native_04",
+    "text": "சாக்கடை நீர் நிரம்பி சாலையில் வழிந்தோடுகிறது, நடவடிக்கை எடுங்கள்.",
+    "expected_language": "ta",
+    "category": "Tamil native script"
+  },
+  {
+    "id": "ta_native_short_01",
+    "text": "விளக்கு எரியவில்லை",
+    "expected_language": "ta",
+    "category": "Tamil short utterance"
+  },
+  {
+    "id": "ta_codemixed_01",
+    "text": "எங்கள் street-ல் drainage water தேங்கி நிற்கிறது.",
+    "expected_language": "ta",
+    "category": "Tamil code-mixed"
+  },
+  {
+    "id": "ta_romanized_01",
+    "text": "enga therula moonu naala street light vela seyyala",
+    "expected_language": "ta",
+    "category": "Tamil Romanized"
+  },
+  {
+    "id": "ta_romanized_02",
+    "text": "kudineer varavillai romba pirachana irukku",
+    "expected_language": "ta",
+    "category": "Tamil Romanized"
+  },
+  {
+    "id": "ta_romanized_03",
+    "text": "road la periya kuli irukku bike pogave mudiyala",
+    "expected_language": "ta",
+    "category": "Tamil Romanized"
+  },
+  {
+    "id": "ta_romanized_04",
+    "text": "saakkadai thanni roattula ooduthu parunga",
+    "expected_language": "ta",
+    "category": "Tamil Romanized"
+  },
+  {
+    "id": "kn_native_01",
+    "text": "ನಮ್ಮ ಬೀದಿಯಲ್ಲಿ ಮೂರು ದಿನಗಳಿಂದ ಸ್ಟ್ರೀಟ್ ಲೈಟ್ ಕೆಲಸ ಮಾಡುತ್ತಿಲ್ಲ.",
+    "expected_language": "kn",
+    "category": "Kannada native script"
+  },
+  {
+    "id": "kn_native_02",
+    "text": "ಕುಡಿಯುವ ನೀರಿನ ಪೈಪ್ ಒಡೆದು ನೀರು ಪೋಲಾಗುತ್ತಿದೆ, ಸರಿಪಡಿಸಿ.",
+    "expected_language": "kn",
+    "category": "Kannada native script"
+  },
+  {
+    "id": "kn_native_03",
+    "text": "ಕಸ ವಿಲೇವಾರಿ ವಾಹನ ಕಳೆದ ಒಂದು ವಾರದಿಂದ ಬಂದಿಲ್ಲ.",
+    "expected_language": "kn",
+    "category": "Kannada native script"
+  },
+  {
+    "id": "kn_native_04",
+    "text": "ರಸ್ತೆಯಲ್ಲಿ ಭಾರಿ ಗುಂಡಿಗಳು ಬಿದ್ದಿದ್ದು ವಾಹನ ಸವಾರರಿಗೆ ತೊಂದರೆಯಾಗಿದೆ.",
+    "expected_language": "kn",
+    "category": "Kannada native script"
+  },
+  {
+    "id": "kn_native_short_01",
+    "text": "ದೀಪ ಆಫ್ ಆಗಿದೆ",
+    "expected_language": "kn",
+    "category": "Kannada short utterance"
+  },
+  {
+    "id": "kn_codemixed_01",
+    "text": "ನಮ್ಮ area ದಲ್ಲಿ drainage overflow ಆಗುತ್ತಿದೆ.",
+    "expected_language": "kn",
+    "category": "Kannada code-mixed"
+  },
+  {
+    "id": "kn_romanized_01",
+    "text": "namma beedhili muru dinagalinda street light kelasa madtilla",
+    "expected_language": "kn",
+    "category": "Kannada Romanized"
+  },
+  {
+    "id": "kn_romanized_02",
+    "text": "kudiyuva neeru barthilla ivatthu eradu dina aayithu",
+    "expected_language": "kn",
+    "category": "Kannada Romanized"
+  },
+  {
+    "id": "kn_romanized_03",
+    "text": "road alli dodda gundigalu ive accident agtidhe",
+    "expected_language": "kn",
+    "category": "Kannada Romanized"
+  },
+  {
+    "id": "kn_romanized_04",
+    "text": "kasa thegedilla namma street alli thondare ide",
+    "expected_language": "kn",
+    "category": "Kannada Romanized"
+  },
+  {
+    "id": "hi_native_01",
+    "text": "हमारी गली में तीन दिनों से स्ट्रीट लाइट काम नहीं कर रही है।",
+    "expected_language": "hi",
+    "category": "Hindi native script"
+  },
+  {
+    "id": "hi_native_02",
+    "text": "पीने के पानी की आपूर्ति बाधित है, कृपया तुरंत बहाल करें।",
+    "expected_language": "hi",
+    "category": "Hindi native script"
+  },
+  {
+    "id": "hi_native_03",
+    "text": "सड़क पर कचरे का ढेर लगा है, बदबू के कारण सांस लेना मुश्किल है।",
+    "expected_language": "hi",
+    "category": "Hindi native script"
+  },
+  {
+    "id": "hi_native_04",
+    "text": "सीवर का गंदा पानी सड़क पर बह रहा है, बच्चे बीमार पड़ रहे हैं।",
+    "expected_language": "hi",
+    "category": "Hindi native script"
+  },
+  {
+    "id": "hi_native_short_01",
+    "text": "पानी नहीं आ रहा",
+    "expected_language": "hi",
+    "category": "Hindi short utterance"
+  },
+  {
+    "id": "hi_codemixed_01",
+    "text": "हमारे ward में garbage collection बिल्कुल बंद है।",
+    "expected_language": "hi",
+    "category": "Hindi code-mixed"
+  },
+  {
+    "id": "hi_romanized_01",
+    "text": "humari gali mein street light kaam nahi kar rahi hai teen din se",
+    "expected_language": "hi",
+    "category": "Hindi Romanized"
+  },
+  {
+    "id": "hi_romanized_02",
+    "text": "paani nahi aa raha hai pipeline leak ho gayi hai",
+    "expected_language": "hi",
+    "category": "Hindi Romanized"
+  },
+  {
+    "id": "hi_romanized_03",
+    "text": "sadak par bohot bade gaddhe hain accident ka khatra hai",
+    "expected_language": "hi",
+    "category": "Hindi Romanized"
+  },
+  {
+    "id": "hi_romanized_04",
+    "text": "kachra uthane koi nahi aaya char dinon se",
+    "expected_language": "hi",
+    "category": "Hindi Romanized"
+  },
+  {
+    "id": "en_civic_01",
+    "text": "The street light in front of house number 42 has been broken for three days.",
+    "expected_language": "en",
+    "category": "English standard"
+  },
+  {
+    "id": "en_civic_02",
+    "text": "There is a massive water pipeline leak on MG road causing severe water loss.",
+    "expected_language": "en",
+    "category": "English standard"
+  },
+  {
+    "id": "en_civic_03",
+    "text": "Garbage has not been collected from our apartment complex for over a week.",
+    "expected_language": "en",
+    "category": "English standard"
+  },
+  {
+    "id": "en_civic_04",
+    "text": "Sewage overflow on 4th cross road is creating an intolerable foul smell.",
+    "expected_language": "en",
+    "category": "English standard"
+  },
+  {
+    "id": "en_civic_05",
+    "text": "Frequent unannounced power outages in our locality for the past five days.",
+    "expected_language": "en",
+    "category": "English standard"
+  },
+  {
+    "id": "en_short_01",
+    "text": "The streetlight is broken.",
+    "expected_language": "en",
+    "category": "English short"
+  },
+  {
+    "id": "en_short_02",
+    "text": "No water supply since morning.",
+    "expected_language": "en",
+    "category": "English short"
+  }
+]

@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from typing import Annotated
 
-from fastapi import APIRouter, Query, Request, status
+from fastapi import APIRouter, HTTPException, Query, Request, status
 
 from app.api.deps import IntakeServiceDep, SettingsDep
 from app.api.params import ComplaintId
@@ -125,3 +125,85 @@ def confirm_intake(complaint_id: ComplaintId, service: IntakeServiceDep) -> Inta
 def intake_handoff(complaint_id: ComplaintId, service: IntakeServiceDep) -> IntakeHandoff:
     """The confirmed intake as Phase 3 will consume it. 409 until the citizen confirms."""
     return service.handoff(complaint_id)
+from app.api.deps import LanguageFusionDep, SettingsDep
+from app.services.language_detection.schemas import (
+    LanguageDetectRequest,
+    LanguageDetectResponse,
+)
+
+@router.post("/language/detect", response_model=LanguageDetectResponse)
+async def detect_language_endpoint(
+    body: LanguageDetectRequest,
+    fusion: LanguageFusionDep,
+) -> LanguageDetectResponse:
+    """Multi-Signal Language Identification combining Audio LID, Script analysis,
+    lexical markers, character n-grams, and secondary LLM verification."""
+    return await fusion.detect(body)
+
+
+from pydantic import BaseModel
+
+class AudioDetectResponse(BaseModel):
+    transcript: str
+    language: str | None
+    language_name: str
+    confidence: float
+    confidence_tier: str
+    needs_confirmation: bool
+    method: str
+    reason_code: str
+    signals: dict
+
+
+@router.post("/language/detect-audio", response_model=AudioDetectResponse)
+async def detect_audio_endpoint(
+    request: Request,
+    settings: SettingsDep,
+    fusion: LanguageFusionDep,
+) -> AudioDetectResponse:
+    """Transcribes citizen audio directly via multimodal audio intelligence, performs
+    audio-level language identification, and fuses with text-level linguistic verification."""
+    audio_bytes = await request.body()
+    content_type = request.headers.get("content-type", "audio/webm").split(";")[0]
+
+    from app.services.intake.speech_to_text import GeminiTranscriptionProvider, validate_audio
+    gemini_key = settings.secret("gemini_api_key")
+    if not gemini_key:
+        raise HTTPException(status_code=503, detail="Server audio recognition not configured")
+
+    provider = GeminiTranscriptionProvider(
+        gemini_key,
+        model=settings.gemini_model,
+        base_url=settings.gemini_base_url,
+        timeout_seconds=settings.stt_timeout_seconds,
+    )
+
+    audio_format = validate_audio(
+        audio_bytes, content_type, max_bytes=settings.max_audio_bytes, max_seconds=settings.max_audio_seconds
+    )
+
+    # 1. Transcribe audio + Audio LID
+    transcript_result = await provider.transcribe(audio_bytes, audio_format=audio_format)
+
+    # 2. Feed audio LID + transcript into LanguageFusionService
+    fusion_req = LanguageDetectRequest(
+        text=transcript_result.text,
+        audio_language=transcript_result.language,
+        audio_confidence=transcript_result.confidence or 0.95,
+        audio_source="gemini_audio",
+    )
+    fusion_result = await fusion.detect(fusion_req)
+
+    return AudioDetectResponse(
+        transcript=transcript_result.text,
+        language=fusion_result.language,
+        language_name=fusion_result.language_name,
+        confidence=fusion_result.confidence,
+        confidence_tier=fusion_result.confidence_tier,
+        needs_confirmation=fusion_result.needs_confirmation,
+        method="multimodal_audio_fusion",
+        reason_code=fusion_result.reason_code,
+        signals=fusion_result.signals.model_dump(),
+    )
+
+
