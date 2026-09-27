@@ -43,7 +43,8 @@ function isErrorResponse(value: unknown): value is ErrorResponse {
 }
 
 export function buildUrl(baseUrl: string, path: string, query?: Query): string {
-  const url = new URL(path.replace(/^\/+/, ''), `${baseUrl}/`)
+  const base = baseUrl || (typeof window !== 'undefined' ? window.location.origin : 'http://127.0.0.1:8000')
+  const url = new URL(path.replace(/^\/+/, ''), `${base.replace(/\/+$/, '')}/`)
   for (const [key, value] of Object.entries(query ?? {})) {
     if (value === undefined || value === null) continue
     for (const item of Array.isArray(value) ? value : [value]) {
