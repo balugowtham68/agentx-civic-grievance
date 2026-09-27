@@ -1,194 +1,1287 @@
-# SPANDAN AI — Listen. Respond. Resolve.
+# SPANDAN AI
+## Autonomous Civic Grievance Redressal Agent
 
-Build for Billions · Agentic AI for Billions track · Autonomous Civic Grievance Redressal Agent
+> **Submit once. SPANDAN follows through.**
 
-> **Hackathon prototype — Phase 1–4 checkpoint.** All civic data is *DEMO CIVIC RULE /
-> prototype configuration*, not official policy. Nothing is filed with any government
-> system. SPANDAN AI never resolves problems itself; resolution stays with human authorities.
+SPANDAN AI is an AI-powered civic grievance redressal system that helps citizens report public issues using **voice or text in regional languages**, understands the complaint, identifies the relevant location and authority, prepares the grievance, submits it into a simulated government workflow, and continues monitoring it after the citizen leaves.
 
-## 1. What SPANDAN AI does (today)
+Unlike a traditional chatbot that only answers questions, SPANDAN AI is designed to **take responsibility for the grievance workflow from intake to authority decision and escalation**.
 
-A citizen reports a civic problem once, by voice or text, in English, Tamil, Telugu, Hindi,
-Kannada or Malayalam. SPANDAN AI:
+---
 
-1. **Understands** it (Phase 2): extracts issue, location and duration from the citizen's own
-   words and shows "What I understood". Nothing advances until the citizen **confirms**.
-2. **Classifies** it (Phase 3): civic category, responsible department and ward, from a
-   **local civic knowledge base** (ChromaDB, embedded) with provenance for every decision. It
-   asks a question instead of guessing when information is missing or ambiguous.
-3. **Drafts** it (Phase 4): a grounded administrative complaint draft that adds no facts. The
-   citizen reviews, edits (every edit is a new version) and approves it.
+# 🚨 Problem
 
-The end state of this checkpoint is **"Draft approved and ready for filing."** Filing itself is
-a later phase and has not happened.
+Citizens often face several problems while reporting civic issues:
 
-## 2. Implemented vs. future phases
+- They may not know which department is responsible.
+- Government portals can be difficult to navigate.
+- Many citizens are more comfortable speaking regional languages.
+- Location and jurisdiction can be unclear.
+- Citizens may not know what happened after submitting a complaint.
+- Complaints can remain pending without clear follow-up.
+- Escalation often requires additional effort from the citizen.
 
-| Phase | Scope | State |
-| --- | --- | --- |
-| 1 | Foundation: layers, contracts, state machine, audit trail, config, UI shell | **Done** |
-| 2 | Offline-first multilingual intake, voice, confirmation | **Done** |
-| 3 | Local RAG, classification, department + jurisdiction reasoning | **Done** |
-| 4 | Fact-locked drafting, validation, versioned citizen review and approval | **Done** |
-| 5 | Mock government API filing, tracking ID | **Not implemented** |
-| 6–10 | Orchestration, simulated SLA clock, Autonomous Watchdog, escalation, authority view, explanations | **Not implemented** |
+The problem is therefore not only:
 
-There is no filing, tracking ID, SLA, notification, officer assignment or escalation in this
-build. The Filing and Watchdog agents exist only as contracts that return 501 naming their
-phase. The authority page is a labelled placeholder.
+> "How can a citizen submit a complaint?"
 
-## 3. Flow
+It is:
 
-```
-Citizen → Intake → Confirmation → Classification + RAG → Drafting → Citizen review → Approval → [Future: Filing → Monitoring → Escalation]
-```
+> **"How can a complaint continue moving toward resolution even after the citizen leaves?"**
 
-Details: [`docs/architecture.md`](docs/architecture.md), [`docs/intake.md`](docs/intake.md),
-[`docs/classification.md`](docs/classification.md), [`docs/drafting.md`](docs/drafting.md).
+---
 
-## 4. Offline mode and optional AI
+# 💡 Our Solution
 
-Everything works with **no internet and no API key**:
+SPANDAN AI converts a citizen's voice or text complaint into a structured, trackable grievance workflow.
 
-- a deterministic offline intake engine with six language resource files
-- a local knowledge base with a deterministic hashing embedder
-- deterministic templates for drafting
+```text
+Citizen
+   │
+   ├── Voice
+   └── Text
+        │
+        ▼
+┌──────────────────────┐
+│ Language Detection   │
+└──────────────────────┘
+        │
+        ▼
+┌──────────────────────┐
+│ Complaint Intake     │
+│                      │
+│ Issue                │
+│ Location             │
+│ Duration             │
+│ Language             │
+└──────────────────────┘
+        │
+        ▼
+┌──────────────────────┐
+│ Location Resolution  │
+│ & Jurisdiction       │
+└──────────────────────┘
+        │
+        ▼
+┌──────────────────────┐
+│ Classification       │
+│ Department           │
+│ Authority            │
+└──────────────────────┘
+        │
+        ▼
+┌──────────────────────┐
+│ Civic RAG            │
+│ Rules / SLA /        │
+│ Authority Knowledge  │
+└──────────────────────┘
+        │
+        ▼
+┌──────────────────────┐
+│ Complaint Drafting   │
+└──────────────────────┘
+        │
+        ▼
+┌──────────────────────┐
+│ Authority Review     │
+└──────────────────────┘
+        │
+        ├── ACCEPT
+        │      │
+        │      ▼
+        │   Accepted
+        │
+        └── REJECT
+               │
+               ▼
+          Escalation
+               │
+               ▼
+       Higher Authority
+               │
+               ▼
+            Review
+⭐ Core Differentiator
 
-Gemini (`GEMINI_API_KEY`) is an optional assistant for wording and gap-filling. Its output is
-always validated, and a failure falls back to the offline result. Browser speech recognition
-needs no key. Server speech-to-text for uploaded audio is optional: a local faster-whisper model
-(not bundled) or remote Whisper (`OPENAI_API_KEY`). The optional `onnx-minilm` embedder is not
-bundled either; if it cannot be loaded, the app reports the knowledge base as unavailable
-(503) instead of crashing.
+Traditional civic applications generally stop after complaint submission.
 
-## 5. Repository layout
+SPANDAN AI continues working.
 
-```
-backend/          FastAPI app (Python 3.11): api, agents, services, repositories, models, schemas
-backend/config/   Language list, drafting templates and administrative vocabulary
-backend/resources/intake/  Offline language resources (en, ta, te, hi, kn, ml) + safety phrases
-knowledge_base/   Civic knowledge base (DEMO CIVIC RULE): categories, departments, wards, guidelines
-frontend/         React 19 + Vite + TypeScript + Tailwind
-docs/             Architecture, per-phase design, phase reports, consolidation report
-scripts/          Secret check, dev seed data, KB ingestion, offline demos
-```
+Citizen submits complaint
+          ↓
+Complaint processed
+          ↓
+Authority identified
+          ↓
+Complaint sent for review
+          ↓
+Authority accepts/rejects
+          ↓
+If rejected → escalation
+          ↓
+Higher authority review
+          ↓
+SLA monitoring
+          ↓
+Follow-up
+Our core idea
 
-## 6. Setup
+"The citizen submits once. SPANDAN continues working after the citizen leaves."
 
-Prerequisites: Python 3.11+, Node.js 20+ (tested with 22) and npm.
+🎯 Hackathon MVP
 
-```bash
-cp .env.example .env            # blank keys are fine: everything runs offline
+The current MVP focuses on demonstrating an end-to-end autonomous grievance workflow.
 
+Citizen Side
+Voice complaint
+Text complaint
+Regional language support
+Automatic language detection
+Manual language selection
+Issue extraction
+Location extraction
+Duration extraction
+Location confirmation
+Complaint tracking ID
+Complaint status
+AI Pipeline
+Multilingual intake
+Language identification
+Complaint understanding
+Location resolution
+Department classification
+Jurisdiction identification
+Civic knowledge retrieval
+Complaint drafting
+Workflow
+Complaint creation
+Authority review
+Authority acceptance
+Authority rejection
+Escalation
+Higher authority review
+Tracking
+SLA monitoring
+Watchdog
+Audit trail
+🌐 Multilingual Experience
+
+SPANDAN AI is designed for citizens who may not prefer English.
+
+Supported languages can include:
+
+English
+తెలుగు (Telugu)
+தமிழ் (Tamil)
+ಕನ್ನಡ (Kannada)
+हिन्दी (Hindi)
+
+The system supports both manual language selection and automatic language detection.
+
+Multi-Signal Language Detection
+
+Instead of depending on a single detector, SPANDAN can combine multiple signals.
+
+Voice
+  │
+  ▼
+Audio Language Signal
+  │
+  ▼
+Speech-to-Text
+  │
+  ▼
+Transcript Language Detection
+  │
+  ├── Script Analysis
+  ├── Multilingual Embeddings
+  ├── Lightweight Classifier
+  └── Linguistic Signals
+  │
+  ▼
+LLM Verification
+     (only when ambiguous)
+  │
+  ▼
+Language Fusion
+  │
+  ▼
+Final Language + Confidence
+Confidence-based behaviour
+High confidence
+      ↓
+Automatically select language
+
+Medium confidence
+      ↓
+Ask user for confirmation
+
+Low confidence
+      ↓
+Show language selector
+
+Explicit user language selection always has priority.
+
+📍 Location Intelligence
+
+Location is critical for civic complaints because different locations can belong to different authorities and jurisdictions.
+
+SPANDAN AI supports multiple location sources:
+
+GPS
+ │
+ ├──────────────┐
+ │              │
+Voice         Text
+ │              │
+ └──────┬───────┘
+        │
+        ▼
+Manual Location
+        │
+        ▼
+┌─────────────────────┐
+│ Location Resolver   │
+└─────────────────────┘
+        │
+        ▼
+State
+District
+City
+Ward
+Locality
+Coordinates
+Jurisdiction
+Confidence
+
+The system should never silently invent a location.
+
+When confidence is low:
+
+"We found Ramapuram, Chennai. Is this correct?"
+
+[ Yes ]
+
+[ Change Location ]
+🏛️ Authority Review Workflow
+
+For the hackathon, SPANDAN does not directly submit complaints to a real government system.
+
+Instead, the complaint enters a simulated authority workflow.
+
+Citizen
+   ↓
+SPANDAN AI
+   ↓
+Complaint Processing
+   ↓
+PENDING_AUTHORITY_REVIEW
+   ↓
+Authority Email
+   │
+   ├───────────────┐
+   │               │
+ ACCEPT          REJECT
+   │               │
+   ▼               ▼
+ACCEPTED       REJECTED
+                   │
+                   ▼
+               ESCALATED
+                   │
+                   ▼
+           HIGHER AUTHORITY
+                   │
+                   ▼
+                REVIEW
+
+This allows judges to see a realistic end-to-end workflow without requiring access to actual government infrastructure.
+
+📧 Authority Email Workflow
+
+When a complaint reaches authority review, SPANDAN sends an email containing:
+
+SPANDAN AI — Civic Grievance Review
+
+Tracking ID: SPN-XXXXXX
+
+Issue:
+Streetlight not working
+
+Location:
+Ramapuram
+
+Department:
+Electrical
+
+Jurisdiction:
+Ward 12
+
+SLA:
+7 days
+
+[ ACCEPT COMPLAINT ]
+
+[ REJECT / ESCALATE ]
+
+The authority can make a decision directly from the email.
+
+🔐 Secure Review Links
+
+Authority actions use secure, one-time review tokens.
+
+Complaint
+    ↓
+Generate random token
+    ↓
+Store token
+    ↓
+Send email
+    ↓
+Authority clicks link
+    ↓
+Validate token
+    ↓
+Perform action
+    ↓
+Invalidate token
+
+The system should validate:
+
+Token exists
+Token has not expired
+Token has not already been used
+Token belongs to the correct complaint
+Requested action is valid
+
+Credentials are never hardcoded into the source code.
+
+🔄 Complaint Lifecycle
+
+The complaint can move through states such as:
+
+CREATED
+   ↓
+UNDERSTOOD
+   ↓
+CLASSIFIED
+   ↓
+DRAFTED
+   ↓
+PENDING_AUTHORITY_REVIEW
+   ↓
+ACCEPTED_BY_AUTHORITY
+   ↓
+IN_PROGRESS
+   ↓
+MONITORING
+   ↓
+RESOLVED
+   ↓
+CLOSED
+
+If the authority rejects the complaint:
+
+PENDING_AUTHORITY_REVIEW
+        ↓
+     REJECTED
+        ↓
+    ESCALATED
+        ↓
+HIGHER_AUTHORITY_REVIEW
+        ↓
+ACCEPTED_BY_HIGHER_AUTHORITY
+        ↓
+     IN_PROGRESS
+
+Every important state transition is recorded in the audit trail.
+
+🤖 AI Agents
+
+SPANDAN AI follows an agent-oriented architecture.
+
+1. Intake Agent
+
+Understands citizen input.
+
+Extracts:
+
+Issue
+Location
+Duration
+Language
+Missing information
+2. Language Detection
+
+Determines the citizen's language using multiple signals.
+
+The system avoids unnecessary LLM calls.
+
+3. Location Resolver
+
+Combines:
+
+GPS
+Voice
+Text
+Manual selection
+
+to identify the relevant jurisdiction.
+
+4. Classification Agent
+
+Determines:
+
+Complaint category
+Department
+Authority
+Jurisdiction
+5. Civic RAG
+
+Retrieves relevant civic information such as:
+
+Department responsibilities
+Jurisdiction rules
+SLA timelines
+Escalation rules
+Required information
+6. Drafting Agent
+
+Converts the structured complaint into a formal grievance.
+
+Example:
+
+Citizen Input:
+
+"Street light near my house has not been working
+for the last five days."
+
+↓
+
+Structured Complaint:
+
+Issue:
+Streetlight failure
+
+Duration:
+5 days
+
+Location:
+Ramapuram
+
+Department:
+Electrical
+
+↓
+
+Formal Complaint:
+
+A streetlight in Ramapuram has reportedly
+remained non-functional for five days.
+The issue is affecting visibility and public safety.
+7. Filing Agent
+
+Handles submission into the simulated government workflow.
+
+It generates:
+
+Tracking ID
+Government reference ID
+Submission timestamp
+8. Watchdog Agent
+
+The Watchdog continues monitoring after submission.
+
+Complaint Filed
+      ↓
+SLA Stored
+      ↓
+Monitoring
+      ↓
+Warning Deadline
+      ↓
+Check Status
+      ↓
+SLA Breach
+      ↓
+Escalation
+
+The Watchdog does not continuously ask an LLM what to do.
+
+Escalation follows predefined policies.
+
+🧠 Selective AI
+
+SPANDAN does not use an expensive LLM for every operation.
+
+The target architecture is:
+
+Cheap / Deterministic Processing
+              ↓
+       Confidence Check
+              ↓
+       Is AI necessary?
+          /        \
+        No          Yes
+        ↓            ↓
+     Result       AI / LLM
+
+Examples:
+
+Script detection → deterministic
+Known location lookup → local data
+SLA calculation → deterministic
+Status transition → policy engine
+Language ambiguity → LLM verification
+Complex complaint understanding → LLM
+
+This reduces unnecessary computation and improves response time.
+
+⚡ Fast User Experience
+
+The citizen should not have to wait for the complete AI pipeline.
+
+Target experience:
+
+Citizen submits
+      ↓
+Fast acknowledgement
+      ↓
+Tracking ID
+      ↓
+Background processing
+      ↓
+Citizen can leave
+      ↓
+SPANDAN continues working
+
+The frontend should remain simple.
+
+Citizen interface
+SPANDAN AI
+
+How can we help?
+
+        🎤
+      SPEAK
+
+or
+
+[ Type your complaint ]
+
+Location:
+[ Use my location ]
+[ Tell location ]
+[ Enter location ]
+
+Language:
+[ Auto Detect ]
+
+[ Submit Complaint ]
+
+After submission:
+
+Complaint Received ✓
+
+Tracking ID:
+SPN-XXXXXX
+
+SPANDAN AI is processing your complaint.
+
+You can leave this page.
+📊 Citizen Tracking
+
+Citizens can use the tracking ID to see the complaint status.
+
+Example:
+
+SPN-2026-001234
+
+✓ Complaint received
+✓ Complaint understood
+✓ Authority identified
+✓ Complaint submitted for review
+✓ Authority accepted
+● Work in progress
+○ Resolution
+
+The citizen does not need to understand the internal AI pipeline.
+
+📝 Audit Trail
+
+Every important action is logged.
+
+Example:
+
+10:30 AM
+Complaint received
+
+10:30 AM
+Language detected: Telugu
+
+10:31 AM
+Issue extracted
+
+10:31 AM
+Location resolved
+
+10:31 AM
+Department identified
+
+10:32 AM
+Complaint drafted
+
+10:32 AM
+Authority review requested
+
+10:40 AM
+Authority accepted complaint
+
+10:41 AM
+Monitoring started
+
+This provides transparency and makes the system easier to demonstrate and debug.
+
+🏗️ Architecture
+
+High-level architecture:
+
+                 CITIZEN
+                    │
+             Voice / Text
+                    │
+                    ▼
+             ┌─────────────┐
+             │   FastAPI   │
+             └─────────────┘
+                    │
+                    ▼
+             Intake Service
+                    │
+          ┌─────────┴─────────┐
+          │                   │
+          ▼                   ▼
+     Language             Location
+     Detection            Resolver
+          │                   │
+          └─────────┬─────────┘
+                    ▼
+              Classification
+                    │
+                    ▼
+                 Civic RAG
+                    │
+                    ▼
+                Drafting
+                    │
+                    ▼
+                 Filing
+                    │
+                    ▼
+          Authority Review
+             │          │
+          Accept      Reject
+             │          │
+             ▼          ▼
+        Monitoring   Escalation
+             │          │
+             └────┬─────┘
+                  ▼
+              Watchdog
+                  │
+                  ▼
+            Citizen Tracking
+📦 Event-Driven Architecture
+
+For larger deployments, the system can evolve toward:
+
+Citizens
+   │
+   ▼
+API Gateway
+   │
+   ▼
+Intake
+   │
+   ▼
+Event / Job Queue
+   │
+   ├── Language Worker
+   ├── Intake Worker
+   ├── Location Worker
+   ├── Classification Worker
+   ├── RAG Worker
+   ├── Drafting Worker
+   ├── Filing Worker
+   └── Watchdog Worker
+
+Workers should remain as stateless as possible.
+
+Persistent complaint state belongs in the database.
+
+The current hackathon prototype does not claim to support billions of users. The architecture is designed so that components can later be replaced with distributed infrastructure.
+
+📈 Scalability Strategy
+
+The system follows several scalability principles:
+
+Stateless workers
+
+Workers should not depend on local process memory for important workflow state.
+
+Asynchronous processing
+
+Long-running operations should run in background jobs.
+
+Selective AI
+
+Use expensive AI only when necessary.
+
+Caching
+
+Stable information such as civic rules and frequently accessed locations can be cached.
+
+Event-driven Watchdog
+
+Avoid continuous polling and unnecessary LLM calls.
+
+Horizontal scaling
+
+Workers can be replicated independently.
+
+Future production infrastructure could include:
+
+Distributed queues
+Kafka / Pulsar
+Redis
+Distributed databases
+Kubernetes
+Cloud workers
+API gateways
+Regional deployment
+Observability infrastructure
+
+These are future production concerns and are intentionally not required for the hackathon MVP.
+
+🛡️ Safety & Trust
+
+SPANDAN AI follows a constrained-autonomy model.
+
+The AI does not have unrestricted authority.
+
+Important decisions such as:
+
+Status transitions
+SLA calculations
+Escalation
+Authority actions
+
+are controlled by deterministic rules and policies.
+
+The AI can recommend or prepare information, while authority decisions remain explicitly controlled.
+
+🔐 Privacy & Security
+
+Security principles include:
+
+No hardcoded credentials
+Environment variables for secrets
+Secure review tokens
+One-time action links
+Token expiration
+Input validation
+API validation
+Audit logging
+Least-privilege access
+Persistent workflow state
+Safe failure handling
+
+Never commit .env files to GitHub.
+
+⚠️ Failure Handling
+
+The complaint should not disappear if a downstream service fails.
+
+Examples:
+
+LLM unavailable
+
+Use deterministic/local fallback where possible.
+
+Speech recognition fails
+
+Ask the citizen to retry or use text.
+
+Location service fails
+
+Allow manual location input.
+
+RAG fails
+
+Continue with safe fallback information where appropriate.
+
+Authority email fails
+
+Keep complaint in:
+
+PENDING_AUTHORITY_REVIEW
+
+and allow retry.
+
+Worker crashes
+
+Persistent workflow state allows the job to be retried.
+
+Duplicate request
+
+Use idempotency to prevent duplicate complaint submission.
+
+🧪 Example Demo
+Scenario
+
+A citizen speaks in Tamil:
+
+"எங்கள் தெருவில் தெருவிளக்கு ஐந்து நாட்களாக வேலை செய்யவில்லை."
+
+Meaning:
+
+"The streetlight in our street has not been working for five days."
+
+SPANDAN processes the complaint:
+
+Language:
+Tamil
+
+Issue:
+Streetlight not working
+
+Duration:
+5 days
+
+Location:
+Detected / confirmed locality
+
+Department:
+Electrical
+
+Jurisdiction:
+Relevant municipal authority
+
+Then:
+
+Complaint drafted
+       ↓
+Tracking ID generated
+       ↓
+Authority review email
+       ↓
+Authority accepts
+       ↓
+Status updated
+       ↓
+Watchdog starts monitoring
+
+If rejected:
+
+Authority rejects
+       ↓
+Complaint escalated
+       ↓
+Higher authority notified
+       ↓
+Higher authority reviews
+🏆 What Makes SPANDAN AI Different?
+Traditional chatbot
+Citizen
+   ↓
+Question
+   ↓
+AI answer
+   ↓
+Conversation ends
+SPANDAN AI
+Citizen
+   ↓
+Complaint
+   ↓
+Understand
+   ↓
+Locate
+   ↓
+Classify
+   ↓
+Draft
+   ↓
+Submit
+   ↓
+Track
+   ↓
+Monitor
+   ↓
+Escalate
+   ↓
+Follow through
+
+The key difference is persistent action after the user's interaction ends.
+
+🛠️ Technology Stack
+Frontend
+React
+TypeScript
+Vite
+Tailwind CSS
+Browser Speech Recognition
+Multilingual UI / i18n
+Backend
+Python
+FastAPI
+Pydantic
+Async processing
+AI
+Gemini API
+Optional AI provider abstraction
+Speech-to-text
+Multilingual language detection
+Embeddings
+Lightweight language classifier
+LLM verification
+Data
+PostgreSQL
+SQLAlchemy / existing repository layer
+ChromaDB / vector store for RAG
+Scheduling / Background Work
+APScheduler
+Background job abstractions
+External Simulation
+Mock Government API
+Authority email workflow
+📁 Project Structure
+agentx-civic-grievance/
+│
+├── frontend/
+│   └── src/
+│       ├── components/
+│       ├── hooks/
+│       ├── i18n/
+│       ├── pages/
+│       ├── services/
+│       ├── types/
+│       ├── App.tsx
+│       ├── config.ts
+│       ├── index.css
+│       └── main.tsx
+│
+├── backend/
+│   ├── app/
+│   │   ├── agents/
+│   │   │   ├── intake/
+│   │   │   ├── classification/
+│   │   │   ├── drafting/
+│   │   │   ├── filing/
+│   │   │   └── watchdog/
+│   │   │
+│   │   ├── api/
+│   │   ├── services/
+│   │   ├── models/
+│   │   ├── database/
+│   │   ├── prompts/
+│   │   ├── repositories/
+│   │   ├── schemas/
+│   │   └── main.py
+│   │
+│   └── tests/
+│
+├── knowledge_base/
+│   ├── departments/
+│   ├── jurisdictions/
+│   ├── rules/
+│   ├── timelines/
+│   └── escalation/
+│
+├── scripts/
+├── docs/
+├── .env.example
+├── .gitignore
+└── docker-compose.yml
+🚀 Running Locally
+Backend
 cd backend
-python3 -m venv .venv
-source .venv/bin/activate       # Windows: .venv\Scripts\activate
-pip install -r requirements-dev.txt
 
-cd ../frontend
+python -m venv .venv
+
+.\.venv\Scripts\Activate.ps1
+
+pip install -r requirements.txt
+
+uvicorn app.main:app --reload
+
+Backend:
+
+http://localhost:8000
+
+API documentation:
+
+http://localhost:8000/docs
+Frontend
+
+Open another terminal:
+
+cd frontend
+
 npm install
-```
 
-## 7. Run
+npm run dev
 
-```bash
-# Backend  -> http://localhost:8000   (API docs: /docs, schema: /openapi.json)
-cd backend && uvicorn app.main:app --port 8000
+Frontend:
 
-# Frontend -> http://localhost:5173
-cd frontend && npm run dev
-```
+http://localhost:5173
+🔑 Environment Variables
 
-`curl http://localhost:8000/health` returns `"status": "ok"`. On first start the backend creates
-the SQLite database and indexes the knowledge base into `backend/data/chroma` (a few seconds).
-Optional sample data: `cd backend && python ../scripts/seed_dev.py`.
+Create a local .env file.
 
-## 8. Demo flow
+Example:
 
-1. Open http://localhost:5173 and choose **Report a problem**.
-2. Type (or speak) e.g. *"Street light on Main Road has not been working for three days."* or
-   the Tamil *"தெரு விளக்கு எரியவில்லை"*.
-3. Answer any question SPANDAN AI asks (for example the location), then **confirm** "What I
-   understood".
-4. **Classify**: you see *Streetlight → Electrical department → Ward 7 (demo)* with the demo
-   sources used.
-5. **Draft**: review the draft. Edit a section (for example add *"It was repaired previously
-   but stopped working again."*). The new version is marked *added by the citizen, not
-   verified*, and earlier versions stay in the version history.
-6. **Approve**. The page says *"Draft approved and ready for filing. Filing is a later phase
-   and has not happened yet."*
+GEMINI_API_KEY=your_gemini_api_key
 
-The same flow without the UI: `scripts/demo_intake.py`, `scripts/demo_classification.py`,
-`scripts/demo_drafting.py` (run with `backend/.venv/bin/python`).
+DATABASE_URL=your_database_url
 
-## 9. Environment variables
+AUTHORITY_REVIEW_EMAIL=authority@example.com
 
-All variables live in one root `.env` (template: [`.env.example`](.env.example)). No variable
-is required.
+HIGHER_OFFICIAL_EMAIL=higher@example.com
 
-| Variable | Default | Notes |
-| --- | --- | --- |
-| `APP_ENV` | `development` | `production` rejects unsafe settings (`FRONTEND_ORIGIN=*`, `LOG_LEVEL=DEBUG`) |
-| `LOG_LEVEL` | `INFO` | |
-| `DATABASE_URL` | `backend/data/agentx.db` | SQLite (file name kept from Phase 1 for compatibility) |
-| `FRONTEND_ORIGIN` | `http://localhost:5173` | CORS allow-list, comma-separated |
-| `GEMINI_API_KEY` | — | Optional, server-side only |
-| `GEMINI_MODEL` | `gemini-2.5-flash` | |
-| `AI_TIMEOUT_SECONDS` | `20` | |
-| `SPEECH_TO_TEXT_PROVIDER` | `auto` | `auto`, `local`, `whisper` (requires `OPENAI_API_KEY`), `none` |
-| `LOCAL_STT_MODEL_PATH` | — | faster-whisper model directory (not bundled) |
-| `OPENAI_API_KEY` | — | Optional remote Whisper |
-| `MAX_AUDIO_BYTES` / `MAX_AUDIO_SECONDS` | `10485760` / `120` | Upload limits |
-| `KB_VECTOR_DIR` | `backend/data/chroma` | Local ChromaDB directory |
-| `KB_EMBEDDING_PROVIDER` | `hashing` | `hashing` (offline) or `onnx-minilm` (optional, not bundled) |
-| `KB_AUTO_INGEST` | `true` | Re-index at start-up when missing or stale |
-| `MOCK_GOV_API_BASE_URL` / `MOCK_GOV_API_KEY` | — | Reserved for Phase 5; unused |
-| `VITE_API_BASE_URL` | `http://localhost:8000` | Frontend. Only `VITE_*` values reach the browser; never put a secret there |
+SMTP_HOST=smtp.example.com
+SMTP_PORT=587
+SMTP_USERNAME=your_email@example.com
+SMTP_PASSWORD=your_password
+SMTP_FROM_EMAIL=your_email@example.com
+Important
 
-## 10. Data and persistence
+Never commit .env to GitHub.
 
-- **Database:** SQLite, created on start (`create_all`). The tables are `complaints`,
-  `intake_records`, `classification_records`, `complaint_drafts` and `audit_events`
-  (append-only), plus Phase 1 `sla_records` / `escalations` (empty until later phases).
-- **Older databases:** if the database was created by an older build with missing columns,
-  start-up stops with a clear message and **does not modify the file**. Back it up, then delete
-  it (or point `DATABASE_URL` elsewhere).
-- **Reset:** stop the backend and delete `backend/data/`. The knowledge-base index is rebuilt
-  automatically, or with `python scripts/ingest_civic_kb.py`.
+Only commit:
 
-## 11. Tests and quality checks
+.env.example
+🧪 Testing
 
-```bash
-cd backend && pytest                  # 291 tests (unit, API, persistence, end-to-end, offline)
-cd backend && ruff check app tests
-cd frontend && npm test               # 43 tests
-cd frontend && npm run typecheck && npm run lint && npm run build
-python scripts/demo_intake.py         # 10 offline intake demos
-python scripts/demo_classification.py # 10 offline classification demos
-python scripts/demo_drafting.py       # 8 offline drafting demos
-scripts/check_secrets.sh              # before every push
-```
+The project should test:
 
-## 12. Security and known limitations
+Intake
+Text complaints
+Voice complaints
+Missing information
+Regional languages
+Language
+Telugu
+Tamil
+Kannada
+Hindi
+English
+Romanized regional languages
+Code-mixed language
+Short/noisy inputs
+Location
+GPS
+Spoken location
+Typed location
+Manual location
+Low-confidence location
+Workflow
+Complaint creation
+Authority acceptance
+Authority rejection
+Escalation
+Higher authority acceptance
+Duplicate requests
+Expired review token
+Used review token
+Watchdog
+SLA warning
+SLA breach
+Escalation
+🔮 Future Roadmap
+Phase 1 — Hackathon MVP
+Voice/text intake
+Multilingual support
+Location resolution
+Classification
+Civic RAG
+Complaint drafting
+Authority review
+Email workflow
+Tracking
+Watchdog
+Escalation
+Audit trail
+Phase 2 — Real Authority Integration
 
-- **No authentication or authorization.** Anyone who can reach the API can read and change
-  complaints. This is acceptable for a local demo, but **real authentication, per-citizen
-  access control and rate limiting are a production requirement before any deployment**.
-- Secrets are read only from the environment, held as `SecretStr` and never logged, returned
-  or sent to the frontend. Logs do not contain citizen text or prompts.
-- **Dependency audit:** `npm audit` reports 0 vulnerabilities. `pip-audit` reports advisories
-  in `chromadb 1.5.9` that have no fixed release yet. They concern Chroma's server mode;
-  SPANDAN AI uses only the embedded client, never a Chroma server.
-- **Language and data:** non-English vocabularies are drafts that need native-speaker
-  review. Drafts are written in English and quote the citizen's own words, because no reliable
-  offline translation model is available. The default embedder is lexical, not semantic.
-- Full list: [`docs/PHASE_1_4_CONSOLIDATION_REPORT.md`](docs/PHASE_1_4_CONSOLIDATION_REPORT.md).
+Replace the mock government workflow with real APIs where officially available.
 
-## 13. Team workflow and reports
+Phase 3 — Officer Workspace
 
-- Branch rules and module ownership: [`docs/development-workflow.md`](docs/development-workflow.md).
-- Phase reports: [`docs/PHASE_1_REPORT.md`](docs/PHASE_1_REPORT.md),
-  [`docs/PHASE_2_IMPLEMENTATION_REPORT.md`](docs/PHASE_2_IMPLEMENTATION_REPORT.md),
-  [`docs/PHASE_3_IMPLEMENTATION_REPORT.md`](docs/PHASE_3_IMPLEMENTATION_REPORT.md),
-  [`docs/PHASE_4_IMPLEMENTATION_REPORT.md`](docs/PHASE_4_IMPLEMENTATION_REPORT.md) and the
+Add:
+
+Officer authentication
+Complaint assignment
+Officer status updates
+Authority dashboard
+Workload monitoring
+Phase 4 — Google Workspace Integration
+
+Optional integration with:
+
+Google OAuth
+Google Workspace
+Google Docs
+Google Drive
+Phase 5 — Large-Scale Deployment
+
+Potential infrastructure:
+
+Distributed event bus
+Distributed workers
+Regional deployments
+Database partitioning
+Distributed caching
+Autoscaling
+Observability
+Rate limiting
+Notification infrastructure
+🎬 Hackathon Demo Flow
+
+A recommended demonstration:
+
+1. Start with the problem
+
+Show how difficult it can be for a citizen to know:
+
+Where should I complain?
+
+Who is responsible?
+
+What happens after I complain?
+
+2. Citizen speaks
+
+Use a regional-language complaint.
+
+Show:
+
+Language detection
+Transcript
+Issue
+Location
+Duration
+3. Location confirmation
+
+Show:
+
+We found:
+Ramapuram, Chennai
+
+Is this correct?
+
+[Yes] [Change]
+4. AI processing
+
+Show a simple progress timeline:
+
+✓ Complaint received
+✓ Understanding complaint
+✓ Identifying authority
+✓ Preparing complaint
+✓ Sending for authority review
+5. Authority receives email
+
+Show the review email:
+
+[ ACCEPT COMPLAINT ]
+
+[ REJECT / ESCALATE ]
+6. Accept workflow
+
+Click:
+
+ACCEPT COMPLAINT
+
+Then show:
+
+ACCEPTED_BY_AUTHORITY
+
+and the citizen tracking page updates.
+
+7. Escalation workflow
+
+For the second scenario:
+
+REJECT
+   ↓
+ESCALATED
+   ↓
+HIGHER AUTHORITY REVIEW
+
+This demonstrates that SPANDAN doesn't stop after rejection.
+
+8. Watchdog
+
+Show:
+
+SLA:
+7 days
+
+Status:
+MONITORING
+
+Warning:
+Approaching SLA deadline
+
+Then demonstrate an SLA breach and policy-based escalation.
+
+💬 One-Line Pitch
+
+SPANDAN AI is an autonomous civic grievance agent that lets citizens report issues in their own language and continues tracking, monitoring, and escalating the complaint even after they leave.
+
+🎤 Short Hackathon Pitch
+
+"Today, reporting a civic problem is often the easy part. The difficult part is knowing who is responsible, whether the complaint was accepted, and what happens after submission.
+
+SPANDAN AI changes this.
+
+A citizen can simply speak or type a complaint in their own language. SPANDAN understands the issue, resolves the location, identifies the responsible authority, prepares the complaint, sends it for authority review, and gives the citizen a tracking ID.
+
+But our key difference is what happens next.
+
+The citizen can leave.
+
+SPANDAN continues monitoring the complaint, watches the SLA, and escalates it when required.
+
+Submit once. SPANDAN follows through."
+
+⚠️ Project Scope
+
+SPANDAN AI is currently a hackathon prototype.
+
+The government interaction is simulated using an authority-review workflow and email-based approval.
+
+It does not claim to directly operate real government systems or physically resolve civic problems.
+
+In a production deployment, official government APIs, authentication, authority systems, notification infrastructure, legal requirements, and security controls would need to be integrated.
+
+👥 Team
+
+Project: SPANDAN AI
+Internal Architecture Name: AGENT X
+Domain: AI / Agentic AI / Civic Technology / NLP
+Platform: Web Application
+
+🚀 Vision
+
+SPANDAN AI aims to move civic technology from:
+
+"A portal where citizens submit complaints"
+
+to:
+
+"An intelligent system that follows the complaint through its lifecycle."
+
+The long-term goal is a privacy-conscious, multilingual, scalable civic agent that helps citizens navigate complex public-service workflows without requiring them to understand the underlying administrative structure.
   [Phase 1–4 consolidation report](docs/PHASE_1_4_CONSOLIDATION_REPORT.md).
