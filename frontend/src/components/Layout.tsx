@@ -1,64 +1,89 @@
-import { NavLink, Outlet } from 'react-router-dom'
+import { Link, Outlet, useLocation } from "react-router-dom";
+import { Shield, Activity, List, LayoutDashboard, Settings, Globe } from "lucide-react";
+import { useLanguage } from "../context/LanguageContext";
 
-const NAV = [
-  { to: '/', label: 'Report a problem', end: true },
-  { to: '/complaints', label: 'Complaints', end: false },
-  { to: '/authority', label: 'Authority', end: false },
-]
+export default function Layout() {
+  const location = useLocation();
+  const { t, selectedLang, setSelectedLang, activeLang } = useLanguage();
 
-/** Honesty requirement: every screen states that this is a prototype with a mock government API. */
-export function SimulationBanner() {
+  const navItems = [
+    { name: t.navHome || "Home", path: "/", icon: <LayoutDashboard size={18} /> },
+    { name: t.navComplaints || "My Complaints", path: "/complaints", icon: <List size={18} /> },
+    { name: t.navActivity || "Activity", path: "/activity", icon: <Activity size={18} /> },
+    { name: t.navSystem || "System", path: "/system", icon: <Settings size={18} /> },
+  ];
+
   return (
-    <div role="note" className="bg-amber-100 px-4 py-2 text-center text-sm font-medium text-amber-950">
-      Prototype · Mock government API · Demo data · Simulated time
-    </div>
-  )
-}
+    <div className="min-h-screen bg-slate-50 flex flex-col font-sans text-slate-900">
+      <header className="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+          <div className="flex items-center space-x-3">
+            <div className="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white font-black text-xl shadow-sm">
+              S
+            </div>
+            <Link to="/" className="font-extrabold text-xl tracking-tight text-slate-900">
+              {t.brand || "SPANDAN AI"}
+            </Link>
+          </div>
 
-export function Layout() {
-  return (
-    <div className="flex min-h-screen flex-col">
-      <SimulationBanner />
-      <header className="border-b border-slate-200 bg-white">
-        <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 px-4 py-3">
-          <NavLink to="/" className="flex flex-col leading-tight" aria-label="SPANDAN AI home">
-            <span className="text-xl font-bold tracking-tight">SPANDAN AI</span>
-            <span className="text-sm text-slate-600">Listen. Respond. Resolve.</span>
-          </NavLink>
-          <nav aria-label="Main">
-            <ul className="flex flex-wrap gap-1">
-              {NAV.map((item) => (
-                <li key={item.to}>
-                  <NavLink
-                    to={item.to}
-                    end={item.end}
-                    className={({ isActive }) =>
-                      `inline-flex min-h-12 items-center rounded-lg px-4 font-medium ${isActive ? 'bg-blue-600 text-white' : 'text-slate-700 hover:bg-slate-100'}`
-                    }
+          <div className="flex items-center space-x-6">
+            <nav className="hidden md:flex space-x-6">
+              {navItems.map((item) => {
+                const isActive =
+                  location.pathname === item.path ||
+                  (item.path !== "/" && location.pathname.startsWith(item.path));
+                return (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    className={`flex items-center space-x-1.5 text-sm font-semibold transition-colors ${
+                      isActive ? "text-blue-600" : "text-slate-600 hover:text-slate-900"
+                    }`}
                   >
-                    {item.label}
-                  </NavLink>
-                </li>
-              ))}
-            </ul>
-          </nav>
+                    {item.icon}
+                    <span>{item.name}</span>
+                  </Link>
+                );
+              })}
+            </nav>
+
+            {/* Language Selector */}
+            <div className="flex items-center space-x-2 bg-slate-100/80 hover:bg-slate-100 px-3 py-1.5 rounded-xl border border-slate-200/80 transition-colors">
+              <Globe size={16} className="text-slate-500" />
+              <select
+                value={selectedLang}
+                onChange={(e) => setSelectedLang(e.target.value)}
+                aria-label="Select language"
+                className="bg-transparent font-medium text-slate-700 text-sm outline-none cursor-pointer"
+              >
+                <option value="auto">✨ {t.autoDetect || "Auto Detect"} ({activeLang.toUpperCase()})</option>
+                <option value="te">తెలుగు</option>
+                <option value="hi">हिन्दी</option>
+                <option value="ta">தமிழ்</option>
+                <option value="kn">ಕನ್ನಡ</option>
+                <option value="en">English</option>
+              </select>
+            </div>
+          </div>
         </div>
       </header>
-      <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8">
+
+      <main className="flex-grow flex flex-col w-full">
         <Outlet />
       </main>
-      <footer className="border-t border-slate-200 px-4 py-4 text-center text-sm text-slate-500">
-        SPANDAN AI — Listen. Respond. Resolve. · Build for Billions
+
+      <footer className="bg-slate-900 py-8 text-slate-400 text-sm text-center">
+        <div className="max-w-6xl mx-auto px-4 flex flex-col items-center">
+          <div className="flex items-center space-x-2 mb-2 text-slate-200 font-semibold">
+            <Shield size={18} className="text-blue-400" />
+            <span>{t.trust || "Your language, your complaint, your tracking ID."}</span>
+          </div>
+          <p className="font-medium tracking-wide">
+            {t.brand || "SPANDAN AI"} — {t.subtitle || "Autonomous Civic Grievance Redressal Agent"}
+          </p>
+          <p className="mt-1 text-xs opacity-60">SPANDAN AI Autonomous Civic Grievance Redressal System</p>
+        </div>
       </footer>
     </div>
-  )
-}
-
-export function PageHeader({ title, subtitle }: { title: string; subtitle?: string }) {
-  return (
-    <div className="mb-6">
-      <h1 className="text-3xl font-bold tracking-tight">{title}</h1>
-      {subtitle && <p className="mt-1 text-slate-600">{subtitle}</p>}
-    </div>
-  )
+  );
 }

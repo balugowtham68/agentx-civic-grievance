@@ -43,17 +43,18 @@ class Settings(BaseSettings):
     app_name: str = "SPANDAN AI"
     app_version: str = "0.1.0"
     app_env: AppEnvironment = AppEnvironment.DEVELOPMENT
+    demo_mode: bool = False
     log_level: str = "INFO"
 
     # Persistence
-    database_url: str = f"sqlite:///{(BACKEND_DIR / 'data' / 'agentx.db').as_posix()}"
+    database_url: str = "postgresql://postgres:AgentX2026!@localhost/agentx"
 
     # HTTP
     frontend_origin: str = "http://localhost:5173"
 
     # AI provider (Phase 2+). Never exposed to the frontend.
     gemini_api_key: SecretStr | None = None
-    gemini_model: str = "gemini-2.5-flash"
+    gemini_model: str = "gemini-3.8-flash"
     gemini_base_url: str = "https://generativelanguage.googleapis.com/v1beta"
     ai_timeout_seconds: float = Field(default=20.0, gt=0, le=120)
     ai_max_output_tokens: int = Field(default=1024, ge=64, le=8192)

@@ -42,8 +42,111 @@ export function createSpandanApi(client: ApiClient = apiClient) {
     trackByTrackingId: (trackingId: string, signal?: AbortSignal) =>
       client.get<ComplaintStatusResponse>(`${V1}/track/${encodeURIComponent(trackingId)}`, { signal }),
 
+    // Asynchronous Autonomous Pipeline APIs
+    validateCivicIntent: (text: string, language?: string) =>
+      client.post<{
+        is_civic: boolean
+        confidence: number
+        category: string | null
+        reason: string | null
+        message: string | null
+        suggested_questions: Array<{
+          id: string
+          question: string
+          options: string[]
+        }>
+      }>(`${V1}/complaints/validate-intent`, { text, language }),
+
+    submitComplaintFast: (body: {
+      text: string
+      language?: string | null
+      location?: string | null
+      latitude?: number | null
+      longitude?: number | null
+      channel?: string
+      photo_data?: string | null
+      photo_name?: string | null
+      diagnostic_details?: Record<string, any> | null
+    }) =>
+      client.post<{
+        complaint_id: string
+        tracking_id: string
+        status: string
+        message: string
+        created_at: string
+      }>(`${V1}/complaints/submit`, body),
+
+    getComplaintTimeline: (id: string, signal?: AbortSignal) =>
+      client.get<{
+        complaint_id: string
+        tracking_id: string
+        status: string
+        issue: string | null
+        location: string | null
+        department_id: string | null
+        jurisdiction_id: string | null
+        timeline: Array<{
+          id: string
+          complaint_id: string
+          stage: string
+          message: string
+          timestamp: string
+          details: Record<string, any>
+          icon: string
+        }>
+      }>(`${V1}/complaints/${encodeURIComponent(id)}/timeline`, { signal }),
+
+    confirmComplaintLocation: (id: string, body: { confirmed: boolean; corrected_location?: string }) =>
+      client.post<{ status: string; location: string }>(`${V1}/complaints/${encodeURIComponent(id)}/location/confirm`, body),
+
+    confirmDraft: (id: string, body: { confirmed: boolean; edited_text?: string } = { confirmed: true }) =>
+      client.post<{ status: string; complaint_id: string; message: string; deadline?: string }>(
+        `${V1}/complaints/${encodeURIComponent(id)}/confirm-draft`,
+        body
+      ),
+
     // ------------------------------------------------------------ citizen intake (Phase 2)
     intakeCapabilities: (signal?: AbortSignal) => client.get<IntakeCapabilities>(`${V1}/intake/capabilities`, { signal }),
+
+    detectLanguage: (text: string, audioLanguage?: string | null, audioConfidence?: number | null) =>
+      client.post<{
+        language: string | null
+        language_name: string
+        confidence: number
+        confidence_tier: 'HIGH' | 'MEDIUM' | 'LOW'
+        needs_confirmation: boolean
+        method: string
+        reason_code: string
+        english_translation?: string
+        signals: {
+          audio?: { language?: string | null; confidence?: number | null; source?: string } | null
+          script?: { dominant_script?: string | null; script_language?: string | null; native_char_ratio?: number; latin_char_ratio?: number; is_code_mixed?: boolean } | null
+          lexical?: { language?: string | null; confidence?: number; marker_scores?: Record<string, number>; matched_markers?: string[]; english_loanword_count?: number } | null
+          classifier?: { predicted_language?: string | null; confidence?: number; probabilities?: Record<string, number> } | null
+          llm?: { language?: string | null; confidence?: number; reason_code?: string | null; executed?: boolean } | null
+        }
+      }>(`/api/v1/language/detect`, {
+        text,
+        audio_language: audioLanguage ?? null,
+        audio_confidence: audioConfidence ?? null,
+      }),
+
+    detectAudio: (audioBlob: Blob) =>
+      client.request<{
+        transcript: string
+        language: string | null
+        language_name: string
+        confidence: number
+        confidence_tier: 'HIGH' | 'MEDIUM' | 'LOW'
+        needs_confirmation: boolean
+        method: string
+        reason_code: string
+        english_translation?: string
+        signals: Record<string, any>
+      }>(`/api/v1/language/detect-audio`, {
+        method: 'POST',
+        rawBody: audioBlob,
+      }),
 
     submitTextIntake: (body: TextIntakeRequest) => client.post<IntakeResult>(`${V1}/intake/text`, body),
 
@@ -91,6 +194,9 @@ export function createSpandanApi(client: ApiClient = apiClient) {
 
     approveDraft: (id: string, version: number) =>
       client.post<DraftView>(`${V1}/drafting/${encodeURIComponent(id)}/approve`, { version }),
+
+    fileComplaint: (id: string) => 
+      client.post<Complaint>(`${V1}/complaints/${encodeURIComponent(id)}/file`, {}),
 
     classificationExplanation: (id: string, signal?: AbortSignal) =>
       client.get<ClassificationExplanation>(`${V1}/classification/${encodeURIComponent(id)}/explanation`, { signal }),

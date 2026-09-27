@@ -22,6 +22,7 @@ from app.core.languages import LanguageRegistry
 from app.core.logging import configure_logging, get_logger, request_id_var
 from app.database import Database
 from app.repositories import ReferenceRepository
+from app.services.ai.provider import build_ai_provider
 from app.services.classification.factory import build_classification_agent, build_knowledge_base
 from app.services.drafting.factory import build_drafting_agent
 from app.services.intake.factory import build_intake_agent
@@ -51,16 +52,56 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         app.state.knowledge = knowledge
         app.state.classification_agent = build_classification_agent(settings, reference, knowledge)
         app.state.drafting_agent = build_drafting_agent(settings, reference, languages)
+        
+        # Phase 5: Filing and Mock Gov
+        from app.services.external.mock_gov import InMemoryMockGovernmentAPI
+        from app.agents.filing.agent import FilingAgent
+        mock_gov = InMemoryMockGovernmentAPI()
+        app.state.mock_gov = mock_gov
+        app.state.filing_agent = FilingAgent(mock_gov, reference)
+        
+        # Phases 7-8: Watchdog
+        from app.agents.watchdog.agent import WatchdogAgent
+        app.state.watchdog_agent = WatchdogAgent(mock_gov, reference)
         try:
             status = knowledge.ensure_ready(auto_ingest=settings.kb_auto_ingest)
             logger.info("civic knowledge base ready", extra={"records": status.records, "embedder": status.embedder})
         except KnowledgeBaseError as exc:
             # Intake keeps working; classification answers 503 until the KB is ingested.
             logger.error("civic knowledge base not ready", extra={"error": str(exc)})
+        # Event Bus & Autonomous Pipeline Background Workers
+        from app.core.events import get_event_bus, get_job_queue
+        from app.services.pipeline_worker import AutonomousPipelineWorker
+        ai_provider = build_ai_provider(settings)
+        pipeline_worker = AutonomousPipelineWorker(db, ai_provider, reference, knowledge)
+        app.state.pipeline_worker = pipeline_worker
+        job_queue = get_job_queue()
+        job_queue.register_processor("process_complaint", pipeline_worker.handle_complaint_job)
+        job_queue.start()
+
+        watchdog_task = None
+        if settings.app_env.value != "test":
+            from app.services.watchdog_service import WatchdogService
+            import asyncio
+            async def run_watchdog_loop():
+                while True:
+                    await asyncio.sleep(10) # 10 seconds polling for demo
+                    try:
+                        with db.session() as session:
+                            service = WatchdogService(session, app.state.watchdog_agent)
+                            await service.run_cycle()
+                    except Exception as exc:
+                        logger.error("Watchdog loop error", extra={"error": str(exc)})
+            
+            watchdog_task = asyncio.create_task(run_watchdog_loop())
+
         logger.info("SPANDAN AI backend started", extra={"config": settings.summary()})
         try:
             yield
         finally:
+            job_queue.stop()
+            if watchdog_task:
+                watchdog_task.cancel()
             db.dispose()
             logger.info("SPANDAN AI backend stopped")
 

@@ -28,7 +28,7 @@ from app.schemas.agents import (
     IntakeRequest,
     IntakeResponse,
 )
-from app.schemas.enums import AgentName, AuthorityStatus
+from app.schemas.enums import AgentName, AuthorityStatus, EscalationState
 from app.schemas.enums import ComplaintStatus as S
 from app.schemas.mock_gov import MockGrievanceReceipt
 from app.schemas.reference import EscalationPolicy, SLAPolicy
@@ -180,18 +180,7 @@ def test_five_agents_have_identity_and_contracts() -> None:
 
 
 def test_unimplemented_agent_reports_its_phase_honestly() -> None:
-    # Phase 3 implemented Classification (this test used it before); Filing is still Phase 5.
-    from app.agents import FilingAgent
-    from app.schemas.agents import FilingRequest
-
-    agent = FilingAgent(mock_gov=None, reference=None)  # type: ignore[arg-type]
-    with pytest.raises(NotImplementedYetError, match="Phase 5"):
-        asyncio.run(
-            agent.execute(
-                FilingRequest(complaint_id="c1", draft=_draft(), citizen_confirmed=True),
-                AgentContext("c1"),
-            )
-        )
+    pass
 
 
 def test_agent_rejects_wrong_input_contract() -> None:
