@@ -47,7 +47,7 @@ class Settings(BaseSettings):
     log_level: str = "INFO"
 
     # Persistence
-    database_url: str = "postgresql://postgres:AgentX2026!@localhost/agentx"
+    database_url: str = f"sqlite:///{(BACKEND_DIR / 'data' / 'agentx.db').as_posix()}"
 
     # HTTP
     frontend_origin: str = "http://localhost:5173"

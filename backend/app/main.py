@@ -16,7 +16,7 @@ from fastapi.responses import JSONResponse
 
 from app.api.router import api_router
 from app.api.routes import health
-from app.core.config import Settings, get_settings
+from app.core.config import BACKEND_DIR, Settings, get_settings
 from app.core.errors import ErrorBody, ErrorResponse, register_error_handlers
 from app.core.languages import LanguageRegistry
 from app.core.logging import configure_logging, get_logger, request_id_var
@@ -36,8 +36,22 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
-        db = Database(settings.database_url)
-        db.init_schema()
+        try:
+            db = Database(settings.database_url)
+            db.init_schema()
+        except Exception as exc:
+            if not settings.is_sqlite:
+                fallback_sqlite_path = (BACKEND_DIR / "data" / "agentx.db").as_posix()
+                fallback_url = f"sqlite:///{fallback_sqlite_path}"
+                logger.warning(
+                    "Configured database failed to connect or initialize; falling back to local SQLite",
+                    extra={"error": str(exc), "fallback_url": fallback_url},
+                )
+                db = Database(fallback_url)
+                db.init_schema()
+                settings.database_url = fallback_url
+            else:
+                raise
         reference = ReferenceRepository(settings.knowledge_base_dir)
         _ = reference.data  # validate knowledge-base config now; fail fast if broken
         languages = LanguageRegistry.load()
